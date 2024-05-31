@@ -13,7 +13,7 @@ import com.vaadin.flow.router.Route;
  * The main view contains a text field for getting the user name and a button
  * that shows a greeting message in a notification.
  */
-@Route("")
+@Route("asd")
 public class MainView extends VerticalLayout {
 
     public MainView() {
@@ -25,7 +25,6 @@ public class MainView extends VerticalLayout {
         Button button = new Button("Say hello", e -> {
             add(new Paragraph(greetService.greet(textField.getValue())));
         });
-
         // Theme variants give you predefined extra styles for components.
         // Example: Primary button is more prominent look.
         button.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
