@@ -1,4 +1,4 @@
-package org.vaadin.example;
+package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -14,7 +14,7 @@ import com.vaadin.flow.router.Route;
  * that shows a greeting message in a notification.
  */
 @Route("asd")
-public class MainView extends VerticalLayout {
+public class MainView extends ViewTemplate {
 
     public MainView() {
         // Use TextField for standard text input
