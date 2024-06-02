@@ -13,7 +13,7 @@ import com.vaadin.flow.router.Route;
 @Route("settings/inventory")
 public class InventorySettingPage  extends MainSettingPage {
 
-    public MainSettingPage() {
+    public InventorySettingPage() {
         HorizontalLayout restOfPage = new HorizontalLayout();
         restOfPage.add(createLeftBar());
         restOfPage.add(createManagerSettings());
