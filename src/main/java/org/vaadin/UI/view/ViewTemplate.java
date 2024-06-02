@@ -10,7 +10,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.Route;
+
 
 
 public abstract class ViewTemplate extends VerticalLayout {
