@@ -2,6 +2,8 @@ package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -31,6 +33,7 @@ public class StoreListView extends VerticalLayout {
 
     private VerticalLayout createStoreRow(Store store) {
         VerticalLayout storeRow = new VerticalLayout();
+        storeRow.setWidthFull();
 
         // Store Name Button
         Button storeNameButton = new Button(store.getName());
@@ -39,37 +42,85 @@ public class StoreListView extends VerticalLayout {
         // Search Bar
         TextField searchBar = new TextField();
         searchBar.setPlaceholder("Search products...");
+        searchBar.setWidthFull();
         searchBar.addValueChangeListener(e -> presenter.searchProducts(store, e.getValue()));
 
-        // Products Horizontal Scroll
-        Div scrollContainer = new Div();
-        scrollContainer.getStyle().set("overflow-x", "auto");
-        scrollContainer.getStyle().set("display", "flex");
-        HorizontalLayout productsLayout = new HorizontalLayout();
-        productsLayout.setSpacing(true);
+        // Products Horizontal Scroll with Navigation Arrows
+        HorizontalLayout productsLayoutWrapper = new HorizontalLayout();
+        productsLayoutWrapper.setWidthFull();
+        productsLayoutWrapper.setAlignItems(Alignment.CENTER);
+        productsLayoutWrapper.getStyle().set("overflow-x", "auto");
 
-        for (Product product : store.getProducts()) {
-            productsLayout.add(createProductCard(product));
-        }
+        Div productsLayout = new Div();
+        productsLayout.getStyle().set("display", "flex");
+        productsLayout.getStyle().set("flex-wrap", "nowrap");
+        productsLayout.getStyle().set("align-items", "center");
 
-        scrollContainer.add(productsLayout);
-        storeRow.add(storeNameButton, searchBar, scrollContainer);
+        final int[] start = {0};
+        final int[] end = {Math.min(8, store.getProducts().size())};
+        updateProductsLayout(productsLayout, store, start[0], end[0]);
+
+        // Navigation Buttons
+        Button leftArrow = new Button(new Icon(VaadinIcon.ARROW_LEFT));
+        leftArrow.addClickListener(e -> {
+            if (start[0] > 0) {
+                start[0] -= 8;
+                end[0] = start[0] + 8;
+                updateProductsLayout(productsLayout, store, start[0], end[0]);
+            }
+        });
+
+        Button rightArrow = new Button(new Icon(VaadinIcon.ARROW_RIGHT));
+        rightArrow.addClickListener(e -> {
+            if (end[0] < store.getProducts().size()) {
+                start[0] += 8;
+                end[0] = start[0] + 8;
+                updateProductsLayout(productsLayout, store, start[0], end[0]);
+            }
+        });
+
+        productsLayoutWrapper.add(leftArrow, productsLayout, rightArrow);
+        storeRow.add(storeNameButton, searchBar, productsLayoutWrapper);
 
         return storeRow;
     }
 
+    private void updateProductsLayout(Div productsLayout, Store store, int start, int end) {
+        productsLayout.removeAll();
+        List<Product> products = store.getProducts().subList(start, end);
+        for (Product product : products) {
+            productsLayout.add(createProductCard(product));
+        }
+    }
+
     private VerticalLayout createProductCard(Product product) {
         VerticalLayout productLayout = new VerticalLayout();
+        productLayout.setAlignItems(Alignment.CENTER);
+        productLayout.getStyle().set("min-width", "150px");
+        productLayout.getStyle().set("max-width", "150px");
+
         Div productImage = new Div();
         productImage.getStyle().set("background-image", "url(" + product.getPicture() + ")");
         productImage.getStyle().set("width", "100px");
         productImage.getStyle().set("height", "100px");
         productImage.getStyle().set("background-size", "cover");
         productLayout.add(productImage);
-        productLayout.add(product.getName());
-        productLayout.add(product.getDescription());
-        productLayout.add("$" + product.getPrice());
-        productLayout.add(product.getCategory());
+
+        Div productName = new Div();
+        productName.setText(product.getName());
+        productName.getStyle().set("font-weight", "bold");
+        productName.getStyle().set("color", "black");
+        productLayout.add(productName);
+
+        Div productDescription = new Div();
+        productDescription.setText(product.getDescription());
+        productDescription.getStyle().set("color", "grey");
+        productLayout.add(productDescription);
+
+        Div productPrice = new Div();
+        productPrice.setText("$" + product.getPrice());
+        productPrice.getStyle().set("color", "black");
+        productLayout.add(productPrice);
 
         // Add to Cart Button
         Button addToCartButton = new Button("Add to Cart");
@@ -85,7 +136,8 @@ public class StoreListView extends VerticalLayout {
             VerticalLayout storeRow = (VerticalLayout) getComponentAt(i);
             Button storeNameButton = (Button) storeRow.getComponentAt(0);
             if (storeNameButton.getText().equals(store.getName())) {
-                HorizontalLayout productsLayout = (HorizontalLayout) ((Div) storeRow.getComponentAt(2)).getComponentAt(0);
+                HorizontalLayout productsLayoutWrapper = (HorizontalLayout) storeRow.getComponentAt(2);
+                Div productsLayout = (Div) productsLayoutWrapper.getComponentAt(1);
                 productsLayout.removeAll();
                 for (Product product : products) {
                     productsLayout.add(createProductCard(product));
