@@ -10,10 +10,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.RouterLayout;
 
 
-
-public abstract class ViewTemplate extends VerticalLayout {
+public class ViewTemplate extends VerticalLayout implements RouterLayout {
     public ViewTemplate() {
         HorizontalLayout header = new HorizontalLayout();
 
