@@ -7,5 +7,4 @@ public interface ISignUpView {
     String getUsername();
     String getPassword();
     String getEmail();
-    void setPresenter(SignUpPresenter presenter);
 }

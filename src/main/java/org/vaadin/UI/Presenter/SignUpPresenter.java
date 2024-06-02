@@ -8,7 +8,6 @@ public class SignUpPresenter {
 
     public SignUpPresenter(ISignUpView view) {
         this.view = view;
-        this.view.setPresenter(this);
     }
 
     public void handleSignup() {
