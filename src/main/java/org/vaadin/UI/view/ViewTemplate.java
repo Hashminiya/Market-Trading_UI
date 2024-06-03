@@ -18,11 +18,10 @@ public class ViewTemplate extends VerticalLayout implements RouterLayout {
         HorizontalLayout header = new HorizontalLayout();
 
         Button logoButton = createLogoButton();
-
+        Button manageStoresButton = createManageStoresButton();
         Button loginButton = new Button("Login");
         Button signUpButton = new Button("Sign Up");
         Button logoutButton = new Button("Logout");
-        Button manageStoresButton = createManageStoresButton();
         Button createNewStoreButton = new Button("Create New Store");
         Button systemManagerButton = new Button("System Manager");
 
