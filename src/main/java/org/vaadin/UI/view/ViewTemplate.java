@@ -13,21 +13,22 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.RouterLayout;
 
 
-
-public abstract class ViewTemplate extends VerticalLayout {
+abstract class ViewTemplate extends VerticalLayout {
     public ViewTemplate() {
+
         HorizontalLayout header = new HorizontalLayout();
 
-        Button logoButton = createLogoButton();
+        addLogoButton(header);
+        addLoginButton(header);
+        addSignupButton(header);
+        addLogoutButton(header);
+        addManageStoresButton(header);
+        decorateLayout(header);
 
-        Button loginButton = new Button("Login");
-        Button signUpButton = new Button("Sign Up");
-        Button logoutButton = new Button("Logout");
-        Button manageStoresButton = createManageStoresButton();
-        Button createNewStoreButton = new Button("Create New Store");
-        Button systemManagerButton = new Button("System Manager");
+        add(header);
+    }
 
-        header.add(logoButton, loginButton, signUpButton, logoutButton, manageStoresButton, createNewStoreButton, systemManagerButton);
+    private  void decorateLayout(HorizontalLayout header){
         header.setWidth("100%");
         header.setHeight("60px");
         header.setSpacing(true);
@@ -36,7 +37,7 @@ public abstract class ViewTemplate extends VerticalLayout {
         add(header);
     }
 
-    private Button createLogoButton(){
+    private void addLogoButton(HorizontalLayout layout){
         Image logoImage = new Image("icons/logoFinal.png","");
         logoImage.setWidth("100px");
         logoImage.setHeight("60px");
@@ -48,16 +49,16 @@ public abstract class ViewTemplate extends VerticalLayout {
             // Navigate to the homepage
             getUI().ifPresent(ui -> ui.navigate(""));
         });
-        return logoButton;
+        layout.add(logoButton);
     }
 
-    private Button createManageStoresButton(){
-        Button manageStoreButton = new Button("Manage Stores");
-        manageStoreButton.addClickListener(event -> {
-            // Navigate to the homepage
-            getUI().ifPresent(ui -> ui.navigate("settings/inventory"));
-        });
-        return  manageStoreButton;
-    }
-    public abstract void setUp();
+    abstract void addManageStoresButton(HorizontalLayout layout);
+
+    abstract void addLoginButton(HorizontalLayout layout);
+
+    abstract void  addLogoutButton(HorizontalLayout layout);
+
+    abstract  void addSignupButton(HorizontalLayout layout);
+
+
 }
