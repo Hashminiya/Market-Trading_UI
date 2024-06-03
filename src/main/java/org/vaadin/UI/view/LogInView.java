@@ -33,7 +33,7 @@ public class LogInView extends VerticalLayout implements ILoginView {
         loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         // Add input fields and button to the layout
-        HorizontalLayout formLayout = new HorizontalLayout(usernameField, passwordField, loginButton);
+        VerticalLayout formLayout = new VerticalLayout(usernameField, passwordField, loginButton);
         add(formLayout);
     }
 
