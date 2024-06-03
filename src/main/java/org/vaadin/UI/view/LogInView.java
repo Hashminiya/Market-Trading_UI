@@ -12,8 +12,8 @@ import org.vaadin.UI.Presenter.LoginPresenter;
 import org.vaadin.UI.view.Interfaces.ILoginView;
 
 
-@Route(value = "login", layout = ViewTemplate.class)
-public class LogInView extends VerticalLayout implements ILoginView {
+@Route("login")
+public class LogInView extends ViewTemplate implements ILoginView {
 
     private final LoginPresenter presenter;
     private final TextField usernameField;
@@ -50,5 +50,25 @@ public class LogInView extends VerticalLayout implements ILoginView {
     @Override
     public String getPassword() {
         return passwordField.getValue();
+    }
+
+    @Override
+    void addManageStoresButton(HorizontalLayout layout) {
+        layout.add(new Button("Manage Store"));
+    }
+
+    @Override
+    void addLoginButton(HorizontalLayout layout) {
+        layout.add(new Button("Login"));
+    }
+
+    @Override
+    void addLogoutButton(HorizontalLayout layout) {
+        layout.add(new Button("Logout"));
+    }
+
+    @Override
+    void addSignupButton(HorizontalLayout layout) {
+        layout.add(new Button("Sign Up"));
     }
 }
