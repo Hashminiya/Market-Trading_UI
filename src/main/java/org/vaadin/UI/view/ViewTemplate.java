@@ -10,6 +10,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.RouterLayout;
 
 
 
@@ -22,7 +23,7 @@ public abstract class ViewTemplate extends VerticalLayout {
         Button loginButton = new Button("Login");
         Button signUpButton = new Button("Sign Up");
         Button logoutButton = new Button("Logout");
-        Button manageStoresButton = new Button("Manage Stores");
+        Button manageStoresButton = createManageStoresButton();
         Button createNewStoreButton = new Button("Create New Store");
         Button systemManagerButton = new Button("System Manager");
 
