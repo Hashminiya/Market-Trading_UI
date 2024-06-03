@@ -1,22 +1,18 @@
 package org.vaadin.UI.view;
 
-import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.*;
+import org.vaadin.UI.Util.UserRole;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.RouterLayout;
 
 
 abstract class ViewTemplate extends VerticalLayout implements RouterLayout {
-    UserRole role;
-    public ViewTemplate(UserRole role) {
-        this.role=role;
+
+
+    public ViewTemplate() {
+
         HorizontalLayout header = new HorizontalLayout();
 
         addLogoButton(header);
@@ -51,13 +47,30 @@ abstract class ViewTemplate extends VerticalLayout implements RouterLayout {
         layout.add(logoButton);
     }
 
-    abstract void addManageStoresButton(HorizontalLayout layout);
+    private void addManageStoresButton(HorizontalLayout layout){
+        Button signUpTopBar = new Button("Manage Stores");
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings/inventory"));});
+        layout.add(signUpTopBar);
+    }
 
-    abstract void addLoginButton(HorizontalLayout layout);
+    private void  addLogoutButton(HorizontalLayout layout){
+        Button signUpTopBar = new Button("Logout");
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate(""));});
+        layout.add(signUpTopBar);
+    }
 
-    abstract void  addLogoutButton(HorizontalLayout layout);
+    private void addLoginButton(HorizontalLayout layout){
+            Button signUpTopBar = new Button("Log-in");
+            signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
+            layout.add(signUpTopBar);
 
-    abstract  void addSignupButton(HorizontalLayout layout);
+    }
 
+    private void addSignupButton(HorizontalLayout layout){
+            Button signUpTopBar = new Button("Sign-up");
+            signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
+            layout.add(signUpTopBar);
+
+    }
 
 }
