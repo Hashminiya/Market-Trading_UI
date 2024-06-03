@@ -13,28 +13,30 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.RouterLayout;
 
 
-public class ViewTemplate extends VerticalLayout implements RouterLayout {
-    public ViewTemplate() {
+abstract class ViewTemplate extends VerticalLayout implements RouterLayout {
+    UserRole role;
+    public ViewTemplate(UserRole role) {
+        this.role=role;
         HorizontalLayout header = new HorizontalLayout();
 
-        Button logoButton = createLogoButton();
-        Button manageStoresButton = createManageStoresButton();
-        Button loginButton = new Button("Login");
-        Button signUpButton = new Button("Sign Up");
-        Button logoutButton = new Button("Logout");
-        Button createNewStoreButton = new Button("Create New Store");
-        Button systemManagerButton = new Button("System Manager");
-
-        header.add(logoButton, loginButton, signUpButton, logoutButton, manageStoresButton, createNewStoreButton, systemManagerButton);
-        header.setWidth("100%");
-        header.setHeight("60px");
-        header.setSpacing(true);
-        header.setAlignItems(Alignment.CENTER);
+        addLogoButton(header);
+        addLoginButton(header);
+        addSignupButton(header);
+        addLogoutButton(header);
+        addManageStoresButton(header);
+        decorateLayout(header);
 
         add(header);
     }
 
-    private Button createLogoButton(){
+    private  void decorateLayout(HorizontalLayout header){
+        header.setWidth("100%");
+        header.setHeight("60px");
+        header.setSpacing(true);
+        header.setAlignItems(Alignment.CENTER);
+    }
+
+    private void addLogoButton(HorizontalLayout layout){
         Image logoImage = new Image("icons/logoFinal.png","");
         logoImage.setWidth("100px");
         logoImage.setHeight("60px");
@@ -46,15 +48,16 @@ public class ViewTemplate extends VerticalLayout implements RouterLayout {
             // Navigate to the homepage
             getUI().ifPresent(ui -> ui.navigate(""));
         });
-        return logoButton;
+        layout.add(logoButton);
     }
 
-    private Button createManageStoresButton(){
-        Button manageStoreButton = new Button("Manage Stores");
-        manageStoreButton.addClickListener(event -> {
-            // Navigate to the homepage
-            getUI().ifPresent(ui -> ui.navigate("settings/inventory"));
-        });
-        return  manageStoreButton;
-    }
+    abstract void addManageStoresButton(HorizontalLayout layout);
+
+    abstract void addLoginButton(HorizontalLayout layout);
+
+    abstract void  addLogoutButton(HorizontalLayout layout);
+
+    abstract  void addSignupButton(HorizontalLayout layout);
+
+
 }
