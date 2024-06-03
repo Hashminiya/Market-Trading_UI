@@ -1,4 +1,4 @@
-package org.vaadin.UI.view;
+package org.vaadin.UI.Util;
 
 public enum UserRole {
     GUEST,
