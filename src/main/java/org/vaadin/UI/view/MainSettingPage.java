@@ -8,7 +8,12 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.router.Route;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Route("settings")
 public class MainSettingPage extends ViewTemplate {
@@ -16,7 +21,7 @@ public class MainSettingPage extends ViewTemplate {
     public MainSettingPage() {
         HorizontalLayout restOfPage = new HorizontalLayout();
         restOfPage.add(createLeftBar());
-        restOfPage.add(createManagerSettings());
+        //restOfPage.add(createManagerSettings());
         add(restOfPage);
     }
 
@@ -28,6 +33,8 @@ public class MainSettingPage extends ViewTemplate {
         // Inventory Button
         Button inventoryButton = new Button("Inventory", new Icon(VaadinIcon.CART));
         inventoryButton.setWidthFull();
+        inventoryButton.addClickListener(event -> {
+            getUI().ifPresent(ui -> ui.navigate("settings/inventory"));});
 
         // About Button
         Button aboutButton = new Button("About", new Icon(VaadinIcon.INFO_CIRCLE));
@@ -97,4 +104,5 @@ public class MainSettingPage extends ViewTemplate {
 
         return settingsLayout;
     }
+
 }
