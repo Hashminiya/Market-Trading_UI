@@ -39,4 +39,9 @@ public class MainView extends ViewTemplate {
 
         add(textField, button);
     }
+
+    @Override
+    public void setUp() {
+
+    }
 }
