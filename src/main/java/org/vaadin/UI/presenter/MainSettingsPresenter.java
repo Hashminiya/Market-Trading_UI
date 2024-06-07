@@ -16,7 +16,7 @@ public class MainSettingsPresenter implements IPresenter {
     }
 
     @Override
-    public void onViewStoped() {
+    public void onViewStopped() {
 
     }
 
