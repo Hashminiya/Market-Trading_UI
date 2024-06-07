@@ -48,7 +48,7 @@ public class SignUpPresenter implements IPresenter {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 view.showNotification("Signup successful for user: " + username);
-                // TODO: Move to login page or other actions
+                // TODO: Move to home page or other actions
             } else if (response.getStatusCode() == HttpStatus.CONFLICT) {
                 view.showNotification("Username already exists.");
             } else {
