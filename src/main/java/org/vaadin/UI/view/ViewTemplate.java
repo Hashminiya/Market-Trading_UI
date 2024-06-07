@@ -10,22 +10,22 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.RouterLayout;
+import org.vaadin.UI.presenter.Interfaces.IPresenter;
 
 
-abstract class ViewTemplate extends VerticalLayout implements RouterLayout {
+abstract class ViewTemplate extends VerticalLayout {
 
-
+    IPresenter presenter;
     public ViewTemplate() {
 
         HorizontalLayout header = new HorizontalLayout();
-
         addLogoButton(header);
         addLoginButton(header);
         addSignupButton(header);
         addLogoutButton(header);
         addManageStoresButton(header);
         decorateLayout(header);
-
+        setUp();
         add(header);
     }
 
@@ -75,6 +75,9 @@ abstract class ViewTemplate extends VerticalLayout implements RouterLayout {
             signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
             layout.add(signUpTopBar);
 
+    }
+    public void setUp(){
+        presenter.onViewLoaded();
     }
 
 }
