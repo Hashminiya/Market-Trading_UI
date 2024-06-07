@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Route("settings/inventory")
-public class InventorySettingPage extends MainSettingPage {
+public class InventorySettingView extends MainSettingView {
     private ComboBox chooseStoreComboBox;
     private ItemGrid itemGrid;
     private List<String> storesList = new ArrayList<>();
-    public InventorySettingPage() {
+    public InventorySettingView() {
         HorizontalLayout restOfPage = new HorizontalLayout();
         restOfPage.add(createChooseStoreComboBox());
 

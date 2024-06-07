@@ -8,23 +8,16 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.presenter.MainSettingsPresenter;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
 @Route("settings")
-public class MainSettingPage extends ViewTemplate {
+public class MainSettingView extends ViewTemplate {
 
     private MainSettingsPresenter mainSettingsPresenter;
-    public MainSettingPage() {
+    public MainSettingView() {
         HorizontalLayout restOfPage = new HorizontalLayout();
         restOfPage.add(createLeftBar());
-        //restOfPage.add(createManagerSettings());
         add(restOfPage);
         mainSettingsPresenter = new MainSettingsPresenter(this);
     }
