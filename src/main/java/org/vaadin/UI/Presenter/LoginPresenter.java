@@ -6,13 +6,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.UserDTO;
+import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewInterface.ILoginView;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
 @Component
-public class LoginPresenter {
+public class LoginPresenter implements IPresenter {
     private final ILoginView view;
     private final RestTemplate restTemplate;
 
@@ -81,4 +82,13 @@ public class LoginPresenter {
         return Pattern.matches("^[a-zA-Z0-9]*$", username);
     }
 
+    @Override
+    public void onViewLoaded() {
+
+    }
+
+    @Override
+    public void onViewStopped() {
+
+    }
 }

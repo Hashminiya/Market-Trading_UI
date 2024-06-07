@@ -3,11 +3,14 @@ package org.vaadin.UI.view;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.presenter.SignUpPresenter;
+import org.vaadin.UI.Util.UserRole;
 import org.vaadin.UI.view.ViewInterface.ISignUpView;
 
 @Route("sign-up")
