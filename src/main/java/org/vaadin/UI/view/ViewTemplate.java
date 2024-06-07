@@ -12,7 +12,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 @Route("")
-public class ViewTemplate extends VerticalLayout {
+public abstract class ViewTemplate extends VerticalLayout {
     public ViewTemplate() {
         HorizontalLayout header = new HorizontalLayout();
         Button logo = new Button("Logo");
@@ -30,4 +30,5 @@ public class ViewTemplate extends VerticalLayout {
 
         add(header);
     }
+    public abstract void setUp();
 }

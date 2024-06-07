@@ -9,15 +9,21 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import org.vaadin.UI.presenter.MainSettingsPresenter;
 
-@Route("settings/inventory")
-public class InventorySettingPage  extends MainSettingPage {
+@Route("settings")
+public class MainSettingView extends ViewTemplate {
 
-    public InventorySettingPage() {
+    private MainSettingsPresenter mainSettingsPresenter;
+    public MainSettingView() {
         HorizontalLayout restOfPage = new HorizontalLayout();
         restOfPage.add(createLeftBar());
-        restOfPage.add(createManagerSettings());
         add(restOfPage);
+        mainSettingsPresenter = new MainSettingsPresenter(this);
+    }
+
+    public void setUp(){
+
     }
 
     private VerticalLayout createLeftBar() {
@@ -25,24 +31,26 @@ public class InventorySettingPage  extends MainSettingPage {
         leftBar.setSpacing(true);
         leftBar.setPadding(true);
 
-        // Inventory Button
-        Button inventoryButton = new Button("Inventory", new Icon(VaadinIcon.CART));
+        Button inventoryButton = new Button("Inventory", new Icon(VaadinIcon.SHOP));
         inventoryButton.setWidthFull();
+        inventoryButton.addClickListener(event -> {
+            mainSettingsPresenter.onInventoryButtonClick();
+            getUI().ifPresent(ui -> ui.navigate("settings/inventory"));});
 
-        // About Button
-        Button aboutButton = new Button("About", new Icon(VaadinIcon.INFO_CIRCLE));
-        aboutButton.setWidthFull();
+        Button manageStoreButton = new Button("Manage Store", new Icon(VaadinIcon.COGS));
+        manageStoreButton.setWidthFull();
+        manageStoreButton.addClickListener(event -> {
+            mainSettingsPresenter.onStoreManagementButtonClick();
+            getUI().ifPresent(ui -> ui.navigate("settings/store Management"));});
 
-        // Admin Button
-        Button adminButton = new Button("Admin", new Icon(VaadinIcon.USER_STAR));
-        adminButton.setWidthFull();
-
-        // Logout Button
-        Button logoutButton = new Button("Logout", new Icon(VaadinIcon.SIGN_OUT));
-        logoutButton.setWidthFull();
+        Button marketHistoryButton = new Button("Market History", new Icon(VaadinIcon.TIME_BACKWARD));
+        marketHistoryButton.setWidthFull();
+        marketHistoryButton.addClickListener(event -> {
+            mainSettingsPresenter.onMarketHistoryButtonClick();
+            getUI().ifPresent(ui -> ui.navigate("settings/market History"));});
 
         // Add buttons to the layout
-        leftBar.add(inventoryButton, aboutButton, adminButton, logoutButton);
+        leftBar.add(inventoryButton, manageStoreButton, marketHistoryButton);
 
         return leftBar;
     }
@@ -97,4 +105,5 @@ public class InventorySettingPage  extends MainSettingPage {
 
         return settingsLayout;
     }
+
 }
