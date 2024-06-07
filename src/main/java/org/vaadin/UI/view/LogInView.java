@@ -17,7 +17,7 @@ import org.vaadin.UI.view.ViewInterface.ILoginView;
 @Route("login")
 public class LogInView extends ViewTemplate implements ILoginView {
 
-    private final LoginPresenter presenter;
+    private LoginPresenter presenter;
     private final TextField usernameField;
     private final PasswordField passwordField;
 

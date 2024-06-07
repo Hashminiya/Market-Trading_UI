@@ -1,11 +1,15 @@
-package org.vaadin.UI.Presenter;
+package org.vaadin.UI.presenter;
 import com.vaadin.flow.component.UI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.vaadin.UI.view.ViewInterface.ISignUpView;
 
+@Component
 public class SignUpPresenter  {
 
     private ISignUpView view;
 
+    @Autowired
     public SignUpPresenter(ISignUpView view) {
         this.view = view;
     }
