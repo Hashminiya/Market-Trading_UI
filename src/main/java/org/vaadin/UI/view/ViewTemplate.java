@@ -77,7 +77,7 @@ abstract class ViewTemplate extends VerticalLayout {
 
     }
     public void setUp(){
-        presenter.onViewLoaded();
+        //presenter.onViewLoaded();
     }
 
 }
