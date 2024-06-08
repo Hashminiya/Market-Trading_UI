@@ -18,7 +18,7 @@ public class SignupView extends ViewTemplate implements ISignUpView {
 
     private final TextField usernameField;
     private final PasswordField passwordField;
-    private final EmailField emailField;
+    private final TextField ageField;
     private final SignUpPresenter presenter;
 
     public SignupView() {
@@ -26,7 +26,7 @@ public class SignupView extends ViewTemplate implements ISignUpView {
         presenter = new SignUpPresenter(this);
         usernameField = new TextField("Username");
         passwordField = new PasswordField("Password");
-        emailField = new EmailField("Email");
+        ageField = new TextField("Age");
 
         // Create sign-up button
         Button signUpButton = new Button("Sign Up");
@@ -35,7 +35,7 @@ public class SignupView extends ViewTemplate implements ISignUpView {
         signUpButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         // Add input fields and button to the layout
-        VerticalLayout formLayout = new VerticalLayout(usernameField, passwordField, emailField, signUpButton);
+        VerticalLayout formLayout = new VerticalLayout(usernameField, passwordField, ageField, signUpButton);
         add(formLayout);
     }
 
@@ -55,7 +55,9 @@ public class SignupView extends ViewTemplate implements ISignUpView {
     }
 
     @Override
-    public String getEmail() {
-        return emailField.getValue();
+    public String getAge() {
+        return ageField.getValue();
     }
+
+
 }
