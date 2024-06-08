@@ -21,16 +21,16 @@ public class SignUpPresenter implements IPresenter {
         this.view = view;
     }
 
-    public void handleSignup()  {
+    public void handleSignup() {
         String username = view.getUsername();
         String password = view.getPassword();
-        String age = view.getAge();  // Assuming age is also required for signup
+        String age = view.getAge(); // Assuming age is also required for signup
 
-        // Add your signup logic here
-        if (!isValidUsername(username) || !isValidPassword(password) || !isValidAge(age)) {
-            view.showNotification("Username, password, or age are invalid.");
-            return;
-        }
+//        // Add your signup logic here
+//        if (!isValidUsername(username) || !isValidPassword(password) || !isValidAge(age)) {
+//            view.showNotification("Username, password, or age are invalid.");
+//            return;
+//        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -44,7 +44,7 @@ public class SignUpPresenter implements IPresenter {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity("/api/user/register", request, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/user/register", request, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 view.showNotification("Signup successful for user: " + username);
@@ -58,6 +58,7 @@ public class SignUpPresenter implements IPresenter {
             view.showNotification("Signup request failed. Please try again later.");
         }
     }
+
 
     private boolean isValidUsername(String username) {
         // TODO: Implement validation logic for username

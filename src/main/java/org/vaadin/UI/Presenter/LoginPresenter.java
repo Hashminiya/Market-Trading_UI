@@ -28,28 +28,24 @@ public class LoginPresenter implements IPresenter {
     }
 
     public void handleLogin() {
+        // Define the URL
+        String url = "http://localhost:8080/user/login";
+
+        // Define the query parameters
         String username = view.getUsername();
         String password = view.getPassword();
 
-        // Add your login logic here
-        if (!isValidUsername(username) || !isValidPassword(password)) {
-            view.showNotification("Username or password are invalid.");
-            return;
-        }
+        // Create the request body as a query string
+        String requestBody = "userName=" + username + "&password=" + password;
 
-        //Modifies http request to receive json
+        // Set the headers
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        // Create request body
-        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("userName", username);
-        requestBody.add("password", password);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
-
+        // Create an HttpEntity with the request body and headers
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity("/api/user/login", request, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Login successful

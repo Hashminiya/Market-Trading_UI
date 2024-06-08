@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="bookstore-example" />
         <module name="project-base" />
+        <module name="Market-Trading_UI" />
       </profile>
     </annotationProcessing>
   </component>
