@@ -7,6 +7,7 @@ public class StoreDTO implements Serializable {
     private String description;
     private List<ProductDTO> products;
 
+
     public StoreDTO(String name, String description, List<ProductDTO> products) {
         this.name = name;
         this.description = description;
