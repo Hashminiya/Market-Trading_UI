@@ -30,7 +30,7 @@ public class SignupView extends ViewTemplate implements ISignUpView {
 
         // Create sign-up button
         Button signUpButton = new Button("Sign Up");
-        signUpButton.addClickListener(event -> {presenter.handleSignup();});
+        signUpButton.addClickListener(event -> {presenter.onSignup();});
 
         signUpButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 

@@ -17,17 +17,14 @@ public class LoginPresenter implements IPresenter {
     private final ILoginView view;
     private final RestTemplate restTemplate;
 
-    private static final int MIN_USERNAME_LENGTH = 4;
-    private static final int MAX_USERNAME_LENGTH = 20;
-    private static final int MIN_PASSWORD_LENGTH = 8;
-
     @Autowired
     public LoginPresenter(ILoginView view) {
         this.restTemplate = new RestTemplate();
         this.view = view;
     }
 
-    public void handleLogin() {
+    public void onLogin() {
+
         // Define the URL
         String url = "http://localhost:8080/user/login";
 
@@ -50,7 +47,6 @@ public class LoginPresenter implements IPresenter {
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Login successful
                 view.showNotification("Login successful for user: " + username);
-                // TODO: Move to home page or perform other actions
             } else {
                 // Login failed
                 view.showNotification("Login failed. User is already exists.");
@@ -59,23 +55,6 @@ public class LoginPresenter implements IPresenter {
             // Request failed
             view.showNotification("Couldn't connect to server. Please try again later.");
         }
-    }
-
-    private boolean isValidPassword(String password) {
-        // Check if password is not null and meets length requirement
-        //TODO:: ADD MORE VALIDATIONS IF NEEDED
-        return password != null && password.length() >= MIN_PASSWORD_LENGTH;
-    }
-
-    private boolean isValidUsername(String username) {
-        // Check if username is not null and meets length requirements
-        //TODO:: ADD MORE VALIDATIONS IF NEEDED
-        if (username == null || username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH) {
-            return false;
-        }
-
-        // Check if username contains only alphanumeric characters (letters and digits)
-        return Pattern.matches("^[a-zA-Z0-9]*$", username);
     }
 
     @Override

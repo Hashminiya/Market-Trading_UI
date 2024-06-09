@@ -1,4 +1,4 @@
-package org.vaadin.UI.presenter;
+package org.vaadin.UI.Presenter;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -9,11 +9,15 @@ import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewInterface.ISignUpView;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Pattern;
+
 
 @Component
 public class SignUpPresenter implements IPresenter {
     private final ISignUpView view;
     private final RestTemplate restTemplate;
+    private static final int MIN_PASSWORD_LENGTH = 4;
+    private static final int MAX_PASSWORD_LENGTH = 20;
 
     @Autowired
     public SignUpPresenter(ISignUpView view) {
@@ -21,16 +25,16 @@ public class SignUpPresenter implements IPresenter {
         this.view = view;
     }
 
-    public void handleSignup() {
+    public void onSignup() {
         String username = view.getUsername();
         String password = view.getPassword();
-        String age = view.getAge(); // Assuming age is also required for signup
+        String age = view.getAge();
 
-//        // Add your signup logic here
-//        if (!isValidUsername(username) || !isValidPassword(password) || !isValidAge(age)) {
-//            view.showNotification("Username, password, or age are invalid.");
-//            return;
-//        }
+        // Add your signup logic here
+        if (!isValidPassword(password) || !isValidAge(age)) {
+            view.showNotification("Password or age are invalid.");
+            return;
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -48,7 +52,6 @@ public class SignUpPresenter implements IPresenter {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 view.showNotification("Signup successful for user: " + username);
-                // TODO: Move to home page or other actions
             } else if (response.getStatusCode() == HttpStatus.CONFLICT) {
                 view.showNotification("Username already exists.");
             } else {
@@ -59,22 +62,10 @@ public class SignUpPresenter implements IPresenter {
         }
     }
 
-
-    private boolean isValidUsername(String username) {
-        // TODO: Implement validation logic for username
-        return username != null && username.length() >= 4 && username.length() <= 20 && username.matches("^[a-zA-Z0-9]*$");
-    }
-
-    private boolean isValidPassword(String password)  {
-        // TODO: Implement validation logic for password
-        return password != null && password.length() >= 8;
-    }
-
     private boolean isValidAge(String age)  {
-        // TODO: Implement validation logic for age
         try{
             int ageConvert = Integer.parseInt(age);
-            if (ageConvert>0 && ageConvert<99)
+            if (ageConvert>0 && ageConvert<120)
                 return true;
             else{
                 return false;
@@ -83,6 +74,20 @@ public class SignUpPresenter implements IPresenter {
         catch (Exception e){
             return false;
         }
+    }
+
+//    private boolean isValidPassword(String password) {
+//        // Check if password is not null and meets length requirement
+//        return password != null && password.length() >= MIN_PASSWORD_LENGTH;
+//    }
+
+    private boolean isValidPassword(String password) {
+        // Check if username is not null and meets length requirements
+        if (password == null || password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
+            return false;
+        }
+        // Check if username contains only alphanumeric characters (letters and digits)
+        return Pattern.matches("^[a-zA-Z0-9]*$", password);
     }
 
     @Override
