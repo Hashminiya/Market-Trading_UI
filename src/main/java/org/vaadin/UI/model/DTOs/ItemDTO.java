@@ -3,42 +3,33 @@ package org.vaadin.UI.model.DTOs;
 import java.io.Serializable;
 
 public class ItemDTO implements Serializable {
-    private final long storeId;
-    private final double totalPrice;
+    private final long id;
+    private final String name;
+    private final double price;
     private final int quantity;
-    private final String itemName;
-    private final long itemId;
 
-    public ItemDTO(long itemId, String itemName, int quantity, long storeId, double totalPrice){
-        this.itemId = itemId;
-        this.itemName = itemName;
+
+    public ItemDTO(long id, String name, int quantity, double price){
+        this.id = id;
+        this.name = name;
         this.quantity = quantity;
-        this.storeId = storeId;
-        this.totalPrice = totalPrice;
+        this.price = price;
     }
 
-    public long getStoreId() {
-        return storeId;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
+    public double getPrice() {
+        return price;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public long getItemId() {
-        return itemId;
-    }
-
     public Long getId() {
-        return itemId;
+        return id;
     }
 
     public String getName() {
-        return itemName;
+        return name;
     }
 
 }

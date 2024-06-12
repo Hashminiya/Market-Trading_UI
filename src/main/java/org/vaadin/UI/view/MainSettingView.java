@@ -9,7 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.MainSettingsPresenter;
+import org.vaadin.UI.Presenter.MainSettingsPresenter;
 
 @Route("settings")
 public class MainSettingView extends ViewTemplate {
@@ -37,6 +37,12 @@ public class MainSettingView extends ViewTemplate {
             mainSettingsPresenter.onInventoryButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/inventory"));});
 
+        Button purchaseHistoryButton = new Button("Purchases", new Icon(VaadinIcon.SHOP));
+        purchaseHistoryButton.setWidthFull();
+        purchaseHistoryButton.addClickListener(event -> {
+            mainSettingsPresenter.onPurchaseHistoryButton();
+            getUI().ifPresent(ui -> ui.navigate("settings/Purchases"));});
+
         Button manageStoreButton = new Button("Manage Store", new Icon(VaadinIcon.COGS));
         manageStoreButton.setWidthFull();
         manageStoreButton.addClickListener(event -> {
@@ -50,7 +56,7 @@ public class MainSettingView extends ViewTemplate {
             getUI().ifPresent(ui -> ui.navigate("settings/market History"));});
 
         // Add buttons to the layout
-        leftBar.add(inventoryButton, manageStoreButton, marketHistoryButton);
+        leftBar.add(inventoryButton ,purchaseHistoryButton, manageStoreButton, marketHistoryButton);
 
         return leftBar;
     }

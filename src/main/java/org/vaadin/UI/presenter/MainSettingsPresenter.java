@@ -1,4 +1,4 @@
-package org.vaadin.UI.presenter;
+package org.vaadin.UI.Presenter;
 
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.MainSettingView;
@@ -8,7 +8,6 @@ public class MainSettingsPresenter implements IPresenter {
 
     public MainSettingsPresenter(MainSettingView mainSettingView){
         this.mainSettingView = mainSettingView;
-
     }
     @Override
     public void onViewLoaded() {
@@ -28,5 +27,8 @@ public class MainSettingsPresenter implements IPresenter {
     }
 
     public void onMarketHistoryButtonClick() {
+    }
+
+    public void onPurchaseHistoryButton() {
     }
 }
