@@ -7,7 +7,6 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.Presenter.InventoryPresenter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
@@ -45,13 +44,13 @@ public class InventorySettingView extends MainSettingView {
         inventoryGrid.setSizeFull();
 
 
-        chooseStoreComboBox.addValueChangeListener(event -> {
-            String selectedOptionStoreName = event.getValue();
-
-            presenter.onSelectStore(selectedOptionStoreName);
-            inventoryGrid.asSingleSelect().addValueChangeListener(
-                    event2 -> showForm(true,event2.getValue()));
-        });
+//        chooseStoreComboBox.addValueChangeListener(event -> {
+//            String selectedOptionStoreName = event.getValue();
+//
+//            presenter.onSelectStore(selectedOptionStoreName);
+//            inventoryGrid.asSingleSelect().addValueChangeListener(
+//                    event2 -> showForm(true,event2.getValue()));
+//        });
 
         restOfPage.add(addNewItemButton);
         restOfPage.add(inventoryGrid);
