@@ -24,12 +24,19 @@ abstract class ViewTemplate extends VerticalLayout {
         addSignupButton(header);
         addLogoutButton(header);
         addManageStoresButton(header);
+        addCreateStoreButton(header);
         decorateLayout(header);
         setUp();
         add(header);
     }
 
-    private  void decorateLayout(HorizontalLayout header){
+    private void addCreateStoreButton(HorizontalLayout layout) {
+        Button createStoreButton = new Button("Create Store");
+        createStoreButton.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("createStore"));});
+        layout.add(createStoreButton);
+    }
+
+    private void decorateLayout(HorizontalLayout header){
         header.setWidth("100%");
         header.setHeight("60px");
         header.setSpacing(true);
