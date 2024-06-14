@@ -1,5 +1,7 @@
 package org.vaadin.UI.view;
 
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.StoreDTO;
@@ -11,19 +13,30 @@ import java.util.List;
 @Route("")
 public class HomeView extends ViewTemplate {
     private final HomePresenter presenter;
-    private final VerticalLayout storeList;
 
     public HomeView() {
         this.presenter = new HomePresenter(this);
-        this.storeList = new VerticalLayout();
-        add(storeList);
+        setSpacing(true);
+        setPadding(true);
+
+        H1 title = new H1("Welcome to Our Online Store");
+        title.getStyle().set("text-align", "center");
+        add(title);
+
         presenter.onViewLoaded();
     }
 
     public void displayStores(List<StoreDTO> stores) {
-        storeList.removeAll();
+        VerticalLayout storesLayout = new VerticalLayout();
+        storesLayout.setSpacing(true);
+
         for (StoreDTO store : stores) {
-            storeList.add(new StoreComponent(store));
+            Div storeDiv = new Div();
+            storeDiv.add(new StoreComponent(store));
+            storeDiv.getStyle().set("margin-bottom", "20px");
+            storesLayout.add(storeDiv);
         }
+
+        add(storesLayout);
     }
 }

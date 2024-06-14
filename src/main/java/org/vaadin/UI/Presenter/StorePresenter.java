@@ -1,16 +1,16 @@
 package org.vaadin.UI.presenter;
 
-import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.model.models.StoreModel;
 import org.vaadin.UI.view.StoreView;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class StorePresenter {
     private final StoreView view;
     private final StoreModel model;
+    private static final Logger logger = Logger.getLogger(StorePresenter.class.getName());
 
     public StorePresenter(StoreView view) {
         this.view = view;
@@ -18,14 +18,15 @@ public class StorePresenter {
     }
 
     public void onViewLoaded(String storeName) {
-        Optional<StoreDTO> store = model.getStores().stream()
-                .filter(s -> s.getName().equals(storeName))
+        Optional<StoreDTO> storeOpt = model.getStores().stream()
+                .filter(store -> store.getName().equals(storeName))
                 .findFirst();
-        if (store.isPresent()) {
-            List<ItemDTO> items = store.get().getItems();
-            view.displayItems(items);
+
+        if (storeOpt.isPresent()) {
+            StoreDTO store = storeOpt.get();
+            view.displayStoreDetails(store);
         } else {
-            view.displayItems(List.of()); // or some error handling
+            logger.severe("Store not found: " + storeName);
         }
     }
 }

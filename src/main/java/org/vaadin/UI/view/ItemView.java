@@ -2,10 +2,12 @@ package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -19,10 +21,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Route("item")
-public class ItemView extends VerticalLayout implements BeforeEnterObserver {
+public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     private final ItemPresenter presenter;
     private final VerticalLayout itemDetails;
-    private final Paragraph itemName;
+    private final H1 itemName;
     private final Paragraph itemPrice;
     private final Paragraph itemQuantity;
     private final Button addToCartButton;
@@ -32,7 +34,7 @@ public class ItemView extends VerticalLayout implements BeforeEnterObserver {
     public ItemView() {
         this.presenter = new ItemPresenter(this);
         this.itemDetails = new VerticalLayout();
-        this.itemName = new Paragraph();
+        this.itemName = new H1();
         this.itemPrice = new Paragraph();
         this.itemQuantity = new Paragraph();
         this.addToCartButton = new Button(new Icon(VaadinIcon.CART));
@@ -55,7 +57,7 @@ public class ItemView extends VerticalLayout implements BeforeEnterObserver {
     }
 
     public void displayItemDetails(ItemDTO item, StoreDTO store) {
-        itemName.setText("Name: " + item.getName());
+        itemName.setText(item.getName());
         itemPrice.setText("Price: " + item.getTotalPrice());
         itemQuantity.setText("Quantity: " + item.getQuantity());
 
@@ -66,11 +68,15 @@ public class ItemView extends VerticalLayout implements BeforeEnterObserver {
 
         // Related items from the same store
         relatedItemsLayout.removeAll();
+        relatedItemsLayout.add(new Paragraph("Related Items"));
+        HorizontalLayout relatedItemsLayoutInner = new HorizontalLayout();
+        relatedItemsLayoutInner.setSpacing(true);
         List<ItemDTO> relatedItems = store.getItems().stream()
                 .filter(i -> i.getItemId() != item.getItemId())
                 .collect(Collectors.toList());
         for (ItemDTO relatedItem : relatedItems) {
-            relatedItemsLayout.add(new ItemComponent(relatedItem));
+            relatedItemsLayoutInner.add(new ItemComponent(relatedItem));
         }
+        relatedItemsLayout.add(relatedItemsLayoutInner);
     }
 }
