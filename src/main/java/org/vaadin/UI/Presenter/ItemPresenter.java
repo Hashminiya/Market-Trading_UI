@@ -1,4 +1,4 @@
-package org.vaadin.UI.presenter;
+package org.vaadin.UI.Presenter;
 
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
