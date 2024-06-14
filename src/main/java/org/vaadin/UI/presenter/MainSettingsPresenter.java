@@ -29,4 +29,7 @@ public class MainSettingsPresenter implements IPresenter {
 
     public void onMarketHistoryButtonClick() {
     }
+
+    public void onPurchaseHistoryButton() {
+    }
 }

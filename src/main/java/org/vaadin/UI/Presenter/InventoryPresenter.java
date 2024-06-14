@@ -16,11 +16,12 @@ public class InventoryPresenter implements IPresenter {
     private int storeId;
     private ItemDTO emptyItem;
 
-    public InventoryPresenter (InventorySettingView view) {
+    public InventoryPresenter(InventorySettingView view) {
         this.view = view;
         inventoryModel = new InventoryModel();
-        this.emptyItem = new ItemDTO(0,"",0,0,0);
+        this.emptyItem = new ItemDTO(0, "", 0, 0, 0);
     }
+
     @Override
     public void onViewLoaded() {
 
@@ -31,35 +32,35 @@ public class InventoryPresenter implements IPresenter {
 
     }
 
-    public void onSelectStore(String storeName){
+    public void onSelectStore(String storeName) {
         //storeItems = inventoryModel.getStoreItems(storeName);
         storeItems = getDemoItems();
         view.fillUpInventory(storeItems);
     }
 
-    public void onSavingItem(ItemDTO item){
+    public void onSavingItem(ItemDTO item) {
 
     }
 
-    public void onEditingItem(ItemDTO item){
-
-    }
-    public void onCancleItem(){
+    public void onEditingItem(ItemDTO item) {
 
     }
 
-    public void onDeleteItem(ItemDTO item){
+    public void onCancleItem() {
 
     }
 
+    public void onDeleteItem(ItemDTO item) {
+
+    }
     private ArrayList<ItemDTO> getDemoItems() {
-//        ArrayList<ItemDTO> items = new ArrayList<>();
-//        items.add(new ItemDTO(1, "Apple", 100, 0.99));
-//        items.add(new ItemDTO(2, "Banana", 150, 0.59));
-//        items.add(new ItemDTO(3, "Orange", 80, 0.79));
-//        items.add(new ItemDTO(4, "Strawberry", 60, 2.99));
-//        items.add(new ItemDTO(5, "Grapes", 200, 2.49));
-//        return items;
+        ArrayList<ItemDTO> items = new ArrayList<>();
+        items.add(new ItemDTO(1, "Apple", 100, 12,0.99));
+        items.add(new ItemDTO(2, "Banana", 150,23, 0.59));
+        items.add(new ItemDTO(3, "Orange", 80, 12,0.79));
+        items.add(new ItemDTO(4, "Strawberry", 60, 23,2.99));
+        items.add(new ItemDTO(5, "Grapes", 200, 12,2.49));
+        return items;
     }
 
 }

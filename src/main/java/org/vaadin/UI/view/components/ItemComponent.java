@@ -20,7 +20,7 @@ public class ItemComponent extends VerticalLayout {
 
         RouterLink itemLink = new RouterLink();
         itemLink.setRoute(ItemView.class);
-        itemLink.setText(item.getName());
+        itemLink.setText(item.getItemName());
         itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getItemId())))));
         itemLink.getStyle().set("cursor", "pointer");
         add(itemLink);
@@ -29,7 +29,7 @@ public class ItemComponent extends VerticalLayout {
         Button addToCartButton = new Button(new Icon(VaadinIcon.CART));
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> {
-            Notification.show(item.getName() + " added to cart");
+            Notification.show(item.getItemName() + " added to cart");
         });
 
         HorizontalLayout priceAndButtonLayout = new HorizontalLayout(price, addToCartButton);

@@ -33,12 +33,7 @@ public class ItemDTO implements Serializable {
         return itemId;
     }
 
-    public Long getId() {
-        return itemId;
-    }
-
-    public String getName() {
+    public String getItemName() {
         return itemName;
     }
-
 }
