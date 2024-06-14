@@ -26,7 +26,7 @@ public class ItemPresenter {
 
         if (itemOpt.isPresent()) {
             ItemDTO item = itemOpt.get();
-            logger.info("Found item: " + item.getName() + " with storeId: " + item.getStoreId());
+            logger.info("Found item: " + item.getItemName() + " with storeId: " + item.getStoreId());
             Optional<StoreDTO> storeOpt = model.getStoreById(String.valueOf(item.getStoreId()));
             if (storeOpt.isPresent()) {
                 StoreDTO store = storeOpt.get();
