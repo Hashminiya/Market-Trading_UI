@@ -9,7 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.MainSettingsPresenter;
+import org.vaadin.UI.Presenter.MainSettingsPresenter;
 
 @Route("settings")
 public class MainSettingView extends ViewTemplate {

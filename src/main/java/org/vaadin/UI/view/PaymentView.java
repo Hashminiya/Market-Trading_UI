@@ -30,6 +30,8 @@ public class PaymentView extends ViewTemplate {
     private Label totalPrice;
     private PaymentPresenter presenter;
 
+    private String token;
+
     private String CARD_REGEX = "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$";
 
     public PaymentView() {
@@ -39,19 +41,19 @@ public class PaymentView extends ViewTemplate {
         restOfPage.setJustifyContentMode(JustifyContentMode.CENTER);
         restOfPage.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        restOfPage.add(createTotalPriceLabel());
+        restOfPage.add(createTotalPriceLabel("$0.00"));
         restOfPage.add(createFormLayout());
         restOfPage.add(createButtonLayout());
 
         submit.addClickListener(e -> {
             Notification.show("Not implemented");
-            presenter.onPay();
+            presenter.onPay(token,cardNumber.getValue(),expiration.getValue(), cvv.getValue());
         });
         add(restOfPage);
     }
 
-    private Component createTotalPriceLabel() {
-        totalPrice = new Label("Total Price: $0.00");
+    private Component createTotalPriceLabel(String setTotalPrice) {
+        totalPrice = new Label("Total Price: " + setTotalPrice);
         totalPrice.addClassName("total-price-label");
         return totalPrice;
     }
@@ -96,6 +98,10 @@ public class PaymentView extends ViewTemplate {
 
         buttonLayout.add(submit);
         return buttonLayout;
+    }
+
+    public void showNotification(String message) {
+        Notification.show(message);
     }
 
     private class ExpirationDateField extends CustomField<String> {
