@@ -1,6 +1,7 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.Presenter.MarketHistoryPurchasesPresenter;
@@ -24,6 +25,9 @@ public class MarketHistoryPurchasesView extends MainSettingView{
         grid.setColumns("id", "productName", "quantity", "price", "buyer");
         presenter.onInitGrid();
         return grid;
+    }
+    public void showNotification(String message) {
+        Notification.show(message);
     }
 
     public void setGrid(List<PurchaseDTO> listOfPurchases) {
