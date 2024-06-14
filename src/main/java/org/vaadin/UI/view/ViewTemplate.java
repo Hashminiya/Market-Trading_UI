@@ -64,16 +64,16 @@ abstract class ViewTemplate extends VerticalLayout {
     }
 
     private void addLoginButton(HorizontalLayout layout){
-            Button signUpTopBar = new Button("Log-in");
-            signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
-            layout.add(signUpTopBar);
+        Button signUpTopBar = new Button("Log-in");
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
+        layout.add(signUpTopBar);
 
     }
 
     private void addSignupButton(HorizontalLayout layout){
-            Button signUpTopBar = new Button("Sign-up");
-            signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
-            layout.add(signUpTopBar);
+        Button signUpTopBar = new Button("Sign-up");
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
+        layout.add(signUpTopBar);
 
     }
     public void setUp(){
