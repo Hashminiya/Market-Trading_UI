@@ -9,7 +9,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.SignUpPresenter;
+import org.vaadin.UI.Presenter.SignUpPresenter;
 import org.vaadin.UI.Util.UserRole;
 import org.vaadin.UI.view.ViewInterface.ISignUpView;
 
