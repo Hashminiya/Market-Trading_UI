@@ -29,7 +29,10 @@ public class LogInView extends ViewTemplate implements ILoginView {
 
         // Create login button
         Button loginButton = new Button("Login");
-        loginButton.addClickListener(event -> presenter.onLogin());
+        loginButton.addClickListener(event -> {
+            loginTopBar.setVisible(false);
+            logoutTopBar.setVisible(true);
+            presenter.onLogin();});
         loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         // Add input fields and button to the layout
