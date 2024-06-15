@@ -6,36 +6,37 @@ import org.vaadin.UI.model.models.StoreModel;
 import org.vaadin.UI.view.ItemView;
 
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class ItemPresenter {
     private final ItemView view;
     private final StoreModel model;
-    private static final Logger logger = Logger.getLogger(ItemPresenter.class.getName());
 
     public ItemPresenter(ItemView view) {
         this.view = view;
         this.model = new StoreModel();
     }
 
-    public void onViewLoaded(String itemId) {
-        Optional<ItemDTO> itemOpt = model.getStores().stream()
-                .flatMap(store -> store.getItems().stream())
-                .filter(i -> String.valueOf(i.getItemId()).equals(itemId))
-                .findFirst();
-
-        if (itemOpt.isPresent()) {
-            ItemDTO item = itemOpt.get();
-            logger.info("Found item: " + item.getName() + " with storeId: " + item.getStoreId());
-            Optional<StoreDTO> storeOpt = model.getStoreById(String.valueOf(item.getStoreId()));
-            if (storeOpt.isPresent()) {
-                StoreDTO store = storeOpt.get();
-                view.displayItemDetails(item, store);
+    public void onViewLoaded(String itemIdStr) {
+        try {
+            long itemId = Long.parseLong(itemIdStr);
+            Optional<StoreDTO> store = model.getStores().stream()
+                    .filter(s -> s.getItems().stream().anyMatch(item -> item.getItemId() == itemId))
+                    .findFirst();
+            if (store.isPresent()) {
+                ItemDTO item = store.get().getItems().stream()
+                        .filter(i -> i.getItemId() == itemId)
+                        .findFirst()
+                        .orElse(null);
+                if (item != null) {
+                    view.displayItemDetails(item, store.get());
+                } else {
+                    System.err.println("Item not found: " + itemId);
+                }
             } else {
-                logger.severe("Store not found for item: " + itemId);
+                System.err.println("Store not found for item: " + itemId);
             }
-        } else {
-            logger.severe("Item not found: " + itemId);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid item ID: " + itemIdStr);
         }
     }
 }

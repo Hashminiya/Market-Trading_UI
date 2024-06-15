@@ -3,38 +3,39 @@ package org.vaadin.UI.Util;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class DemoDataAPI {
 
-    public static List<ItemDTO> demoItems1 = Arrays.asList(
-            new ItemDTO(1, "Laptop", 10, 1, 999.99),
-            new ItemDTO(2, "Smart TV", 5, 1, 599.99),
-            new ItemDTO(3, "Bluetooth Speaker", 20, 1, 49.99)
-            // Add more items here
-    );
-
-    public static List<ItemDTO> demoItems2 = Arrays.asList(
-            new ItemDTO(4, "T-Shirt", 50, 2, 14.99),
-            new ItemDTO(5, "Jeans", 30, 2, 39.99),
-            new ItemDTO(6, "Jacket", 15, 2, 59.99)
-            // Add more items here
-    );
-
-    // Add more item lists for other stores here
-
-    public static List<StoreDTO> demoStores = Arrays.asList(
-            new StoreDTO("Electronics", "Store for various electronic items", demoItems1),
-            new StoreDTO("Clothing", "Store for clothing and fashion items", demoItems2)
-            // Add more stores here
-    );
-
     public static List<StoreDTO> getStores() {
-        return demoStores;
+        List<ItemDTO> items1 = Arrays.asList(
+                new ItemDTO(1, "Laptop", 5, 1, 1000.0),
+                new ItemDTO(2, "Phone", 10, 1, 500.0)
+        );
+        List<ItemDTO> items2 = Arrays.asList(
+                new ItemDTO(3, "T-shirt", 20, 2, 20.0),
+                new ItemDTO(4, "Jeans", 15, 2, 40.0)
+        );
+        List<ItemDTO> items3 = Arrays.asList(
+                new ItemDTO(5, "Tent", 8, 3, 200.0),
+                new ItemDTO(6, "Sleeping Bag", 12, 3, 50.0)
+        );
+
+        List<StoreDTO> stores = new ArrayList<>();
+        stores.add(new StoreDTO(1, "Electronics", "Electronic devices and gadgets", items1));
+        stores.add(new StoreDTO(2, "Clothing", "Fashionable clothing items", items2));
+        stores.add(new StoreDTO(3, "Camping", "Camping equipment and supplies", items3));
+
+        return stores;
     }
 
-    public static StoreDTO getStoreById(String id) {
-        return demoStores.stream().filter(store -> String.valueOf(store.getItems().get(0).getStoreId()).equals(id)).findFirst().orElse(null);
+    public static StoreDTO getStoreById(long id) {
+        List<StoreDTO> stores = getStores();
+        return stores.stream()
+                .filter(store -> store.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 }
