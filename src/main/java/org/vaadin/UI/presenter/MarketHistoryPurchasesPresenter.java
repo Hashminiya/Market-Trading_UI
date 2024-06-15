@@ -1,4 +1,5 @@
 package org.vaadin.UI.presenter;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
 import org.vaadin.UI.model.models.MarketHistoryPurchasesModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.Util.Credentials;
+import org.vaadin.UI.model.DTOs.UserDTO;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewInterface.ILoginView;
 import org.springframework.stereotype.Component;
