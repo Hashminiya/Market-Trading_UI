@@ -53,7 +53,7 @@ abstract class ViewTemplate extends VerticalLayout {
     }
 
     private void addManageStoresButton(HorizontalLayout layout){
-        Button signUpTopBar = new Button("Manage Stores");
+        Button signUpTopBar = new Button("Settings");
         signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings"));});
         layout.add(signUpTopBar);
     }
