@@ -3,6 +3,7 @@ package org.vaadin.UI.presenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewInterface.ILoginView;
 import org.springframework.stereotype.Component;
@@ -41,6 +42,7 @@ public class LoginPresenter implements IPresenter {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Login successful
+                Credentials.setToken(response.getBody(),this);
                 view.showNotification("Login successful for user: " + username);
             } else {
                 // Login failed

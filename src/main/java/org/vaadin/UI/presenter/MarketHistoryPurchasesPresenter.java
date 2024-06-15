@@ -9,7 +9,6 @@ import java.util.List;
 public class MarketHistoryPurchasesPresenter implements IPresenter {
     private MarketHistoryPurchasesView view;
 
-    private String token;
     private MarketHistoryPurchasesModel model;
     public MarketHistoryPurchasesPresenter(MarketHistoryPurchasesView view){
         this.view = view;
@@ -26,7 +25,7 @@ public class MarketHistoryPurchasesPresenter implements IPresenter {
     }
 
     public void onInitGrid(){
-        List<PurchaseDTO> resultListOfPurchases = model.getListOfPurchases(token);
+        List<PurchaseDTO> resultListOfPurchases = model.getListOfPurchases(Credentials.getToken());
 
         if(resultListOfPurchases!= null){
             view.setGrid(resultListOfPurchases);
