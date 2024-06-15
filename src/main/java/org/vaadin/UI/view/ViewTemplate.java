@@ -1,15 +1,9 @@
 package org.vaadin.UI.view;
 
-import org.vaadin.UI.Util.UserRole;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.RouterLayout;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 
 
@@ -60,7 +54,7 @@ abstract class ViewTemplate extends VerticalLayout {
 
     private void addManageStoresButton(HorizontalLayout layout){
         Button signUpTopBar = new Button("Manage Stores");
-        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings/inventory"));});
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings"));});
         layout.add(signUpTopBar);
     }
 

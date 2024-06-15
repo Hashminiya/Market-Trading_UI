@@ -5,53 +5,81 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.Presenter.InventoryPresenter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
+import org.vaadin.UI.view.components.ItemForm;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Route("settings/inventory")
 public class InventorySettingView extends MainSettingView {
-    private ComboBox chooseStoreComboBox;
+    private ComboBox<String> chooseStoreComboBox;
     private Grid<ItemDTO> inventoryGrid;
-    private List<String> storesList = new ArrayList<>();
     private Button addNewItemButton;
     private InventoryPresenter presenter;
-    private VerticalLayout restOfPage;
+    private VerticalLayout drawer;
+    private ItemForm form;
+
     public InventorySettingView() {
         presenter = new InventoryPresenter(this);
-        restOfPage = new VerticalLayout();
-        inventoryGrid = createInventoryGrid();
-//        inventoryGrid.setSizeFull();
+
+        VerticalLayout rightContent = getRightContent();
+        rightContent.removeAll();
+
+        HorizontalLayout topLayout = new HorizontalLayout();
         chooseStoreComboBox = createChooseStoreComboBox();
+        addNewItemButton = new Button("Add New Item", new Icon(VaadinIcon.PLUS));
+        topLayout.add(chooseStoreComboBox);
+        topLayout.add(addNewItemButton);
+        topLayout.setWidthFull();
+        topLayout.setAlignItems(FlexComponent.Alignment.END);
+        rightContent.add(topLayout);
+
+        inventoryGrid = createInventoryGrid();
+        inventoryGrid.setWidthFull();
+        rightContent.add(inventoryGrid);
+
+        form = new ItemForm(presenter);
+        form.setVisible(false);
+
+        drawer = createDrawer();
+        rightContent.add(drawer);
+
         chooseStoreComboBox.addValueChangeListener(event -> {
-            String selectedOptionStoreName = (String) event.getValue();
+            String selectedOptionStoreName = event.getValue();
             presenter.onSelectStore(selectedOptionStoreName);
         });
-        addNewItemButton = new Button("Add New Item",new Icon(VaadinIcon.PLUS));
-        restOfPage.add(chooseStoreComboBox);
-        restOfPage.add(addNewItemButton);
-        add(restOfPage);
+
+        inventoryGrid.asSingleSelect().addValueChangeListener(event -> {
+            if (event.getValue() != null) {
+                showForm(true, event.getValue());
+            } else {
+                showForm(false, null);
+            }
+        });
+
+//        addNewItemButton.addClickListener(event -> {
+//            showForm(true, new ItemDTO());
+//        });
     }
 
-    private ComboBox createChooseStoreComboBox() {
-
+    private ComboBox<String> createChooseStoreComboBox() {
         List<String> storesList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             storesList.add("example store " + i);
         }
-        chooseStoreComboBox = new ComboBox<>("Select your store",storesList);
-        chooseStoreComboBox.setPlaceholder("No store selected yet");
-        return chooseStoreComboBox;
+        ComboBox<String> comboBox = new ComboBox<>("Select your store", storesList);
+        comboBox.setPlaceholder("No store selected yet");
+        return comboBox;
     }
 
-    public void fillUpInventory(ArrayList<ItemDTO> storeItemsList){
+    public void fillUpInventory(ArrayList<ItemDTO> storeItemsList) {
         inventoryGrid.setItems(storeItemsList);
-        add(inventoryGrid);
     }
 
     private Grid<ItemDTO> createInventoryGrid() {
@@ -60,8 +88,31 @@ public class InventorySettingView extends MainSettingView {
         grid.getColumnByKey("itemId").setHeader("Item ID");
         grid.getColumnByKey("itemName").setHeader("Item Name");
         grid.getColumnByKey("quantity").setHeader("Quantity Available");
-        grid.getColumnByKey("storeId").setHeader("StoreID");
+        grid.getColumnByKey("storeId").setHeader("Store ID");
         grid.getColumnByKey("totalPrice").setHeader("Price");
         return grid;
+    }
+
+    private VerticalLayout createDrawer() {
+        VerticalLayout drawerLayout = new VerticalLayout();
+        drawerLayout.setWidth("300px");
+        drawerLayout.setHeightFull();
+        drawerLayout.getStyle().set("position", "fixed");
+        drawerLayout.getStyle().set("right", "0");
+        drawerLayout.getStyle().set("top", "0");
+        drawerLayout.getStyle().set("background", "white");
+        drawerLayout.setVisible(false);
+        drawerLayout.add(form);
+        return drawerLayout;
+    }
+
+    public void showForm(boolean show, ItemDTO itemDTO) {
+        form.setVisible(show);
+        form.setEnabled(show);
+        drawer.setVisible(show);
+
+        if (show && itemDTO != null) {
+            form.setItem(itemDTO);
+        }
     }
 }
