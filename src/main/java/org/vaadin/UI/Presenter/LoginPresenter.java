@@ -5,6 +5,7 @@ import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.UserDTO;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewInterface.ILoginView;
@@ -46,6 +47,7 @@ public class LoginPresenter implements IPresenter {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Login successful
+                Credentials.setToken(response.getBody(),this);
                 view.showNotification("Login successful for user: " + username);
             } else {
                 // Login failed
