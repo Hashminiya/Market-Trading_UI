@@ -33,7 +33,7 @@ public class LoginModel {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Login successful
-                Credentials.setToken(response.getBody(),this);
+                Credentials.setToken(response.getBody(),this.getClass());
                 return "Login successful for user: " + username;
             } else {
                 // Login failed
