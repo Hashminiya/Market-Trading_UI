@@ -1,12 +1,11 @@
 
-package org.vaadin.UI.Presenter;
+package org.vaadin.UI.presenter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.models.InventoryModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.InventorySettingView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InventoryPresenter implements IPresenter {
 

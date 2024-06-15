@@ -1,4 +1,4 @@
-package org.vaadin.UI.Presenter;
+package org.vaadin.UI.presenter;
 import org.vaadin.UI.model.models.CreateStoreModel;
 import org.vaadin.UI.view.CreateStoreView;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
