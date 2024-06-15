@@ -8,6 +8,7 @@ public class CartItemDTO implements Serializable {
     private int quantity;
     private double price;
 
+
     public CartItemDTO(long itemId, String itemName, int quantity, double price) {
         this.itemId = itemId;
         this.itemName = itemName;
