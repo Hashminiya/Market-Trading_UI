@@ -63,5 +63,15 @@ public class InventoryPresenter implements IPresenter {
         return items;
     }
 
+    public void onChoosingStore() {
+        ArrayList<String> stores = inventoryModel.getStores();
+        if (stores != null) {
+            view.fillChooseStoreComboBox(stores);
+        } else {
+            view.showNotification("enable to retrieve stores from server");
+
+        }
+    }
+
 }
 
