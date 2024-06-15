@@ -88,6 +88,94 @@ public class InventoryModel {
         }
         return storeNames;
     }
+
+    public String saveItem(ItemDTO itemDTO,String token) {
+        //Modifies http request to receive json
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Create request body
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
+        requestBody.add("itemName=", String.valueOf(itemDTO.getItemName()));
+        requestBody.add("description=", "");
+        requestBody.add("itemPrice=", String.valueOf(itemDTO.getTotalPrice()));
+        requestBody.add("stockAmount=", String.valueOf(itemDTO.getQuantity()));
+        requestBody.add("categories=","");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/storeManagement/addItemToStore?token="+token, request, String.class);
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return "Item added successfully";
+
+            } else {
+                return "Item addition - Failed";
+
+            }
+        } catch (Exception e) {
+            return "Item addition - Failed";
+        }
+    }
+
+    public String updateItem(ItemDTO itemDTO,String token) {
+        //Modifies http request to receive json
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Create request body
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
+        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
+        requestBody.add("newName=", String.valueOf(itemDTO.getItemName()));
+        requestBody.add("newPrice=", String.valueOf(itemDTO.getTotalPrice()));
+        requestBody.add("newAmount=", String.valueOf(itemDTO.getQuantity()));
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/storeManagement/updateItem?token="+token, request, String.class);
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return "Item update successfully";
+
+            } else {
+                return "Item update - Failed";
+
+            }
+        } catch (Exception e) {
+            return "Item update - Failed";
+        }
+    }
+
+    public String deleteItem(ItemDTO itemDTO, String token) {
+        //Modifies http request to receive json
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Create request body
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
+        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/storeManagement/deleteItem?token="+token, request, String.class);
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return "Item update successfully";
+
+            } else {
+                return "Item update - Failed";
+
+            }
+        } catch (Exception e) {
+            return "Item update - Failed";
+        }
+    }
 }
 
 

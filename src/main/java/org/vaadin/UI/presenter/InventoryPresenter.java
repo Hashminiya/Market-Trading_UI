@@ -1,5 +1,6 @@
 
 package org.vaadin.UI.presenter;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.models.InventoryModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
@@ -38,19 +39,34 @@ public class InventoryPresenter implements IPresenter {
     }
 
     public void onSavingItem(ItemDTO item) {
-
+        String response = inventoryModel.saveItem(item, Credentials.getToken());
+        if (response != null) {
+            view.showNotification(response);
+        } else {
+            view.showNotification(response);
+        }
     }
 
     public void onEditingItem(ItemDTO item) {
-
+        String response = inventoryModel.updateItem(item, Credentials.getToken());
+        if (response != null) {
+            view.showNotification(response);
+        } else {
+            view.showNotification(response);
+        }
     }
 
     public void onCancleItem() {
-
+        view.showForm(false,emptyItem);
     }
 
     public void onDeleteItem(ItemDTO item) {
-
+        String response = inventoryModel.deleteItem(item, Credentials.getToken());
+        if (response != null) {
+            view.showNotification(response);
+        } else {
+            view.showNotification(response);
+        }
     }
     private ArrayList<ItemDTO> getDemoItems() {
         ArrayList<ItemDTO> items = new ArrayList<>();
