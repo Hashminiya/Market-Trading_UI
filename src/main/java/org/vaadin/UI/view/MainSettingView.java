@@ -67,7 +67,7 @@ public class MainSettingView extends ViewTemplate {
         marketHistoryButton.setWidthFull();
         marketHistoryButton.addClickListener(event -> {
             mainSettingsPresenter.onMarketHistoryButtonClick();
-            getUI().ifPresent(ui -> ui.navigate("settings/market History"));
+            getUI().ifPresent(ui -> ui.navigate("settings/market-history"));
         });
 
         // Add buttons to the layout

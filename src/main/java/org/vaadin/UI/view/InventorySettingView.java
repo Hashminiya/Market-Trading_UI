@@ -65,9 +65,9 @@ public class InventorySettingView extends MainSettingView {
             }
         });
 
-//        addNewItemButton.addClickListener(event -> {
-//            showForm(true, new ItemDTO());
-//        });
+        addNewItemButton.addClickListener(event -> {
+            presenter.onClickingAddNewItemButton();
+        });
     }
 
     public void fillChooseStoreComboBox(ArrayList<String> storeList) {

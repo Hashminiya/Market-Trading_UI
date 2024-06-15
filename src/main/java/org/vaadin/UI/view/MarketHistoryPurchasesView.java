@@ -9,7 +9,7 @@ import org.vaadin.UI.model.DTOs.PurchaseDTO;
 
 import java.util.List;
 
-@Route("market-history")
+@Route("settings/market-history")
 public class MarketHistoryPurchasesView extends MainSettingView{
 
     private MarketHistoryPurchasesPresenter presenter;

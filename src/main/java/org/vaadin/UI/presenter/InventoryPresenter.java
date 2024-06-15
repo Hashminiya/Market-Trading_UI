@@ -72,5 +72,8 @@ public class InventoryPresenter implements IPresenter {
         }
     }
 
+    public void onClickingAddNewItemButton() {
+        view.showForm(true,emptyItem);
+    }
 }
 
