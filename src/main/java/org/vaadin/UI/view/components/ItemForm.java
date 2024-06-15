@@ -115,7 +115,7 @@ public class ItemForm extends Div {
         save.setWidth("100%");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addClickListener(event -> {
-            if (currentItem != null && binder.writeBeanIfValid(currentItem)) {
+            if (currentItem != null && binder.isValid()) {
                 presenter.onSavingItem(currentItem);
             }
         });
