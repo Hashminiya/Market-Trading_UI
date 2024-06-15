@@ -6,6 +6,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.Presenter.InventoryPresenter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
@@ -20,12 +21,12 @@ public class InventorySettingView extends MainSettingView {
     private List<String> storesList = new ArrayList<>();
     private Button addNewItemButton;
     private InventoryPresenter presenter;
-    private HorizontalLayout restOfPage;
+    private VerticalLayout restOfPage;
     public InventorySettingView() {
         presenter = new InventoryPresenter(this);
-        restOfPage = new HorizontalLayout();
+        restOfPage = new VerticalLayout();
         inventoryGrid = createInventoryGrid();
-        inventoryGrid.setSizeFull();
+//        inventoryGrid.setSizeFull();
         chooseStoreComboBox = createChooseStoreComboBox();
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = (String) event.getValue();
