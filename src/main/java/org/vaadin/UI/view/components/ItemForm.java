@@ -18,7 +18,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToBigDecimalConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import org.vaadin.UI.Presenter.InventoryPresenter;
+import org.vaadin.UI.presenter.InventoryPresenter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 
 public class ItemForm extends Div {

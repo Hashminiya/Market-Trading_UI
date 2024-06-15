@@ -14,7 +14,7 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
-import org.vaadin.UI.Presenter.ItemPresenter;
+import org.vaadin.UI.presenter.ItemPresenter;
 import org.vaadin.UI.view.components.ItemComponent;
 
 import java.util.List;
