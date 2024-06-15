@@ -1,4 +1,5 @@
 package org.vaadin.UI.presenter;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.CreateStoreModel;
 import org.vaadin.UI.view.CreateStoreView;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
@@ -7,7 +8,6 @@ public class CreateStorePresenter implements IPresenter {
 
     private final CreateStoreView view;
     private final CreateStoreModel model;
-    private String token;
 
     public CreateStorePresenter(CreateStoreView view) {
         this.view = view;
@@ -16,7 +16,7 @@ public class CreateStorePresenter implements IPresenter {
 
 
     public void onCreateStore(String storeName, String storeDescription) {
-        String result = model.createStore(token, storeName, storeDescription);
+        String result = model.createStore(Credentials.getToken(), storeName, storeDescription);
         view.showNotification(result);
     }
 
