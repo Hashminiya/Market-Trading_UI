@@ -16,6 +16,8 @@ public class CartItemDTO implements Serializable {
         this.price = price;
     }
 
+
+
     // Getters and Setters
     public long getItemId() {
         return itemId;
