@@ -66,6 +66,7 @@ abstract class ViewTemplate extends VerticalLayout {
         loginTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
             loginTopBar.setVisible(true);
+            logoutTopBar.setVisible(false);
             getUI().ifPresent(ui -> ui.navigate(""));});
         layout.add(logoutTopBar);
     }
