@@ -1,5 +1,6 @@
 package org.vaadin.UI.presenter;
 
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.PaymentModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.PaymentView;
@@ -21,7 +22,7 @@ public class PaymentPresenter implements IPresenter{
     public void onViewStopped() {
     }
 
-    public void onPay(String token, String creditCard, String expiryDate, String cvv){
-        paymentView.showNotification( model.checkoutShoppingCart(token,creditCard,expiryDate,cvv));
+    public void onPay(String creditCard, String expiryDate, String cvv){
+        paymentView.showNotification( model.checkoutShoppingCart(Credentials.getToken(),creditCard,expiryDate,cvv));
     }
 }

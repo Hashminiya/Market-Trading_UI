@@ -30,8 +30,6 @@ public class PaymentView extends ViewTemplate {
     private Label totalPrice;
     private PaymentPresenter presenter;
 
-    private String token;
-
 
     private String CARD_REGEX = "^\\d{16}$";
     private String CVV_REGEX = "^\\d{3}$";
@@ -48,7 +46,7 @@ public class PaymentView extends ViewTemplate {
 
         submit.addClickListener(e -> {
             Notification.show("Not implemented");
-            presenter.onPay(token,cardNumber.getValue(),expiration.getValue(), cvv.getValue());
+            presenter.onPay(cardNumber.getValue(),expiration.getValue(), cvv.getValue());
         });
         add(restOfPage);
     }
