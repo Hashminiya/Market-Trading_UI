@@ -1,21 +1,24 @@
 package org.vaadin.UI.Util;
 
-import org.vaadin.UI.presenter.LoginPresenter;
-
 public class Credentials {
-
     private static String token;
+    private static String username = "guest";
 
-    public static String getToken(){
+    public static String getToken() {
         return token;
     }
 
-    public static void setToken(String value, Object caller) {
-//        if (caller instanceof LoginPresenter) {
-//            token = value;
-//        } else {
-//            throw new IllegalArgumentException("Setter method can only be accessed from login and guestSession");
-//        }
+    public static void setToken(String value, String user) {
         token = value;
+        username = user;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void clear() {
+        token = null;
+        username = "guest";
     }
 }

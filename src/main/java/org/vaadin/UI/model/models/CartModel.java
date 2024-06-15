@@ -6,6 +6,7 @@ import org.vaadin.UI.model.DTOs.CartItemDTO;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CartModel {
 
@@ -18,7 +19,7 @@ public class CartModel {
     public List<CartItemDTO> getCartItems(String token) {
         String url = "http://localhost:8080/user/viewShoppingCart?token=" + token;
         ResponseEntity<CartItemDTO[]> response = restTemplate.getForEntity(url, CartItemDTO[].class);
-        return Arrays.asList(response.getBody());
+        return Arrays.asList(Objects.requireNonNull(response.getBody()));
     }
 
     public String addItemToCart(String token, long storeId, long itemId, int quantity) {

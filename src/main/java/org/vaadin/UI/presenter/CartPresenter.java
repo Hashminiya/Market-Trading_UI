@@ -10,8 +10,8 @@ import java.util.List;
 
 public class CartPresenter implements IPresenter {
 
-    private CartView cartView;
-    private CartModel cartModel;
+    private final CartView cartView;
+    private final CartModel cartModel;
 
     public CartPresenter(CartView cartView) {
         this.cartView = cartView;
@@ -21,8 +21,12 @@ public class CartPresenter implements IPresenter {
     @Override
     public void onViewLoaded() {
         String token = Credentials.getToken();
-        List<CartItemDTO> cartItems = cartModel.getCartItems(token);
-        cartView.displayCartItems(cartItems);
+        if (token != null && !token.isEmpty()) {
+            List<CartItemDTO> cartItems = cartModel.getCartItems(token);
+            cartView.displayCartItems(cartItems);
+        } else {
+            cartView.showNotification("No items found in the cart.");
+        }
     }
 
     @Override

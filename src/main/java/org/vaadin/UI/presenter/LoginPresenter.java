@@ -20,15 +20,16 @@ public class LoginPresenter implements IPresenter {
     public void onLogin() {
         String result = model.login(view.getUsername(), view.getPassword());
         view.showNotification(result);
+        if (result.contains("Login successful")) {
+            view.updateUserDisplayName(view.getUsername());
+        }
     }
 
     @Override
     public void onViewLoaded() {
-
     }
 
     @Override
     public void onViewStopped() {
-
     }
 }

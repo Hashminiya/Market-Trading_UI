@@ -33,11 +33,13 @@ public class CartView extends ViewTemplate {
 
         Button checkoutButton = new Button("Checkout");
         checkoutButton.addClickListener(event -> {
-            // Perform checkout, for simplicity using fixed values here.
             presenter.checkout("1234567812345678", "12/24", "123", "DISCOUNT10");
         });
 
         add(title, cartGrid, checkoutButton);
+
+        // Load the cart items when the view is initialized
+        presenter.onViewLoaded();
     }
 
     public void displayCartItems(List<CartItemDTO> cartItems) {

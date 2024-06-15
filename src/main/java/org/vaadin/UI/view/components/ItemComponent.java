@@ -4,7 +4,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.QueryParameters;
@@ -19,8 +18,8 @@ public class ItemComponent extends VerticalLayout {
     private ItemPresenter presenter;
 
     public ItemComponent(ItemDTO item) {
-        this.presenter = new ItemPresenter(new ItemView()); // Assuming ItemView is the view associated with this presenter
-        setWidth("200px"); // Set a fixed width for consistent alignment
+        this.presenter = new ItemPresenter(new ItemView());
+        setWidth("200px");
 
         RouterLink itemLink = new RouterLink();
         itemLink.setRoute(ItemView.class);
@@ -32,9 +31,7 @@ public class ItemComponent extends VerticalLayout {
         Paragraph price = new Paragraph("Price: " + item.getTotalPrice());
         Button addToCartButton = new Button(new Icon(VaadinIcon.CART));
         addToCartButton.getElement().setProperty("title", "Add to Cart");
-        addToCartButton.addClickListener(event -> {
-            presenter.addItemToCart(item);
-        });
+        addToCartButton.addClickListener(event -> presenter.addItemToCart(item));
 
         HorizontalLayout priceAndButtonLayout = new HorizontalLayout(price, addToCartButton);
         priceAndButtonLayout.setAlignItems(Alignment.CENTER);

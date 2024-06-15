@@ -50,6 +50,8 @@ public class ItemPresenter {
         if (token != null && !token.isEmpty()) {
             String result = cartModel.addItemToCart(token, item.getStoreId(), item.getItemId(), 1); // Assuming quantity of 1 for simplicity
             Notification.show(result);
+            // Refresh the cart view to show the newly added item
+            view.getUI().ifPresent(ui -> ui.navigate("cart"));
         } else {
             Notification.show("You need to log in to add items to the cart.");
         }
