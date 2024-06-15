@@ -14,7 +14,7 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.Presenter.PaymentPresenter;
+import org.vaadin.UI.presenter.PaymentPresenter;
 
 
 @PageTitle("Payment Form")

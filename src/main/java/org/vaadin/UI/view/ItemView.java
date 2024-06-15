@@ -57,7 +57,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     }
 
     public void displayItemDetails(ItemDTO item, StoreDTO store) {
-        itemName.setText(item.getName());
+        itemName.setText(item.getItemName());
         itemPrice.setText("Price: " + item.getTotalPrice());
         itemQuantity.setText("Quantity: " + item.getQuantity());
 

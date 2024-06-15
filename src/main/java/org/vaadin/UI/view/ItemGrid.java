@@ -13,7 +13,7 @@ public class ItemGrid extends Grid<ItemDTO> {
     public ItemGrid() {
     setSizeFull();
 
-    addColumn(ItemDTO::getName).setHeader("Item name")
+    addColumn(ItemDTO::getItemName).setHeader("Item name")
                 .setFlexGrow(20).setSortable(true).setKey("itemname");
 
     // Format and add " €" to price

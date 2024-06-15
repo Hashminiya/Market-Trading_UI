@@ -4,12 +4,12 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.Presenter.MarketHistoryPurchasesPresenter;
+import org.vaadin.UI.presenter.MarketHistoryPurchasesPresenter;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
 
 import java.util.List;
 
-@Route("market-history")
+@Route("settings/market-history")
 public class MarketHistoryPurchasesView extends MainSettingView{
 
     private MarketHistoryPurchasesPresenter presenter;
