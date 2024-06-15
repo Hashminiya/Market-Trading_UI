@@ -5,6 +5,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -32,7 +33,9 @@ public class InventorySettingView extends MainSettingView {
         rightContent.removeAll();
 
         HorizontalLayout topLayout = new HorizontalLayout();
-        chooseStoreComboBox = createChooseStoreComboBox();
+        chooseStoreComboBox = new ComboBox<>("Select your store");
+        chooseStoreComboBox.setPlaceholder("No store selected yet");
+        presenter.onChoosingStore();
         addNewItemButton = new Button("Add New Item", new Icon(VaadinIcon.PLUS));
         topLayout.add(chooseStoreComboBox);
         topLayout.add(addNewItemButton);
@@ -68,14 +71,8 @@ public class InventorySettingView extends MainSettingView {
 //        });
     }
 
-    private ComboBox<String> createChooseStoreComboBox() {
-        List<String> storesList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            storesList.add("example store " + i);
-        }
-        ComboBox<String> comboBox = new ComboBox<>("Select your store", storesList);
-        comboBox.setPlaceholder("No store selected yet");
-        return comboBox;
+    public void fillChooseStoreComboBox(ArrayList<String> storeList) {
+        chooseStoreComboBox.setItems(storeList);
     }
 
     public void fillUpInventory(ArrayList<ItemDTO> storeItemsList) {
@@ -114,5 +111,8 @@ public class InventorySettingView extends MainSettingView {
         if (show && itemDTO != null) {
             form.setItem(itemDTO);
         }
+    }
+    public void showNotification(String message) {
+        Notification.show(message);
     }
 }
