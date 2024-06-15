@@ -135,7 +135,7 @@ public class ItemForm extends Div {
         delete.setWidth("100%");
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR, ButtonVariant.LUMO_PRIMARY);
         delete.addClickListener(event -> {
-            if (currentItem != null) {
+            if (currentItem != null && binder.isValid()) {
                 presenter.onDeleteItem(currentItem);
             }
         });
