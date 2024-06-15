@@ -10,6 +10,9 @@ import org.vaadin.UI.presenter.Interfaces.IPresenter;
 abstract class ViewTemplate extends VerticalLayout {
 
     IPresenter presenter;
+    Button loginTopBar;
+    Button logoutTopBar;
+
     public ViewTemplate() {
 
         HorizontalLayout header = new HorizontalLayout();
@@ -59,15 +62,19 @@ abstract class ViewTemplate extends VerticalLayout {
     }
 
     private void  addLogoutButton(HorizontalLayout layout){
-        Button signUpTopBar = new Button("Logout");
-        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate(""));});
-        layout.add(signUpTopBar);
+        logoutTopBar = new Button("Logout");
+        loginTopBar.setVisible(false);
+        logoutTopBar.addClickListener(event -> {
+            loginTopBar.setVisible(true);
+            logoutTopBar.setVisible(false);
+            getUI().ifPresent(ui -> ui.navigate(""));});
+        layout.add(logoutTopBar);
     }
 
     private void addLoginButton(HorizontalLayout layout){
-        Button signUpTopBar = new Button("Log-in");
-        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
-        layout.add(signUpTopBar);
+        loginTopBar = new Button("Log-in");
+        loginTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
+        layout.add(loginTopBar);
 
     }
 

@@ -19,7 +19,7 @@ public class CreateStoreModel {
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
             return response.getBody();
         } catch (Exception e) {
             return e.getMessage();
