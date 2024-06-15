@@ -10,12 +10,16 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.RouterLink;
 import org.vaadin.UI.model.DTOs.ItemDTO;
+import org.vaadin.UI.presenter.ItemPresenter;
 import org.vaadin.UI.view.ItemView;
 
 import java.util.Collections;
 
 public class ItemComponent extends VerticalLayout {
+    private ItemPresenter presenter;
+
     public ItemComponent(ItemDTO item) {
+        this.presenter = new ItemPresenter(new ItemView()); // Assuming ItemView is the view associated with this presenter
         setWidth("200px"); // Set a fixed width for consistent alignment
 
         RouterLink itemLink = new RouterLink();
@@ -29,7 +33,7 @@ public class ItemComponent extends VerticalLayout {
         Button addToCartButton = new Button(new Icon(VaadinIcon.CART));
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> {
-            Notification.show(item.getItemName() + " added to cart");
+            presenter.addItemToCart(item);
         });
 
         HorizontalLayout priceAndButtonLayout = new HorizontalLayout(price, addToCartButton);

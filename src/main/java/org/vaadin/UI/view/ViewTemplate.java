@@ -1,11 +1,12 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
-
+import org.vaadin.UI.Util.Credentials;
 
 abstract class ViewTemplate extends VerticalLayout {
 
@@ -22,6 +23,7 @@ abstract class ViewTemplate extends VerticalLayout {
         addLogoutButton(header);
         addManageStoresButton(header);
         addCreateStoreButton(header);
+        addCartButton(header);  // Add the Cart button
         decorateLayout(header);
         setUp();
         add(header);
@@ -29,7 +31,7 @@ abstract class ViewTemplate extends VerticalLayout {
 
     private void addCreateStoreButton(HorizontalLayout layout) {
         Button createStoreButton = new Button("Create Store");
-        createStoreButton.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("createStore"));});
+        createStoreButton.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("createStore")); });
         layout.add(createStoreButton);
     }
 
@@ -57,35 +59,46 @@ abstract class ViewTemplate extends VerticalLayout {
 
     private void addManageStoresButton(HorizontalLayout layout){
         Button signUpTopBar = new Button("Settings");
-        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings"));});
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings")); });
         layout.add(signUpTopBar);
     }
 
-    private void  addLogoutButton(HorizontalLayout layout){
+    private void addLogoutButton(HorizontalLayout layout){
         logoutTopBar = new Button("Logout");
         loginTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
             loginTopBar.setVisible(true);
             logoutTopBar.setVisible(false);
-            getUI().ifPresent(ui -> ui.navigate(""));});
+            getUI().ifPresent(ui -> ui.navigate("")); });
         layout.add(logoutTopBar);
     }
 
     private void addLoginButton(HorizontalLayout layout){
         loginTopBar = new Button("Log-in");
-        loginTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
+        loginTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login")); });
         layout.add(loginTopBar);
-
     }
 
     private void addSignupButton(HorizontalLayout layout){
         Button signUpTopBar = new Button("Sign-up");
-        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up")); });
         layout.add(signUpTopBar);
-
-    }
-    public void setUp(){
-        //presenter.onViewLoaded();
     }
 
+    private void addCartButton(HorizontalLayout layout) {
+        Button cartButton = new Button("Cart");
+        cartButton.addClickListener(event -> {
+            String token = Credentials.getToken();
+            if (token != null && !token.isEmpty()) {
+                getUI().ifPresent(ui -> ui.navigate("cart"));
+            } else {
+                Notification.show("You need to log in to view your cart.");
+            }
+        });
+        layout.add(cartButton);
+    }
+
+    public void setUp() {
+        // presenter.onViewLoaded();
+    }
 }
