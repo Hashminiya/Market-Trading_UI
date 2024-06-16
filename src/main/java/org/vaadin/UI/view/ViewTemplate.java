@@ -2,9 +2,11 @@ package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 
 
@@ -110,8 +112,6 @@ abstract class ViewTemplate extends VerticalLayout {
             }
         });
         layout.add(cartButton);
-    }
-
     }
     public void setUp(){
         //presenter.onViewLoaded();

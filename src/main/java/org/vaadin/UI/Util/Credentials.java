@@ -28,7 +28,7 @@ public class Credentials {
     public static void logOut(){
         isLogedIn = false;
         token = null;
-        username = "guest";
+        userName = "guest";
     }
 
     public static boolean isIsLogedIn() {
