@@ -21,7 +21,7 @@ public class LoginModel {
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
-                Credentials.setToken(response.getBody(), username);
+                Credentials.setToken(response.getBody(), username);                           
                 return "Login successful for user: " + username;
             } else {
                 return response.getBody();

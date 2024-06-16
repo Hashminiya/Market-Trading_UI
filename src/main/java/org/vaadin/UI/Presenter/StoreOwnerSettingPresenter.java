@@ -1,5 +1,6 @@
 package org.vaadin.UI.presenter;
 
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.StoreOwnerSettingModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.StoreOwnerSettingView;
@@ -11,7 +12,6 @@ import java.util.Set;
 public class StoreOwnerSettingPresenter implements IPresenter {
     private final StoreOwnerSettingView view;
     private final StoreOwnerSettingModel model;
-    private String token;
 
     public StoreOwnerSettingPresenter(StoreOwnerSettingView view) {
         this.view = view;
@@ -19,17 +19,16 @@ public class StoreOwnerSettingPresenter implements IPresenter {
     }
 
     public void onCreateStore(String storeName, String storeDescription) {
-        String result = model.showStoreOwnerSetting(token, storeName, storeDescription);
+        String result = model.showStoreOwnerSetting(Credentials.getToken(), storeName, storeDescription);
         view.showNotification(result);
     }
 
-    public List<Long> getUserStoreOwnerships(String token) {
-        this.token = token; // assuming token is provided/set here
-        return model.viewUserStoresOwnership(token);
+    public List<Long> getUserStoreOwnerships() {
+        return model.viewUserStoresOwnership(Credentials.getToken());
     }
 
-    public Set<String> getStoreManagementInfo(String token, long storeId) {
-        return model.viewManagementInfo(token, storeId);
+    public Set<String> getStoreManagementInfo(long storeId) {
+        return model.viewManagementInfo(Credentials.getToken(), storeId);
     }
 
     @Override
