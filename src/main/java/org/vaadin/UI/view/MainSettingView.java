@@ -60,7 +60,21 @@ public class MainSettingView extends ViewTemplate {
         manageStoreButton.setWidthFull();
         manageStoreButton.addClickListener(event -> {
             mainSettingsPresenter.onStoreManagementButtonClick();
-            getUI().ifPresent(ui -> ui.navigate("settings/store Management"));
+            getUI().ifPresent(ui -> ui.navigate("settings/store-setting"));
+        });
+
+        Button assignOwnerButton = new Button("Assign owner", new Icon(VaadinIcon.COGS));
+        assignOwnerButton.setWidthFull();
+        assignOwnerButton.addClickListener(event -> {
+            mainSettingsPresenter.onStoreManagementButtonClick();
+            getUI().ifPresent(ui -> ui.navigate("settings/assign owner"));
+        });
+
+        Button assignManagerButton = new Button("Assign manager", new Icon(VaadinIcon.COGS));
+        assignManagerButton.setWidthFull();
+        assignManagerButton.addClickListener(event -> {
+            mainSettingsPresenter.onStoreManagementButtonClick();
+            getUI().ifPresent(ui -> ui.navigate("settings/assign manager"));
         });
 
         Button marketHistoryButton = new Button("Market History", new Icon(VaadinIcon.TIME_BACKWARD));
@@ -71,7 +85,7 @@ public class MainSettingView extends ViewTemplate {
         });
 
         // Add buttons to the layout
-        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, marketHistoryButton);
+        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, marketHistoryButton);
         return leftBar;
     }
 
