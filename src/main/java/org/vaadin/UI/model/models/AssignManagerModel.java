@@ -17,12 +17,12 @@ public class AssignManagerModel {
     }
 
     public String assignManager(String token, String userName, String storeNumber, Set<String> permissions) {
-        String url = "http://localhost:8080/storeManagement/assignStoreManager?founderToken=" + token + "&storeId=" + storeNumber + "&newOwnerId=" + userName;
+        String url = "http://localhost:8080/storeManagement/assignStoreManager";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("token", token);
         params.add("storeId", storeNumber);
-        params.add("newOwnerId", userName);
+        params.add("newManagerI", userName);
 
         // Convert set of permissions to list
         List<String> permissionsList = new ArrayList<>(permissions);
