@@ -44,6 +44,13 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> {
             Notification.show(itemName.getText() + " added to cart");
+            presenter.addItemToCart(new ItemDTO(
+                    Long.parseLong(event.getSource().getElement().getProperty("itemId")),
+                    itemName.getText(),
+                    Integer.parseInt(itemQuantity.getText()),
+                    Long.parseLong(event.getSource().getElement().getProperty("storeId")),
+                    Double.parseDouble(itemPrice.getText().replace("Price: ", ""))
+            ));
         });
 
         itemDetails.add(itemName, itemPrice, itemQuantity, addToCartButton, storeLinkLayout, relatedItemsLayout);
