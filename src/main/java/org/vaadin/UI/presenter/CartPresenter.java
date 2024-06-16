@@ -2,11 +2,10 @@ package org.vaadin.UI.presenter;
 
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.CartItemDTO;
+import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
 import org.vaadin.UI.model.models.CartModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.CartView;
-
-import java.util.List;
 
 public class CartPresenter implements IPresenter {
 
@@ -22,8 +21,8 @@ public class CartPresenter implements IPresenter {
     public void onViewLoaded() {
         String token = Credentials.getToken();
         if (token != null && !token.isEmpty()) {
-            List<CartItemDTO> cartItems = cartModel.getCartItems(token);
-            cartView.displayCartItems(cartItems);
+            String s = cartModel.getShoppingCart(token);
+            cartView.displayShoppingCart(s);
         } else {
             cartView.showNotification("No items found in the cart.");
         }

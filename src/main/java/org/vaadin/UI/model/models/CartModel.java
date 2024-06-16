@@ -2,11 +2,7 @@ package org.vaadin.UI.model.models;
 
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import org.vaadin.UI.model.DTOs.CartItemDTO;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
 
 public class CartModel {
 
@@ -16,10 +12,10 @@ public class CartModel {
         this.restTemplate = new RestTemplate();
     }
 
-    public List<CartItemDTO> getCartItems(String token) {
-        String url = "http://localhost:8080/user/viewShoppingCart?token=" + token;
-        ResponseEntity<CartItemDTO[]> response = restTemplate.getForEntity(url, CartItemDTO[].class);
-        return Arrays.asList(Objects.requireNonNull(response.getBody()));
+    public String getShoppingCart(String token) {
+        String url = "http://localhost:8080/user/getShoppingCart?token=" + token;
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        return response.getBody();
     }
 
     public String addItemToCart(String token, long storeId, long itemId, int quantity) {
