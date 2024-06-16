@@ -4,5 +4,4 @@ public interface ILoginView {
     void showNotification(String message);
     String getUsername();
     String getPassword();
-    void updateUserDisplayName(String username);
 }
