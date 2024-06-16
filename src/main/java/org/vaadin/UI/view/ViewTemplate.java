@@ -1,25 +1,23 @@
 package org.vaadin.UI.view;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import org.vaadin.UI.Util.Credentials;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.html.Image;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
+
 
 abstract class ViewTemplate extends VerticalLayout {
 
     IPresenter presenter;
     Button loginTopBar;
     Button logoutTopBar;
-    Div userDisplayName;
+    Button signUpTopBar;
 
     public ViewTemplate() {
         HorizontalLayout header = new HorizontalLayout();
         addLogoButton(header);
-        addUserDisplayName(header);
         addLoginButton(header);
         addSignupButton(header);
         addLogoutButton(header);
@@ -27,10 +25,24 @@ abstract class ViewTemplate extends VerticalLayout {
         addCreateStoreButton(header);
         addCartButton(header);
         decorateLayout(header);
+        displayUserName(header);
+        displayButtons();
         setUp();
         add(header);
 
-        updateUserDisplayName(Credentials.getUsername());
+    }
+
+    private void displayButtons() {
+        if (Credentials.isIsLogedIn()){
+            loginTopBar.setVisible(false);
+            signUpTopBar.setVisible(false);
+            logoutTopBar.setVisible(true);
+        }
+        else{
+            loginTopBar.setVisible(true);
+            signUpTopBar.setVisible(false);
+            logoutTopBar.setVisible(false);
+        }
     }
 
     private void addCreateStoreButton(HorizontalLayout layout) {
@@ -39,7 +51,7 @@ abstract class ViewTemplate extends VerticalLayout {
         layout.add(createStoreButton);
     }
 
-    private void decorateLayout(HorizontalLayout header) {
+    private void decorateLayout(HorizontalLayout header){
         header.setWidth("100%");
         header.setHeight("60px");
         header.setSpacing(true);
@@ -58,35 +70,32 @@ abstract class ViewTemplate extends VerticalLayout {
         layout.add(logoButton);
     }
 
-    private void addManageStoresButton(HorizontalLayout layout) {
-        Button settingsButton = new Button("Settings");
-        settingsButton.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate("settings")));
-        layout.add(settingsButton);
+    private void addManageStoresButton(HorizontalLayout layout){
+        Button signUpTopBar = new Button("Settings");
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings"));});
+        layout.add(signUpTopBar);
     }
 
-    private void addLogoutButton(HorizontalLayout layout) {
+    private void  addLogoutButton(HorizontalLayout layout){
         logoutTopBar = new Button("Logout");
         logoutTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
-            Credentials.clear();
-            updateUserDisplayName("guest");
             loginTopBar.setVisible(true);
             logoutTopBar.setVisible(false);
-            Notification.show("Logged out successfully");
-            getUI().ifPresent(ui -> ui.navigate(""));
-        });
+            getUI().ifPresent(ui -> ui.navigate(""));});
         layout.add(logoutTopBar);
     }
 
-    private void addLoginButton(HorizontalLayout layout) {
+    private void addLoginButton(HorizontalLayout layout){
         loginTopBar = new Button("Log-in");
-        loginTopBar.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate("login")));
+        loginTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
         layout.add(loginTopBar);
+
     }
 
-    private void addSignupButton(HorizontalLayout layout) {
-        Button signUpTopBar = new Button("Sign-up");
-        signUpTopBar.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate("sign-up")));
+    private void addSignupButton(HorizontalLayout layout){
+        signUpTopBar = new Button("Sign-up");
+        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
         layout.add(signUpTopBar);
     }
 
@@ -103,18 +112,13 @@ abstract class ViewTemplate extends VerticalLayout {
         layout.add(cartButton);
     }
 
-    private void addUserDisplayName(HorizontalLayout layout) {
-        userDisplayName = new Div();
-        layout.add(userDisplayName);
+    }
+    public void setUp(){
+        //presenter.onViewLoaded();
+    }
+    public void displayUserName(HorizontalLayout layout){
+        Text userNameLabel = new Text(Credentials.getUserName());
+        layout.add(userNameLabel);
     }
 
-    public void updateUserDisplayName(String username) {
-        userDisplayName.setText("Logged in as: " + username);
-        loginTopBar.setVisible("guest".equals(username));
-        logoutTopBar.setVisible(!"guest".equals(username));
-    }
-
-    public void setUp() {
-        // presenter.onViewLoaded();
-    }
 }
