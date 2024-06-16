@@ -9,6 +9,8 @@ import com.vaadin.flow.component.html.Image;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 
+import java.awt.*;
+
 
 abstract class ViewTemplate extends VerticalLayout {
 
@@ -82,8 +84,6 @@ abstract class ViewTemplate extends VerticalLayout {
         logoutTopBar = new Button("Logout");
         logoutTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
-            loginTopBar.setVisible(true);
-            logoutTopBar.setVisible(false);
             getUI().ifPresent(ui -> ui.navigate(""));});
         layout.add(logoutTopBar);
     }
