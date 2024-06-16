@@ -21,9 +21,6 @@ public class LoginPresenter implements IPresenter {
     public void onLogin(SuccessCallBack callBack) {
         String result = model.login(view.getUsername(), view.getPassword(), callBack);
         view.showNotification(result);
-        if (result.contains("Login successful")) {
-            view.updateUserDisplayName(view.getUsername());
-        }
     }
 
     @Override
@@ -33,4 +30,5 @@ public class LoginPresenter implements IPresenter {
     @Override
     public void onViewStopped() {
     }
+
 }

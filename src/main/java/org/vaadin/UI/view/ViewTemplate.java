@@ -6,20 +6,27 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
+import org.vaadin.UI.Presenter.LogoutPresenter;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 
 import java.awt.*;
 
 
-abstract class ViewTemplate extends VerticalLayout {
+public abstract class ViewTemplate extends VerticalLayout {
 
     IPresenter presenter;
+    LogoutPresenter logoutPresenter;
     Button loginTopBar;
     Button logoutTopBar;
     Button signUpTopBar;
 
     public ViewTemplate() {
+        init();
+    }
+
+    private void init() {
+        removeAll();
         HorizontalLayout header = new HorizontalLayout();
         addLogoButton(header);
         addLoginButton(header);
@@ -33,7 +40,7 @@ abstract class ViewTemplate extends VerticalLayout {
         displayButtons();
         setUp();
         add(header);
-
+        logoutPresenter = new LogoutPresenter(this);
     }
 
     private void displayButtons() {
@@ -44,7 +51,7 @@ abstract class ViewTemplate extends VerticalLayout {
         }
         else{
             loginTopBar.setVisible(true);
-            signUpTopBar.setVisible(false);
+            signUpTopBar.setVisible(true);
             logoutTopBar.setVisible(false);
         }
     }
@@ -84,7 +91,8 @@ abstract class ViewTemplate extends VerticalLayout {
         logoutTopBar = new Button("Logout");
         logoutTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
-            getUI().ifPresent(ui -> ui.navigate(""));});
+            logoutPresenter.onLogOut(this::succesfullLogout);
+            });
         layout.add(logoutTopBar);
     }
 
@@ -119,6 +127,10 @@ abstract class ViewTemplate extends VerticalLayout {
     public void displayUserName(HorizontalLayout layout){
         Text userNameLabel = new Text(Credentials.getUserName());
         layout.add(userNameLabel);
+    }
+    private void succesfullLogout() {
+        init();
+        getUI().ifPresent(ui -> ui.navigate(""));
     }
 
 }

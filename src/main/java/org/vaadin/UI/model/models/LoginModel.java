@@ -35,4 +35,25 @@ public class LoginModel {
             return e.getMessage();
         }
     }
+    public String logout(String token, SuccessCallBack callBack) {
+
+        // Define the URL
+        String url = "http://localhost:8080/user/logout";
+        String requestBody = "token=" + token;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                Credentials.logOut();
+                callBack.call();
+                return "Logout successful";
+            } else {
+                return response.getBody();
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
 }
