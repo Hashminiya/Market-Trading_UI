@@ -7,6 +7,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import org.vaadin.UI.Util.SuccessCallBack;
 import org.vaadin.UI.presenter.LoginPresenter;
 
 import org.vaadin.UI.view.ViewInterface.ILoginView;
@@ -30,14 +31,18 @@ public class LogInView extends ViewTemplate implements ILoginView {
         // Create login button
         Button loginButton = new Button("Login");
         loginButton.addClickListener(event -> {
-            loginTopBar.setVisible(false);
-            logoutTopBar.setVisible(true);
-            presenter.onLogin();});
+            presenter.onLogin(() -> succesfullLogin());});
         loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         // Add input fields and button to the layout
         VerticalLayout formLayout = new VerticalLayout(usernameField, passwordField, loginButton);
         add(formLayout);
+    }
+
+    private void succesfullLogin() {
+        loginTopBar.setVisible(false);
+        logoutTopBar.setVisible(true);
+        getUI().ifPresent(ui -> ui.navigate(""));
     }
 
     @Override

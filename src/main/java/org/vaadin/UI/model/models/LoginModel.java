@@ -3,6 +3,7 @@ package org.vaadin.UI.model.models;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.Util.Credentials;
+import org.vaadin.UI.Util.SuccessCallBack;
 
 public class LoginModel {
 
@@ -13,7 +14,7 @@ public class LoginModel {
     }
 
 
-    public String login(String username, String password) {
+    public String login(String username, String password, SuccessCallBack callBack) {
 
         // Define the URL
         String url = "http://localhost:8080/user/login";
@@ -33,7 +34,8 @@ public class LoginModel {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Login successful
-                Credentials.setToken(response.getBody(),this.getClass());
+                Credentials.setToken(response.getBody(),username);
+                callBack.call();
                 return "Login successful for user: " + username;
             } else {
                 // Login failed

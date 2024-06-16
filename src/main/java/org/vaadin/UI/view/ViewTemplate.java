@@ -1,10 +1,14 @@
 package org.vaadin.UI.view;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
+
+import java.awt.*;
 
 
 abstract class ViewTemplate extends VerticalLayout {
@@ -12,6 +16,7 @@ abstract class ViewTemplate extends VerticalLayout {
     IPresenter presenter;
     Button loginTopBar;
     Button logoutTopBar;
+    Button signUpTopBar;
 
     public ViewTemplate() {
 
@@ -23,8 +28,24 @@ abstract class ViewTemplate extends VerticalLayout {
         addManageStoresButton(header);
         addCreateStoreButton(header);
         decorateLayout(header);
+        displayUserName(header);
+        displayButtons();
         setUp();
         add(header);
+
+    }
+
+    private void displayButtons() {
+        if (Credentials.isIsLogedIn()){
+            loginTopBar.setVisible(false);
+            signUpTopBar.setVisible(false);
+            logoutTopBar.setVisible(true);
+        }
+        else{
+            loginTopBar.setVisible(true);
+            signUpTopBar.setVisible(false);
+            logoutTopBar.setVisible(false);
+        }
     }
 
     private void addCreateStoreButton(HorizontalLayout layout) {
@@ -65,8 +86,6 @@ abstract class ViewTemplate extends VerticalLayout {
         logoutTopBar = new Button("Logout");
         logoutTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
-            loginTopBar.setVisible(true);
-            logoutTopBar.setVisible(false);
             getUI().ifPresent(ui -> ui.navigate(""));});
         layout.add(logoutTopBar);
     }
@@ -79,13 +98,17 @@ abstract class ViewTemplate extends VerticalLayout {
     }
 
     private void addSignupButton(HorizontalLayout layout){
-        Button signUpTopBar = new Button("Sign-up");
+        signUpTopBar = new Button("Sign-up");
         signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
         layout.add(signUpTopBar);
 
     }
     public void setUp(){
         //presenter.onViewLoaded();
+    }
+    public void displayUserName(HorizontalLayout layout){
+        Text userNameLabel = new Text(Credentials.getUserName());
+        layout.add(userNameLabel);
     }
 
 }
