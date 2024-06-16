@@ -30,8 +30,10 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     private final Button addToCartButton;
     private final VerticalLayout relatedItemsLayout;
     private final VerticalLayout storeLinkLayout;
+    
 
     public ItemView() {
+
         this.presenter = new ItemPresenter(this);
         this.itemDetails = new VerticalLayout();
         this.itemName = new H1();

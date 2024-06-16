@@ -2,12 +2,17 @@ package org.vaadin.UI.model.DTOs;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 public class CartItemDTO implements Serializable {
     private long itemId;
     private String itemName;
     private int quantity;
     private double price;
 
+    // No-argument constructor
+    public CartItemDTO() {
+    }
 
     public CartItemDTO(long itemId, String itemName, int quantity, double price) {
         this.itemId = itemId;
@@ -15,8 +20,6 @@ public class CartItemDTO implements Serializable {
         this.quantity = quantity;
         this.price = price;
     }
-
-
 
     // Getters and Setters
     public long getItemId() {
