@@ -63,7 +63,7 @@ abstract class ViewTemplate extends VerticalLayout {
 
     private void  addLogoutButton(HorizontalLayout layout){
         logoutTopBar = new Button("Logout");
-        loginTopBar.setVisible(false);
+        logoutTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
             loginTopBar.setVisible(true);
             logoutTopBar.setVisible(false);
