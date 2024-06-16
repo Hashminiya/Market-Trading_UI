@@ -8,7 +8,9 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.presenter.LoginPresenter;
+
 import org.vaadin.UI.view.ViewInterface.ILoginView;
+
 
 @Route("login")
 public class LogInView extends ViewTemplate implements ILoginView {
@@ -23,11 +25,14 @@ public class LogInView extends ViewTemplate implements ILoginView {
         passwordField = new PasswordField("Password");
         Button loginButton = new Button("Login");
         loginButton.addClickListener(event -> {
-            presenter.onLogin();
-        });
+            presenter.onLogin(() -> succesfullLogin());});
         loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         VerticalLayout formLayout = new VerticalLayout(usernameField, passwordField, loginButton);
         add(formLayout);
+    }
+
+    private void succesfullLogin() {
+        getUI().ifPresent(ui -> ui.navigate(""));
     }
 
     @Override
@@ -45,8 +50,4 @@ public class LogInView extends ViewTemplate implements ILoginView {
         return passwordField.getValue();
     }
 
-    @Override
-    public void updateUserDisplayName(String username) {
-        super.updateUserDisplayName(username);
-    }
 }
