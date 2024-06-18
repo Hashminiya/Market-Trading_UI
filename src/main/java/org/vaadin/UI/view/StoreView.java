@@ -1,17 +1,14 @@
 package org.vaadin.UI.view;
 
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.presenter.StorePresenter;
-import org.vaadin.UI.view.components.ItemComponent;
+import org.vaadin.UI.view.components.StoreComponentTable;
 
 import java.util.List;
 
@@ -47,11 +44,6 @@ public class StoreView extends ViewTemplate implements BeforeEnterObserver {
         storeDescription.setText(store.getDescription());
 
         itemList.removeAll();
-        HorizontalLayout itemLayout = new HorizontalLayout();
-        itemLayout.setSpacing(true);
-        for (ItemDTO item : store.getItems()) {
-            itemLayout.add(new ItemComponent(item));
-        }
-        itemList.add(itemLayout);
+        itemList.add(new StoreComponentTable(store));
     }
 }

@@ -9,8 +9,8 @@ import org.vaadin.UI.view.StoreView;
 
 import java.util.Collections;
 
-public class StoreComponent extends VerticalLayout {
-    public StoreComponent(StoreDTO store) {
+public class StoreComponentList extends VerticalLayout {
+    public StoreComponentList(StoreDTO store) {
         RouterLink storeLink = new RouterLink();
         storeLink.setRoute(StoreView.class);
         storeLink.setText(store.getName());

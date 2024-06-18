@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Route("item")
 public class ItemView extends ViewTemplate implements BeforeEnterObserver {
+    private ItemDTO item;
     private final ItemPresenter presenter;
     private final VerticalLayout itemDetails;
     private final H1 itemName;
@@ -34,6 +35,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     private final VerticalLayout storeLinkLayout;
 
     public ItemView() {
+        this.item = new ItemDTO();
         this.presenter = new ItemPresenter(this);
         this.itemDetails = new VerticalLayout();
         this.itemName = new H1();
@@ -47,16 +49,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
 
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> {
-            Notification.show(itemName.getText() + " added to cart");
-            presenter.addItemToCart(new ItemDTO(
-                    Long.parseLong(event.getSource().getElement().getProperty("itemId")),
-                    itemName.getText(),
-                    Integer.parseInt(itemQuantity.getText()),
-                    Long.parseLong(event.getSource().getElement().getProperty("storeId")),
-                    Double.parseDouble(itemPrice.getText().replace("Price: ", "")),
-                    List.of(itemCategories.getText().split(", ")), // Convert categories to list
-                    itemDescription.getText() // Pass description
-            ));
+            presenter.addItemToCart(item);
         });
 
         itemDetails.add(itemName, itemPrice, itemQuantity, itemDescription, itemCategories, addToCartButton, storeLinkLayout, relatedItemsLayout);
@@ -70,6 +63,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     }
 
     public void displayItemDetails(ItemDTO item, StoreDTO store) {
+        this.item = item;
         itemName.setText(item.getItemName());
         itemPrice.setText("Price: " + item.getTotalPrice());
         itemQuantity.setText("Quantity: " + item.getQuantity());

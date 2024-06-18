@@ -11,7 +11,15 @@ public class ItemDTO implements Serializable {
     private final long itemId;
     private final List<String> categories;
     private final String description;
-
+    public ItemDTO() {
+        this.itemId = 0;
+        this.itemName = "";
+        this.quantity = 0;
+        this.storeId = 0;
+        this.totalPrice = 0;
+        this.categories = List.of();
+        this.description = "";
+    }
     public ItemDTO(long itemId, String itemName, int quantity, long storeId, double totalPrice, List<String> categories, String description) {
         this.itemId = itemId;
         this.itemName = itemName;
