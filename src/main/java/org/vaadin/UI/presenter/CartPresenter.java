@@ -17,16 +17,18 @@ public class CartPresenter implements IPresenter {
         this.cartModel = new CartModel();
     }
 
+
     @Override
     public void onViewLoaded() {
         String token = Credentials.getToken();
         if (token != null && !token.isEmpty()) {
-            String s = cartModel.getShoppingCart(token);
-            cartView.displayShoppingCart(s);
+            ShoppingCartDTO shoppingCart = cartModel.getShoppingCart(token);
+            cartView.displayShoppingCart(shoppingCart);
         } else {
             cartView.showNotification("No items found in the cart.");
         }
     }
+
 
     @Override
     public void onViewStopped() {
