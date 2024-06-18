@@ -6,7 +6,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.presenter.HomePresenter;
-import org.vaadin.UI.view.components.StoreComponent;
+import org.vaadin.UI.view.components.StoreComponentList;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class HomeView extends ViewTemplate {
 
         for (StoreDTO store : stores) {
             Div storeDiv = new Div();
-            storeDiv.add(new StoreComponent(store));
+            storeDiv.add(new StoreComponentList(store));
             storeDiv.getStyle().set("margin-bottom", "20px");
             storesLayout.add(storeDiv);
         }
