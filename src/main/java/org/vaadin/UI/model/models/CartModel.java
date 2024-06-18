@@ -1,5 +1,6 @@
 package org.vaadin.UI.model.models;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
@@ -12,9 +13,14 @@ public class CartModel {
         this.restTemplate = new RestTemplate();
     }
 
-    public String getShoppingCart(String token) {
+
+    public ShoppingCartDTO getShoppingCart(String token) {
         String url = "http://localhost:8080/user/getShoppingCart?token=" + token;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<ShoppingCartDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<ShoppingCartDTO>() {});
+        System.out.println("Response: " + response.getBody());  // Debug log
         return response.getBody();
     }
 
