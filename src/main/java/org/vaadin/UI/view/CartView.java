@@ -28,7 +28,7 @@ public class CartView extends ViewTemplate {
         title.getStyle().set("font-size", "24px");
 
         cartGrid = new Grid<>(CartItemDTO.class);
-        cartGrid.setColumns( "itemName", "quantity", "price");
+        cartGrid.setColumns("itemId", "itemName", "quantity", "price", "categories", "description");
         cartGrid.addColumn(cartItem -> cartItem.getQuantity() * cartItem.getPrice()).setHeader("Total");
 
         Button checkoutButton = new Button("Checkout");
