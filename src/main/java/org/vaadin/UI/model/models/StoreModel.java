@@ -30,12 +30,6 @@ public class StoreModel {
         try {
             ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:8080/storeBuyer/getAllStores", String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
-                // Print response
-                for (int i = 0; i < 100; i++) {
-                    System.out.println();
-                }
-                System.out.println(response.getBody());
-
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode root = objectMapper.readTree(response.getBody());
                 List<StoreDTO> stores = new ArrayList<>();
@@ -43,19 +37,27 @@ public class StoreModel {
                 root.fields().forEachRemaining(entry -> {
                     long storeId = Long.parseLong(entry.getKey());
                     JsonNode storeNode = entry.getValue();
-                    String storeName = storeNode.get("storeName").asText();
-                    String storeDescription = storeNode.get("storeDescription").asText();
 
-                    List<ItemDTO> items = new ArrayList<>();
-                    storeNode.get("items").forEach(itemNode -> {
-                        long itemId = itemNode.get("itemId").asLong();
-                        String itemName = itemNode.get("itemName").asText();
-                        int stockAmount = itemNode.get("stockAmount").asInt();
-                        double itemPrice = itemNode.get("itemPrice").asDouble();
-                        items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice));
-                    });
+                    if (storeNode != null && storeNode.has("storeName") && storeNode.has("storeDescription") && storeNode.has("items")) {
+                        String storeName = storeNode.get("storeName").asText();
+                        String storeDescription = storeNode.get("storeDescription").asText();
 
-                    stores.add(new StoreDTO(storeId, storeName, storeDescription, items));
+                        List<ItemDTO> items = new ArrayList<>();
+                        storeNode.get("items").forEach(itemNode -> {
+                            if (itemNode != null && itemNode.has("itemId") && itemNode.has("itemName") && itemNode.has("stockAmount") && itemNode.has("itemPrice") && itemNode.has("category")) {
+                                long itemId = itemNode.get("itemId").asLong();
+                                String itemName = itemNode.get("itemName").asText();
+                                int stockAmount = itemNode.get("stockAmount").asInt();
+                                double itemPrice = itemNode.get("itemPrice").asDouble();
+                                List<String> categories = new ArrayList<>();
+                                itemNode.get("category").forEach(categoryNode -> categories.add(categoryNode.asText()));
+
+                                items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice, categories, ""));
+                            }
+                        });
+
+                        stores.add(new StoreDTO(storeId, storeName, storeDescription, items));
+                    }
                 });
 
                 return stores;
