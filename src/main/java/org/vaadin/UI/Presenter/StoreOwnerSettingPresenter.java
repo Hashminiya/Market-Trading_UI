@@ -23,12 +23,12 @@ public class StoreOwnerSettingPresenter implements IPresenter {
         view.showNotification(result);
     }
 
-    public List<Long> getUserStoreOwnerships() {
+    public List<String> getUserStoreOwnerships() {
         return model.viewUserStoresOwnership(Credentials.getToken());
     }
 
-    public Set<String> getStoreManagementInfo(long storeId) {
-        return model.viewManagementInfo(Credentials.getToken(), storeId);
+    public Set<String> getStoreManagementInfo(String storeName) {
+        return model.viewManagementInfo(Credentials.getToken(), storeName);
     }
 
     @Override
