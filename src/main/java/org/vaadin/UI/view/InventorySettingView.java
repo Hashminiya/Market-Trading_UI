@@ -15,6 +15,7 @@ import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.view.components.ItemForm;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Route("settings/inventory")
 public class InventorySettingView extends MainSettingView {
@@ -70,7 +71,7 @@ public class InventorySettingView extends MainSettingView {
         });
     }
 
-    public void fillChooseStoreComboBox(ArrayList<String> storeList) {
+    public void fillChooseStoreComboBox(List<String> storeList) {
         chooseStoreComboBox.setItems(storeList);
     }
 

@@ -7,6 +7,7 @@ import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.InventorySettingView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryPresenter implements IPresenter {
 
@@ -33,8 +34,8 @@ public class InventoryPresenter implements IPresenter {
     }
 
     public void onSelectStore(String storeName) {
-        //storeItems = inventoryModel.getStoreItems(storeName);
-        storeItems = getDemoItems();
+        storeItems = inventoryModel.getStoreItems(storeName,Credentials.getToken());
+        //storeItems = getDemoItems();
         view.fillUpInventory(storeItems);
     }
 
@@ -79,7 +80,7 @@ public class InventoryPresenter implements IPresenter {
     }
 
     public void onChoosingStore() {
-        ArrayList<String> stores = inventoryModel.getStores();
+        List<String> stores = inventoryModel.getStores(Credentials.getToken());
         if (stores != null) {
             view.fillChooseStoreComboBox(stores);
         } else {

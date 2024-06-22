@@ -18,7 +18,7 @@ import java.util.*;
 
 @Route("settings/store-setting")
 public class StoreOwnerSettingView extends MainSettingView {
-    private ComboBox<Long> chooseStoreComboBox;
+    private ComboBox<String> chooseStoreComboBox;
 //    private VerticalLayout restOfPage;
     private StoreOwnerSettingPresenter presenter;
     private Button sendButton;  // Declare the button at the class level
@@ -57,30 +57,30 @@ public class StoreOwnerSettingView extends MainSettingView {
         formLayout.setSpacing(true);
 
         chooseStoreComboBox.addValueChangeListener(event -> {
-            Long selectedStoreId = event.getValue();
-            if (selectedStoreId != null) {
-                displayManagementInfo(selectedStoreId);
+            String selectedStoreName = event.getValue();
+            if (selectedStoreName != null) {
+                displayManagementInfo(selectedStoreName);
             }
         });
         permissionsComboBox = new MultiSelectComboBox<>("Manager Permissions");
         add(formLayout);
     }
 
-    private ComboBox<Long> createChooseStoreComboBox() {
+    private ComboBox<String> createChooseStoreComboBox() {
         // Fetch the real store IDs that the user owns
-        List<Long> storesList = presenter.getUserStoreOwnerships();
+        List<String> storesList = presenter.getUserStoreOwnerships();
         chooseStoreComboBox = new ComboBox<>("Select your store", storesList);
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         return chooseStoreComboBox;
     }
 
 
-    private void displayManagementInfo(long storeId) {
+    private void displayManagementInfo(String storename) {
         // Remove the existing management info combo box if it exists
         if (managementInfoComboBox != null) {
             formLayout.remove(managementInfoComboBox);
         }
-        Set<String> managementInfo = presenter.getStoreManagementInfo(storeId);
+        Set<String> managementInfo = presenter.getStoreManagementInfo(storename);
         if (managementInfo != null) {
             managementInfoComboBox = new ComboBox<>("Select manager", managementInfo);
             managementInfoComboBox.setPlaceholder("No store selected yet");

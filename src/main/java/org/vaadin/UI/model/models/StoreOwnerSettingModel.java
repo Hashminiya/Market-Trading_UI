@@ -30,16 +30,16 @@ public class StoreOwnerSettingModel {
         }
     }
 
-    public List<Long> viewUserStoresOwnership(String token) {
-        String url = "http://localhost:8080/user/viewUserStoresOwnership?token=" + token;
+    public List<String> viewUserStoresOwnership(String token) {
+        String url = "http://localhost:8080/user/viewStoresByNameForUserOwnership?token=" + token;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<List<Long>> response = restTemplate.exchange(
-                    url, HttpMethod.PUT, requestEntity, (Class<List<Long>>) (Class<?>) List.class);
+            ResponseEntity<List<String>> response = restTemplate.exchange(
+                    url, HttpMethod.PUT, requestEntity, (Class<List<String>>) (Class<?>) List.class);
             return response.getBody();
 //            return List.of(1L, 2L, 3L, 4L);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class StoreOwnerSettingModel {
         }
     }
 
-    public Set<String> viewManagementInfo(String token, long storeId) {
+    public Set<String> viewManagementInfo(String token, String storeId) {
         String url = "http://localhost:8080/storeManagement/viewManagementInfo?token=" + token + "&storeId=" + storeId;
 
         HttpHeaders headers = new HttpHeaders();

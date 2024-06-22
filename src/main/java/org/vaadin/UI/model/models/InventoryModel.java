@@ -3,6 +3,7 @@ package org.vaadin.UI.model.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -11,82 +12,66 @@ import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryModel {
     private final RestTemplate restTemplate;
     public InventoryModel (){
         this.restTemplate = new RestTemplate();
     }
-    public ArrayList<ItemDTO> getStoreItems(String storeName){
-        //Modifies http request to receive json
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        // Create request body
-        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("storeName",storeName);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
-
+    public ArrayList<ItemDTO> getStoreItems(String storeName, String token) {
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/api/storeManagement/viewInventory", request, String.class);
+            String url = "http://localhost:8080/storeManagement/viewInventoryByStoreNameAndToken?token=" + token + "&storeName=" + storeName;
+
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
+                // Print response (for debugging)
+                for (int i = 0; i < 100; i++) {
+                    System.out.println();
+                }
+                System.out.println(response.getBody());
 
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode root = objectMapper.readTree(response.getBody());
+                ArrayList<ItemDTO> items = new ArrayList<>();
+
+                root.forEach(itemNode -> {
+                    long itemId = itemNode.get("itemId").asLong();
+                    String itemName = itemNode.get("itemName").asText();
+                    double itemPrice = itemNode.get("itemPrice").asDouble();
+                    int stockAmount = itemNode.get("stockAmount").asInt();
+                    //String category = itemNode.get("category").asText();
+                    long storeId = itemNode.has("storeId") ? itemNode.get("storeId").asLong() : 0L;
+
+                    items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice));
+                });
+
+                return items;
             } else {
-
-
+                return new ArrayList<>();
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
+            return new ArrayList<>();
         }
-        return null;
     }
 
-    public ArrayList<String> getStores() {
+    public List<String> getStores(String token) {
+        String url = "http://localhost:8080/user/viewStoresByNameForUserOwnership?token=" + token;
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(
-                    "http://localhost:8080/storeBuyer/getAllStoreInfo",
-                    HttpMethod.GET,
-                    requestEntity,
-                    String.class
-            );
-
-            if (response.getStatusCode() == HttpStatus.OK) {
-                ArrayList<String> storeNames = parseStoreNames(response.getBody());
-                return storeNames;
-            } else {
-                return null; // Handle non-OK status code as needed
-            }
+            ResponseEntity<List<String>> response = restTemplate.exchange(
+                    url, HttpMethod.PUT, requestEntity, (Class<List<String>>) (Class<?>) List.class);
+            return response.getBody();
         } catch (Exception e) {
-            e.printStackTrace(); // Handle exceptions appropriately
+            e.printStackTrace();
             return null;
         }
-    }
-    private ArrayList<String> parseStoreNames(String responseBody) {
-        // Implement parsing logic based on the JSON response
-        // Example:
-        // JSON Array: ["Store A", "Store B", "Store C"]
-        // Parse JSON array into ArrayList<String>
-        // This is a simplified example; actual parsing logic will depend on your JSON structure
-        // Gson or Jackson libraries can be used for parsing JSON
-        // Here is a simplified example:
-        ArrayList<String> storeNames = new ArrayList<>();
-        // Assuming response body is a JSON array of store names
-        // Parse JSON array into list of strings
-        // Example parsing using Jackson ObjectMapper:
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            storeNames = mapper.readValue(responseBody, new TypeReference<ArrayList<String>>() {});
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return storeNames;
     }
 
     public String saveItem(ItemDTO itemDTO,String token) {
