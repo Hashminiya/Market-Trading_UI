@@ -18,6 +18,7 @@ public class StoreView extends ViewTemplate implements BeforeEnterObserver {
     private final VerticalLayout itemList;
     private final H1 storeNameTitle;
     private final Paragraph storeDescription;
+    private StoreDTO storeDTO;
 
     public StoreView() {
         this.presenter = new StorePresenter(this);
@@ -33,6 +34,7 @@ public class StoreView extends ViewTemplate implements BeforeEnterObserver {
         add(itemList);
     }
 
+
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         String storeName = event.getLocation().getQueryParameters().getParameters().getOrDefault("storeName", List.of("")).get(0);
@@ -45,5 +47,8 @@ public class StoreView extends ViewTemplate implements BeforeEnterObserver {
 
         itemList.removeAll();
         itemList.add(new StoreComponentTable(store));
+    }
+    public StoreDTO getStoreDTO() {
+        return storeDTO;
     }
 }

@@ -6,6 +6,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -48,7 +49,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
 
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> {
-            presenter.addItemToCart(item);
+            presenter.addItemToCart(item,1);
         });
 
         itemDetails.add(itemName, itemPrice, itemQuantity, itemDescription, itemCategories, addToCartButton, storeLinkLayout, relatedItemsLayout);

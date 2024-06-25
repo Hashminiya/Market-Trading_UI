@@ -1,60 +1,94 @@
 package org.vaadin.UI.model.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
 
 public class ItemDTO implements Serializable {
-    private final long itemStoreId;
-    private final double itemPrice;
-    private final int itemQuantity;
-    private final String itemName;
-    private final long itemId;
-    private final List<String> itemCategories;
-    private final String itemDescription;
+    @JsonProperty("id")
+    private long id;
+
+    @JsonProperty("price")
+    private double itemPrice;
+
+    @JsonProperty("quantity")
+    private int itemQuantity;
+
+    @JsonProperty("name")
+    private String itemName;
+
+    @JsonProperty("categories")
+    private List<String> itemCategories;
+
+    @JsonProperty("description")
+    private String itemDescription;
+
+    @JsonProperty("storeId")
+    private long storeId;
+
+    // Add an empty constructor if you want Jackson to be able to instantiate ItemDTO without parameters
     public ItemDTO() {
-        this.itemId = 0;
-        this.itemName = "";
-        this.itemQuantity = 0;
-        this.itemStoreId = 0;
-        this.itemPrice = 0;
-        this.itemCategories = List.of();
-        this.itemDescription = "";
     }
-    public ItemDTO(long itemId, String itemName, int quantity, long storeId, double totalPrice, List<String> categories, String description) {
-        this.itemId = itemId;
+
+    public ItemDTO(long id, String itemName, int quantity, long storeId, double price, List<String> categories, String description) {
+        this.id = id;
         this.itemName = itemName;
         this.itemQuantity = quantity;
-        this.itemStoreId = storeId;
-        this.itemPrice = totalPrice;
+        this.itemPrice = price;
         this.itemCategories = categories;
         this.itemDescription = description;
     }
 
-    public long getItemStoreId() {
-        return itemStoreId;
+    // Getters and Setters
+    public long getItemId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public double getItemPrice() {
         return itemPrice;
     }
 
+    public void setItemPrice(double itemPrice) {
+        this.itemPrice = itemPrice;
+    }
+
     public int getItemQuantity() {
         return itemQuantity;
     }
 
-    public long getItemId() {
-        return itemId;
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 
     public String getItemName() {
         return itemName;
     }
 
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     public List<String> getItemCategories() {
         return itemCategories;
     }
 
+    public void setItemCategories(List<String> itemCategories) {
+        this.itemCategories = itemCategories;
+    }
+
     public String getItemDescription() {
         return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
+    public Long getItemStoreId() {
+        return storeId;
     }
 }

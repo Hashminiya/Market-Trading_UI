@@ -15,11 +15,15 @@ public class StorePresenter {
     private final StoreModel model;
     private final ItemPresenter itemPresenter;
     private static final Logger logger = Logger.getLogger(StorePresenter.class.getName());
+    private StoreDTO storeDTO;
+    private Long storeId;
 
     public StorePresenter(StoreView view) {
         this.view = view;
         this.model = new StoreModel();
         this.itemPresenter = new ItemPresenter(new ItemView());
+
+ ;
     }
 
     public void onViewLoaded(String storeName) {
@@ -35,9 +39,9 @@ public class StorePresenter {
         }
     }
 
-    public void addItemToCart(ItemDTO item) {
+    public void addItemToCart(ItemDTO item, int amount) {
         // Add the item to the cart in the model
-        itemPresenter.addItemToCart(item);
+        itemPresenter.addItemToCart(item, amount);
         logger.info("Item added to cart: " + item.getItemName());
     }
 }
