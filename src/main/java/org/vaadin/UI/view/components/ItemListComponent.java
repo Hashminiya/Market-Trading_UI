@@ -7,28 +7,16 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.RouterLink;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.model.DTOs.StoreDTO;
-import org.vaadin.UI.presenter.StorePresenter;
-import org.vaadin.UI.view.ItemView; // Ensure this is imported
-import org.vaadin.UI.view.StoreView;
+import org.vaadin.UI.view.ItemView;
 
 import java.util.Collections;
+import java.util.List;
 
-public class StoreComponentTable extends VerticalLayout {
-    private StorePresenter presenter;
+public class ItemListComponent extends VerticalLayout {
 
-    public StoreComponentTable(StoreDTO store) {
-        this.presenter = new StorePresenter(new StoreView());
-
-        RouterLink storeLink = new RouterLink();
-        storeLink.setRoute(StoreView.class);
-        storeLink.setText(store.getName());
-        storeLink.setQueryParameters(new QueryParameters(Collections.singletonMap("storeName", Collections.singletonList(store.getName()))));
-        storeLink.getStyle().set("cursor", "pointer");
-        add(storeLink);
-
+    public ItemListComponent(List<ItemDTO> items) {
         Grid<ItemDTO> itemsGrid = new Grid<>(ItemDTO.class, false);
-        itemsGrid.setItems(store.getItems());
+        itemsGrid.setItems(items);
 
         itemsGrid.addComponentColumn(item -> {
             RouterLink itemLink = new RouterLink();
@@ -41,17 +29,21 @@ public class StoreComponentTable extends VerticalLayout {
 
         itemsGrid.addColumn(ItemDTO::getItemPrice).setHeader("Price");
         itemsGrid.addColumn(ItemDTO::getItemDescription).setHeader("Description");
-        itemsGrid.addColumn(item -> String.join(", ", item.getItemCategories())).setHeader("Category");
+        itemsGrid.addColumn(item -> item.getItemCategories() != null ? String.join(", ", item.getItemCategories()) : "No Categories").setHeader("Category");
 
         itemsGrid.addComponentColumn(item -> {
             Button addToCartButton = new Button("Add to Cart");
             addToCartButton.addClickListener(click -> {
-                presenter.addItemToCart(item,  1);
                 Notification.show(item.getItemName() + " added to cart.");
             });
             return addToCartButton;
         }).setHeader("Actions");
 
         add(itemsGrid);
+    }
+
+    public ItemListComponent() {
+        //text with no items found
+        add("No items found.");
     }
 }

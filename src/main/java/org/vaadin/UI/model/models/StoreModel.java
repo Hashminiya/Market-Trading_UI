@@ -92,6 +92,32 @@ public class StoreModel {
         }
     }
 
+    public List<ItemDTO> searchItemsByKeyWord(String keyword) {
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:8080/storeBuyer/searchGenerallyByKeyWord?keyWord=" + keyword, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.readValue(response.getBody(), new TypeReference<List<ItemDTO>>() {});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<ItemDTO> searchItemsByKeyWordAndCategory(String keyword, String category) {
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:8080/storeBuyer/searchGenerallyByKeyWordAndCategory?keyWord=" + keyword + "&category=" + category, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.readValue(response.getBody(), new TypeReference<List<ItemDTO>>() {});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
     // Demo data methods
     private List<StoreDTO> getDemoStores() {
         // Your demo data implementation

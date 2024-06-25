@@ -31,7 +31,7 @@ public class ItemComponent extends VerticalLayout {
         Paragraph price = new Paragraph("Price: " + item.getItemPrice());
         Button addToCartButton = new Button(new Icon(VaadinIcon.CART));
         addToCartButton.getElement().setProperty("title", "Add to Cart");
-        addToCartButton.addClickListener(event -> presenter.addItemToCart(item));
+        addToCartButton.addClickListener(event -> presenter.addItemToCart(item,1));
 
         HorizontalLayout priceAndButtonLayout = new HorizontalLayout(price, addToCartButton);
         priceAndButtonLayout.setAlignItems(Alignment.CENTER);
