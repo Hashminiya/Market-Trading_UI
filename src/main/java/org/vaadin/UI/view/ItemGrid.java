@@ -21,17 +21,17 @@ public class ItemGrid extends Grid<ItemDTO> {
         decimalFormat.setMaximumFractionDigits(2);
         decimalFormat.setMinimumFractionDigits(2);
 
-    addColumn(ItemDTO -> decimalFormat.format(ItemDTO.getTotalPrice()) + " $")
+    addColumn(ItemDTO -> decimalFormat.format(ItemDTO.getItemPrice()) + " $")
             .setHeader("Price").setTextAlign(ColumnTextAlign.END)
-                .setComparator(Comparator.comparing(ItemDTO::getTotalPrice))
+                .setComparator(Comparator.comparing(ItemDTO::getItemPrice))
             .setFlexGrow(3).setKey("price");
 
-    addColumn(ItemDTO -> ItemDTO.getQuantity() == 0 ? "-"
-            : Integer.toString(ItemDTO.getQuantity()))
+    addColumn(ItemDTO -> ItemDTO.getItemQuantity() == 0 ? "-"
+            : Integer.toString(ItemDTO.getItemQuantity()))
             .setHeader("Stock count")
                         .setTextAlign(ColumnTextAlign.END)
                         .setComparator(
-            Comparator.comparingInt(ItemDTO::getQuantity))
+            Comparator.comparingInt(ItemDTO::getItemQuantity))
             .setFlexGrow(3).setKey("stock");
 
     // Show all categories the product is in, separated by commas

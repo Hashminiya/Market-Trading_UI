@@ -30,9 +30,9 @@ public class StoreComponentTable extends VerticalLayout {
         itemsGrid.setItems(store.getItems());
 
         itemsGrid.addColumn(ItemDTO::getItemName).setHeader("Name");
-        itemsGrid.addColumn(ItemDTO::getTotalPrice).setHeader("Price");
-        itemsGrid.addColumn(ItemDTO::getDescription).setHeader("Description");
-        itemsGrid.addColumn(item -> String.join(", ", item.getCategories())).setHeader("Category");
+        itemsGrid.addColumn(ItemDTO::getItemPrice).setHeader("Price");
+        itemsGrid.addColumn(ItemDTO::getItemDescription).setHeader("Description");
+        itemsGrid.addColumn(item -> String.join(", ", item.getItemCategories())).setHeader("Category");
 
         itemsGrid.addComponentColumn(item -> {
             Button addToCartButton = new Button("Add to Cart");

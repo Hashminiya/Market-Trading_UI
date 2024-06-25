@@ -6,7 +6,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.model.DTOs.CartItemDTO;
+import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
 import org.vaadin.UI.presenter.CartPresenter;
 
@@ -15,7 +15,7 @@ import org.vaadin.UI.presenter.CartPresenter;
 public class CartView extends ViewTemplate {
 
     private CartPresenter presenter;
-    private Grid<CartItemDTO> cartGrid;
+    private Grid<ItemDTO> cartGrid;
 
     public CartView() {
         presenter = new CartPresenter(this);
@@ -27,9 +27,9 @@ public class CartView extends ViewTemplate {
         title.setText("Shopping Cart");
         title.getStyle().set("font-size", "24px");
 
-        cartGrid = new Grid<>(CartItemDTO.class);
+        cartGrid = new Grid<>(ItemDTO.class);
         cartGrid.setColumns("itemId", "itemName", "quantity", "price", "categories", "description");
-        cartGrid.addColumn(cartItem -> cartItem.getQuantity() * cartItem.getPrice()).setHeader("Total");
+        cartGrid.addColumn(cartItem -> cartItem.getItemQuantity() * cartItem.getItemPrice()).setHeader("Total");
 
         Button checkoutButton = new Button("Checkout");
         checkoutButton.addClickListener(event -> {
