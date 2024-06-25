@@ -22,40 +22,37 @@ import java.util.stream.Collectors;
 
 @Route("item")
 public class ItemView extends ViewTemplate implements BeforeEnterObserver {
+    private ItemDTO item;
     private final ItemPresenter presenter;
     private final VerticalLayout itemDetails;
     private final H1 itemName;
     private final Paragraph itemPrice;
     private final Paragraph itemQuantity;
+    private final Paragraph itemDescription; // Add description field
+    private final Paragraph itemCategories; // Add categories field
     private final Button addToCartButton;
     private final VerticalLayout relatedItemsLayout;
     private final VerticalLayout storeLinkLayout;
-    
 
     public ItemView() {
-
+        this.item = new ItemDTO();
         this.presenter = new ItemPresenter(this);
         this.itemDetails = new VerticalLayout();
         this.itemName = new H1();
         this.itemPrice = new Paragraph();
         this.itemQuantity = new Paragraph();
+        this.itemDescription = new Paragraph(); // Initialize description field
+        this.itemCategories = new Paragraph(); // Initialize categories field
         this.addToCartButton = new Button(new Icon(VaadinIcon.CART));
         this.relatedItemsLayout = new VerticalLayout();
         this.storeLinkLayout = new VerticalLayout();
 
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> {
-            Notification.show(itemName.getText() + " added to cart");
-            presenter.addItemToCart(new ItemDTO(
-                    Long.parseLong(event.getSource().getElement().getProperty("itemId")),
-                    itemName.getText(),
-                    Integer.parseInt(itemQuantity.getText()),
-                    Long.parseLong(event.getSource().getElement().getProperty("storeId")),
-                    Double.parseDouble(itemPrice.getText().replace("Price: ", ""))
-            ));
+            presenter.addItemToCart(item);
         });
 
-        itemDetails.add(itemName, itemPrice, itemQuantity, addToCartButton, storeLinkLayout, relatedItemsLayout);
+        itemDetails.add(itemName, itemPrice, itemQuantity, itemDescription, itemCategories, addToCartButton, storeLinkLayout, relatedItemsLayout);
         add(itemDetails);
     }
 
@@ -66,9 +63,12 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     }
 
     public void displayItemDetails(ItemDTO item, StoreDTO store) {
+        this.item = item;
         itemName.setText(item.getItemName());
         itemPrice.setText("Price: " + item.getTotalPrice());
         itemQuantity.setText("Quantity: " + item.getQuantity());
+        itemDescription.setText("Description: " + item.getDescription()); // Set description
+        itemCategories.setText("Categories: " + String.join(", ", item.getCategories())); // Set categories
 
         // Link to the store
         storeLinkLayout.removeAll();

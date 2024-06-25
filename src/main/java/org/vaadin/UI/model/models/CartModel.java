@@ -13,7 +13,6 @@ public class CartModel {
         this.restTemplate = new RestTemplate();
     }
 
-
     public ShoppingCartDTO getShoppingCart(String token) {
         String url = "http://localhost:8080/user/getShoppingCart?token=" + token;
         HttpHeaders headers = new HttpHeaders();
