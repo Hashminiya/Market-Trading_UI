@@ -44,7 +44,7 @@ public class InventoryModel {
                     //String category = itemNode.get("category").asText();
                     long storeId = itemNode.has("storeId") ? itemNode.get("storeId").asLong() : 0L;
 
-                    items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice));
+                    items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice, new ArrayList<String>(), "desc"));//TODO: add categorys and description
                 });
 
                 return items;
