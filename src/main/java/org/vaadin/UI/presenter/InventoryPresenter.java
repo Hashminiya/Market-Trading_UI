@@ -1,5 +1,5 @@
-package org.vaadin.UI.presenter;
 
+package org.vaadin.UI.presenter;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.models.InventoryModel;
@@ -36,6 +36,7 @@ public class InventoryPresenter implements IPresenter {
     public void onSelectStore(String storeName) {
         storeItems = inventoryModel.getStoreItems(storeName,Credentials.getToken());
         //storeItems = getDemoItems();
+        // storeItems = inventoryModel.getStoreItems(storeName);
         // storeItems = inventoryModel.getStoreItems(storeName);
         storeItems = getDemoItems();
         view.fillUpInventory(storeItems);
@@ -95,4 +96,3 @@ public class InventoryPresenter implements IPresenter {
         view.showForm(true, emptyItem);
     }
 }
-
