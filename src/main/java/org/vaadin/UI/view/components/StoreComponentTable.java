@@ -9,6 +9,7 @@ import com.vaadin.flow.router.RouterLink;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.presenter.StorePresenter;
+import org.vaadin.UI.view.ItemView; // Ensure this is imported
 import org.vaadin.UI.view.StoreView;
 
 import java.util.Collections;
@@ -29,7 +30,15 @@ public class StoreComponentTable extends VerticalLayout {
         Grid<ItemDTO> itemsGrid = new Grid<>(ItemDTO.class, false);
         itemsGrid.setItems(store.getItems());
 
-        itemsGrid.addColumn(ItemDTO::getItemName).setHeader("Name");
+        itemsGrid.addComponentColumn(item -> {
+            RouterLink itemLink = new RouterLink();
+            itemLink.setRoute(ItemView.class);
+            itemLink.setText(item.getItemName());
+            itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getItemId())))));
+            itemLink.getStyle().set("cursor", "pointer");
+            return itemLink;
+        }).setHeader("Name");
+
         itemsGrid.addColumn(ItemDTO::getItemPrice).setHeader("Price");
         itemsGrid.addColumn(ItemDTO::getItemDescription).setHeader("Description");
         itemsGrid.addColumn(item -> String.join(", ", item.getItemCategories())).setHeader("Category");
