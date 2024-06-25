@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ShoppingCartDTO implements Serializable {
-    private List<CartItemDTO> items;
+    private List<ItemDTO> items;
     private double totalPrice;
 
     // Getters and Setters
-    public List<CartItemDTO> getItems() {
+    public List<ItemDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<CartItemDTO> items) {
+    public void setItems(List<ItemDTO> items) {
         this.items = items;
     }
 

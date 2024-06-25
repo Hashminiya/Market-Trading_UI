@@ -28,7 +28,7 @@ public class ItemComponent extends VerticalLayout {
         itemLink.getStyle().set("cursor", "pointer");
         add(itemLink);
 
-        Paragraph price = new Paragraph("Price: " + item.getTotalPrice());
+        Paragraph price = new Paragraph("Price: " + item.getItemPrice());
         Button addToCartButton = new Button(new Icon(VaadinIcon.CART));
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> presenter.addItemToCart(item));

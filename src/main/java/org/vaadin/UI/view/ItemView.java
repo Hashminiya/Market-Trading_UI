@@ -6,7 +6,6 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -65,10 +64,10 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     public void displayItemDetails(ItemDTO item, StoreDTO store) {
         this.item = item;
         itemName.setText(item.getItemName());
-        itemPrice.setText("Price: " + item.getTotalPrice());
-        itemQuantity.setText("Quantity: " + item.getQuantity());
-        itemDescription.setText("Description: " + item.getDescription()); // Set description
-        itemCategories.setText("Categories: " + String.join(", ", item.getCategories())); // Set categories
+        itemPrice.setText("Price: " + item.getItemPrice());
+        itemQuantity.setText("Quantity: " + item.getItemQuantity());
+        itemDescription.setText("Description: " + item.getItemDescription()); // Set description
+        itemCategories.setText("Categories: " + String.join(", ", item.getItemCategories())); // Set categories
 
         // Link to the store
         storeLinkLayout.removeAll();
