@@ -37,6 +37,7 @@ public class ItemDTO implements Serializable {
         this.itemPrice = price;
         this.itemCategories = categories;
         this.itemDescription = description;
+        this.storeId = storeId;
     }
 
     // Getters and Setters

@@ -10,6 +10,11 @@ import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
 import org.vaadin.UI.presenter.CartPresenter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @PageTitle("Shopping Cart")
 @Route("cart")
 public class CartView extends ViewTemplate {
@@ -28,7 +33,12 @@ public class CartView extends ViewTemplate {
         title.getStyle().set("font-size", "24px");
 
         cartGrid = new Grid<>(ItemDTO.class);
-        cartGrid.setColumns("itemId", "itemName", "quantity", "price", "categories", "description");
+        cartGrid.addColumn(ItemDTO::getItemId).setHeader("ID");
+        cartGrid.addColumn(ItemDTO::getItemName).setHeader("Name");
+        cartGrid.addColumn(ItemDTO::getItemQuantity).setHeader("Quantity");
+        cartGrid.addColumn(ItemDTO::getItemPrice).setHeader("Price");
+        cartGrid.addColumn(item -> String.join(", ", item.getItemCategories() != null ? item.getItemCategories() : Collections.emptyList())).setHeader("Categories");
+        cartGrid.addColumn(ItemDTO::getItemDescription).setHeader("Description");
         cartGrid.addColumn(cartItem -> cartItem.getItemQuantity() * cartItem.getItemPrice()).setHeader("Total");
 
         Button checkoutButton = new Button("Checkout");
@@ -43,8 +53,14 @@ public class CartView extends ViewTemplate {
     }
 
     public void displayShoppingCart(ShoppingCartDTO shoppingCart) {
-        if (shoppingCart != null && shoppingCart.getItems() != null) {
-            cartGrid.setItems(shoppingCart.getItems());
+        if (shoppingCart != null && shoppingCart.getBaskets() != null) {
+            List<ItemDTO> items = new ArrayList<>();
+            shoppingCart.getBaskets().forEach(basket -> {
+                if (basket.getItemsDetails() != null) {
+                    items.addAll(basket.getItemsDetails());
+                }
+            });
+            cartGrid.setItems(items);
         } else {
             showNotification("No items found in the cart.");
         }

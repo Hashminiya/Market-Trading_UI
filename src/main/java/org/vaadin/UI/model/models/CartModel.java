@@ -1,6 +1,8 @@
 package org.vaadin.UI.model.models;
 
-import org.springframework.core.ParameterizedTypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
@@ -14,13 +16,17 @@ public class CartModel {
     }
 
     public ShoppingCartDTO getShoppingCart(String token) {
-        String url = "http://localhost:8080/user/getShoppingCart?token=" + token;
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<ShoppingCartDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<ShoppingCartDTO>() {});
-        System.out.println("Response: " + response.getBody());  // Debug log
-        return response.getBody();
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:8080/user/getShoppingCart?token=" + token, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                return objectMapper.readValue(response.getBody(), new TypeReference<ShoppingCartDTO>() {});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String addItemToCart(String token, long storeId, long itemId, int quantity) {

@@ -1,19 +1,25 @@
 package org.vaadin.UI.model.DTOs;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class ShoppingCartDTO implements Serializable {
-    private List<ItemDTO> items;
+public class ShoppingCartDTO {
+    private List<ShoppingBasketDTO> baskets;
     private double totalPrice;
 
-    // Getters and Setters
-    public List<ItemDTO> getItems() {
-        return items;
+    public ShoppingCartDTO() {
     }
 
-    public void setItems(List<ItemDTO> items) {
-        this.items = items;
+    public ShoppingCartDTO(List<ShoppingBasketDTO> baskets, double totalPrice) {
+        this.baskets = baskets;
+        this.totalPrice = totalPrice;
+    }
+
+    public List<ShoppingBasketDTO> getBaskets() {
+        return baskets;
+    }
+
+    public void setBaskets(List<ShoppingBasketDTO> baskets) {
+        this.baskets = baskets;
     }
 
     public double getTotalPrice() {
