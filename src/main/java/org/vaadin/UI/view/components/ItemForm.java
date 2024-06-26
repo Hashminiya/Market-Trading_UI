@@ -100,8 +100,8 @@ public class ItemForm extends Div {
         content.add(horizontalLayout);
 
         binder = new Binder<>(ItemDTO.class);
-        binder.forField(price).withConverter(new PriceConverter()).bind("totalPrice");
-        binder.forField(quantity).withConverter(new StockCountConverter()).bind("quantity");
+        binder.forField(price).withConverter(new PriceConverter()).bind("itemPrice");
+        binder.forField(quantity).withConverter(new StockCountConverter()).bind("itemQuantity");
         binder.bindInstanceFields(this);
 
         binder.addStatusChangeListener(event -> {

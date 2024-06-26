@@ -40,7 +40,7 @@ public class ItemDTO implements Serializable {
     }
 
     // Getters and Setters
-    public long getItemId() {
+    public long getId() {
         return id;
     }
 
@@ -88,7 +88,7 @@ public class ItemDTO implements Serializable {
         this.itemDescription = itemDescription;
     }
 
-    public Long getItemStoreId() {
+    public Long getStoreId() {
         return storeId;
     }
 }
