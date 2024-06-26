@@ -25,11 +25,11 @@ public class ItemPresenter {
         try {
             long itemId = Long.parseLong(itemIdStr);
             Optional<StoreDTO> store = storeModel.getStores().stream()
-                    .filter(s -> s.getItems().stream().anyMatch(item -> item.getItemId() == itemId))
+                    .filter(s -> s.getItems().stream().anyMatch(item -> item.getId() == itemId))
                     .findFirst();
             if (store.isPresent()) {
                 ItemDTO item = store.get().getItems().stream()
-                        .filter(i -> i.getItemId() == itemId)
+                        .filter(i -> i.getId() == itemId)
                         .findFirst()
                         .orElse(null);
                 if (item != null) {
@@ -48,7 +48,7 @@ public class ItemPresenter {
     public void addItemToCart(ItemDTO item, int amount) {
         String token = Credentials.getToken();
         if (token != null && !token.isEmpty()) {
-            String result = cartModel.addItemToCart(token, item.getItemId(),item.getItemStoreId(), amount); // Assuming quantity of 1 for simplicity
+            String result = cartModel.addItemToCart(token, item.getId(),item.getStoreId(), amount); // Assuming quantity of 1 for simplicity
             Notification.show(result);
             // Refresh the cart view to show the newly added item
             view.getUI().ifPresent(ui -> ui.navigate("cart"));

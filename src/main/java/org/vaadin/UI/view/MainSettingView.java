@@ -84,8 +84,15 @@ public class MainSettingView extends ViewTemplate {
             getUI().ifPresent(ui -> ui.navigate("settings/market-history"));
         });
 
+        Button policyButton = new Button("Policies", new Icon(VaadinIcon.LIST_OL));
+        policyButton.setWidthFull();
+        policyButton.addClickListener(event -> {
+            mainSettingsPresenter.onPolicyButtonClick();
+            getUI().ifPresent(ui -> ui.navigate("settings/policies"));
+        });
+
         // Add buttons to the layout
-        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, marketHistoryButton);
+        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, marketHistoryButton , policyButton);
         return leftBar;
     }
 

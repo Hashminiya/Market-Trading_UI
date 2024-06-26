@@ -9,11 +9,12 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.PolicyDTO;
 import org.vaadin.UI.presenter.PolicyPresenter;
 
 import java.util.List;
-
+@Route("settings/policies")
 public class PolicyView extends MainSettingView {
     private ComboBox<String> chooseStoreComboBox;
     private Grid<PolicyDTO> policiesGrid;
@@ -31,7 +32,7 @@ public class PolicyView extends MainSettingView {
         chooseStoreComboBox = new ComboBox<>("Select your store");
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
-        addNewPolicyButton = new Button("Add New Item", new Icon(VaadinIcon.PLUS));
+        addNewPolicyButton = new Button("Add New Policy", new Icon(VaadinIcon.PLUS));
         topLayout.add(chooseStoreComboBox);
         topLayout.add(addNewPolicyButton);
         topLayout.setWidthFull();
