@@ -22,7 +22,7 @@ public class ItemListComponent extends VerticalLayout {
             RouterLink itemLink = new RouterLink();
             itemLink.setRoute(ItemView.class);
             itemLink.setText(item.getItemName());
-            itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getItemId())))));
+            itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getId())))));
             itemLink.getStyle().set("cursor", "pointer");
             return itemLink;
         }).setHeader("Name");

@@ -81,7 +81,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
         HorizontalLayout relatedItemsLayoutInner = new HorizontalLayout();
         relatedItemsLayoutInner.setSpacing(true);
         List<ItemDTO> relatedItems = store.getItems().stream()
-                .filter(i -> i.getItemId() != item.getItemId())
+                .filter(i -> i.getId() != item.getId())
                 .collect(Collectors.toList());
         for (ItemDTO relatedItem : relatedItems) {
             relatedItemsLayoutInner.add(new ItemComponent(relatedItem));

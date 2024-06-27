@@ -32,4 +32,7 @@ public class MainSettingsPresenter implements IPresenter {
 
     public void onPurchaseHistoryButton() {
     }
+
+    public void onPolicyButtonClick() {
+    }
 }

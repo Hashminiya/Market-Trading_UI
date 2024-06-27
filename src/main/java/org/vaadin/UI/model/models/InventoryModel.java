@@ -79,7 +79,7 @@ public class InventoryModel {
 
         // Create request body
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("storeId=", String.valueOf(itemDTO.getItemStoreId()));
+        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
         requestBody.add("itemName=", String.valueOf(itemDTO.getItemName()));
         requestBody.add("description=", "");
         requestBody.add("itemPrice=", String.valueOf(itemDTO.getItemPrice()));
@@ -110,8 +110,8 @@ public class InventoryModel {
 
         // Create request body
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("storeId=", String.valueOf(itemDTO.getItemStoreId()));
-        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
+        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
+        requestBody.add("itemId=", String.valueOf(itemDTO.getId()));
         requestBody.add("newName=", String.valueOf(itemDTO.getItemName()));
         requestBody.add("newPrice=", String.valueOf(itemDTO.getItemPrice()));
         requestBody.add("newAmount=", String.valueOf(itemDTO.getItemQuantity()));
@@ -140,8 +140,8 @@ public class InventoryModel {
 
         // Create request body
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("storeId=", String.valueOf(itemDTO.getItemStoreId()));
-        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
+        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
+        requestBody.add("itemId=", String.valueOf(itemDTO.getId()));
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
 
