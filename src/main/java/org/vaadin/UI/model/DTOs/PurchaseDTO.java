@@ -1,17 +1,25 @@
 package org.vaadin.UI.model.DTOs;
-public class PurchaseDTO {
-    private Long id;
-    private String productName;
-    private Integer quantity;
-    private Double price;
-    private String buyer;
 
-    public PurchaseDTO(Long id, String productName, Integer quantity, Double price, String buyer) {
+import java.io.Serializable;
+import java.util.List;
+
+public class PurchaseDTO implements Serializable {
+    private Long id;
+    private List<ItemDTO> purchasedItemsList;
+    private double totalAmount;
+    private String userId;
+    private String purchaseDate;
+
+    // Add an empty constructor if needed
+    public PurchaseDTO() {
+    }
+
+    public PurchaseDTO(Long id, List<ItemDTO> purchasedItemsList, double totalAmount, String userId, String purchaseDate) {
         this.id = id;
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
-        this.buyer = buyer;
+        this.purchasedItemsList = purchasedItemsList;
+        this.totalAmount = totalAmount;
+        this.userId = userId;
+        this.purchaseDate = purchaseDate;
     }
 
     // Getters and Setters
@@ -23,35 +31,35 @@ public class PurchaseDTO {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public List<ItemDTO> getPurchasedItemsList() {
+        return purchasedItemsList;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setPurchasedItemsList(List<ItemDTO> purchasedItemsList) {
+        this.purchasedItemsList = purchasedItemsList;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getBuyer() {
-        return buyer;
+    public String getPurchaseDate() {
+        return purchaseDate;
     }
 
-    public void setBuyer(String buyer) {
-        this.buyer = buyer;
+    public void setPurchaseDate(String purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 }
