@@ -91,8 +91,15 @@ public class MainSettingView extends ViewTemplate {
             getUI().ifPresent(ui -> ui.navigate("settings/policies"));
         });
 
+        Button discountButton = new Button("Discounts", new Icon(VaadinIcon.BOOK_PERCENT));
+        discountButton.setWidthFull();
+        discountButton.addClickListener(event -> {
+            mainSettingsPresenter.onDiscountButtonClick();
+            getUI().ifPresent(ui -> ui.navigate("settings/discounts"));
+        });
+
         // Add buttons to the layout
-        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, marketHistoryButton , policyButton);
+        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, marketHistoryButton , policyButton , discountButton);
         return leftBar;
     }
 

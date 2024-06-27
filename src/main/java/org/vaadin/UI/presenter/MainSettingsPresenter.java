@@ -35,4 +35,7 @@ public class MainSettingsPresenter implements IPresenter {
 
     public void onPolicyButtonClick() {
     }
+
+    public void onDiscountButtonClick() {
+    }
 }
