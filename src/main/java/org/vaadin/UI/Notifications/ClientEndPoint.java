@@ -59,4 +59,8 @@ public class ClientEndPoint implements WebSocketListener {
     public Session getSession() {
         return session;
     }
+
+    public void addMessageListeners(List<MessageListener> messageListeners) {
+        this.messageListeners.addAll(messageListeners);
+    }
 }

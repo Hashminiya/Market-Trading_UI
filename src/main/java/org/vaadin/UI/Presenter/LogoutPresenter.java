@@ -1,6 +1,7 @@
 package org.vaadin.UI.Presenter;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.vaadin.UI.Notifications.WebSocketHandler;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.Util.SuccessCallBack;
 import org.vaadin.UI.model.models.LoginModel;
@@ -30,5 +31,6 @@ public class LogoutPresenter implements IPresenter {
     public void onLogOut(SuccessCallBack callBack){
         String result = model.logout(Credentials.getToken(),callBack);
         Notification.show(result);
+        WebSocketHandler.closeConnection();
     }
 }

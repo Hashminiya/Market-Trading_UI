@@ -1,6 +1,8 @@
 package org.vaadin.UI.presenter;
 
+import org.vaadin.UI.Notifications.MessageListener;
 import org.vaadin.UI.Util.Credentials;
+import org.vaadin.UI.Util.Messages;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.NotificationDTO;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
@@ -17,7 +19,7 @@ public class NotificationPresenter implements IPresenter {
 
     private final NotificationView view;
     private NotificationModel model;
-    private ArrayList<NotificationDTO> notifications;
+
 
     public NotificationPresenter(NotificationView view) {
         this.view = view;
@@ -26,8 +28,13 @@ public class NotificationPresenter implements IPresenter {
 
     @Override
     public void onViewLoaded() {
-        //List<NotificationDTO> resultListOfNotifications = model.getListOfNotifications(Credentials.getToken());
-        List<NotificationDTO> resultListOfNotifications = model.getDemoNotifications(Credentials.getToken());
+        Messages messages = Messages.getInstance();
+        List<NotificationDTO> resultListOfNotifications;
+        if(!messages.isLoaded()){
+            resultListOfNotifications = model.getDemoNotifications(Credentials.getToken());
+            messages.load(resultListOfNotifications);
+        }
+        resultListOfNotifications = messages.getNotifications();
 
         if(resultListOfNotifications!= null){
             view.setGrid(resultListOfNotifications);
@@ -39,4 +46,5 @@ public class NotificationPresenter implements IPresenter {
     public void onViewStopped() {
         // Implement any cleanup logic here
     }
+
 }
