@@ -2,6 +2,8 @@ package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -36,6 +38,7 @@ public abstract class ViewTemplate extends VerticalLayout implements MessageList
         addManageStoresButton(header);
         addCreateStoreButton(header);
         addCartButton(header);
+        addNotificationButton(header);
         decorateLayout(header);
         displayUserName(header);
         displayButtons();
@@ -101,13 +104,18 @@ public abstract class ViewTemplate extends VerticalLayout implements MessageList
         loginTopBar = new Button("Log-in");
         loginTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
         layout.add(loginTopBar);
-
     }
 
     private void addSignupButton(HorizontalLayout layout){
         signUpTopBar = new Button("Sign-up");
         signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
         layout.add(signUpTopBar);
+    }
+
+    private void addNotificationButton(HorizontalLayout layout){
+        Button notificationTopBar = new Button(new Icon(VaadinIcon.BELL));
+        notificationTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("notification"));});
+        layout.add(notificationTopBar);
     }
 
     private void addCartButton(HorizontalLayout layout) {
