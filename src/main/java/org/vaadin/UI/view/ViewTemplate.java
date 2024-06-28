@@ -1,31 +1,39 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
-import org.vaadin.UI.Notifications.MessageListener;
 import org.vaadin.UI.Presenter.LogoutPresenter;
+import org.vaadin.UI.Presenter.ViewTemplatePresenter;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 
-import java.awt.*;
+import java.util.Arrays;
 
 
-public abstract class ViewTemplate extends VerticalLayout implements MessageListener {
+public abstract class ViewTemplate extends VerticalLayout{
 
     IPresenter presenter;
     LogoutPresenter logoutPresenter;
     Button loginTopBar;
     Button logoutTopBar;
     Button signUpTopBar;
+    Button notificationTopBar;
+    private UI currentUI;
 
     public ViewTemplate() {
         init();
+        presenter = new ViewTemplatePresenter(this);
+        presenter.onViewLoaded();
+        currentUI = UI.getCurrent();
     }
 
     private void init() {
@@ -113,8 +121,9 @@ public abstract class ViewTemplate extends VerticalLayout implements MessageList
     }
 
     private void addNotificationButton(HorizontalLayout layout){
-        Button notificationTopBar = new Button(new Icon(VaadinIcon.BELL));
+        notificationTopBar = new Button(new Icon(VaadinIcon.BELL));
         notificationTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("notification"));});
+        notificationTopBar.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         layout.add(notificationTopBar);
     }
 
@@ -141,9 +150,17 @@ public abstract class ViewTemplate extends VerticalLayout implements MessageList
         init();
         getUI().ifPresent(ui -> ui.navigate(""));
     }
-
-    @Override
-    public void onMessageReceived(String message) {
-        ///TODO show Notifications
+    public void notificationReceived() {
+        if (currentUI != null) {
+            currentUI.access(() -> {
+                Span span = new Span("!");
+                span.getElement().getThemeList().addAll(Arrays.asList("badge", "error", "primary", "small", "pill"));
+                span.getStyle().set("position", "absolute").set("transform", "translate(-40%, -85%)");
+                notificationTopBar.getElement().appendChild(span.getElement());
+            });
+        }
+        else{
+            System.out.println("ui is null");
+        }
     }
 }

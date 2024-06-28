@@ -48,7 +48,6 @@ public class LogInView extends ViewTemplate implements ILoginView {
 
     private void succesfullLogin() {
         getUI().ifPresent(ui -> ui.navigate(""));
-        WebSocketHandler.openConnection(this);
     }
 
     @Override
