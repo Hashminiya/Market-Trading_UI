@@ -48,7 +48,7 @@ public class ItemPresenter {
     public void addItemToCart(ItemDTO item, int amount) {
         String token = Credentials.getToken();
         if (token != null && !token.isEmpty()) {
-            String result = cartModel.addItemToCart(token, item.getItemId(),item.getItemStoreId(), amount); // Assuming quantity of 1 for simplicity
+            String result = cartModel.addItemToCart(token, item.getItemStoreId(),item.getItemId(), amount); // Assuming quantity of 1 for simplicity
             Notification.show(result);
             // Refresh the cart view to show the newly added item
             view.getUI().ifPresent(ui -> ui.navigate("cart"));
