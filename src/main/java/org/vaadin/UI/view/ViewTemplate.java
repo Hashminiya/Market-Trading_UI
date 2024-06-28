@@ -6,6 +6,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
+import org.vaadin.UI.Notifications.MessageListener;
 import org.vaadin.UI.Presenter.LogoutPresenter;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
@@ -13,7 +14,7 @@ import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import java.awt.*;
 
 
-public abstract class ViewTemplate extends VerticalLayout {
+public abstract class ViewTemplate extends VerticalLayout implements MessageListener {
 
     IPresenter presenter;
     LogoutPresenter logoutPresenter;
@@ -133,4 +134,8 @@ public abstract class ViewTemplate extends VerticalLayout {
         getUI().ifPresent(ui -> ui.navigate(""));
     }
 
+    @Override
+    public void onMessageReceived(String message) {
+        ///TODO show Notifications
+    }
 }
