@@ -3,6 +3,7 @@ package org.vaadin.UI.presenter;
 import org.vaadin.UI.Notifications.MessageListener;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.Util.Messages;
+import org.vaadin.UI.Util.SuccessCallBack;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.NotificationDTO;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
@@ -12,6 +13,7 @@ import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.InventorySettingView;
 import org.vaadin.UI.view.NotificationView;
 
+import javax.security.auth.callback.Callback;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +30,15 @@ public class NotificationPresenter implements IPresenter {
 
     @Override
     public void onViewLoaded() {
+        if(!Credentials.isIsLogedIn()){
+            view.setGrid(new ArrayList<>());
+            view.showNotification("To see messages, please login first");
+            return;
+        }
         Messages messages = Messages.getInstance();
         List<NotificationDTO> resultListOfNotifications;
         if(!messages.isLoaded()){
-            resultListOfNotifications = model.getDemoNotifications(Credentials.getToken());
+            resultListOfNotifications = model.getListOfNotifications(Credentials.getToken());
             messages.load(resultListOfNotifications);
         }
         resultListOfNotifications = messages.getNotifications();
@@ -39,12 +46,21 @@ public class NotificationPresenter implements IPresenter {
         if(resultListOfNotifications!= null){
             view.setGrid(resultListOfNotifications);
         }
-        else view.showNotification("Failed to fetch purchases history");
+        else view.showNotification("Failed to fetch notifications");
     }
 
     @Override
     public void onViewStopped() {
         // Implement any cleanup logic here
+    }
+    public void clear(SuccessCallBack callback){
+        Messages messages = Messages.getInstance();
+        List<NotificationDTO> resultListOfNotifications = model.clear(Credentials.getToken(), callback);
+        messages.replace(resultListOfNotifications);
+        if(resultListOfNotifications!= null){
+            view.setGrid(resultListOfNotifications);
+        }
+        else view.showNotification("Failed to clear notifications");
     }
 
 }

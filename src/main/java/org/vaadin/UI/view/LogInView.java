@@ -14,6 +14,7 @@ import org.vaadin.UI.Notifications.WebSocketHandler;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.Notifications.ClientEndPoint;
 import org.vaadin.UI.Notifications.MessageListener;
+import org.vaadin.UI.Util.Messages;
 import org.vaadin.UI.presenter.LoginPresenter;
 
 
@@ -48,6 +49,7 @@ public class LogInView extends ViewTemplate implements ILoginView {
 
     private void succesfullLogin() {
         getUI().ifPresent(ui -> ui.navigate(""));
+        WebSocketHandler.openConnection(Messages.getInstance());
     }
 
     @Override

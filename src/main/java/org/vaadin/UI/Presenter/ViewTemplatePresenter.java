@@ -6,7 +6,7 @@ import org.vaadin.UI.model.DTOs.NotificationDTO;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewTemplate;
 
-public class ViewTemplatePresenter implements IPresenter, MessageListener {
+public class ViewTemplatePresenter implements IPresenter {
 
     private final ViewTemplate view;
 
@@ -16,17 +16,11 @@ public class ViewTemplatePresenter implements IPresenter, MessageListener {
 
     @Override
     public void onViewLoaded() {
-        WebSocketHandler.addListener(this);
+
     }
 
     @Override
     public void onViewStopped() {
 
-    }
-
-    @Override
-    public void onMessageReceived(String message) {
-        Messages.getInstance().addNotification(new NotificationDTO(message));
-        view.notificationReceived();
     }
 }
