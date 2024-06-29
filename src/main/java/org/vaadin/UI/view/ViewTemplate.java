@@ -11,14 +11,19 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.server.VaadinSession;
+import org.springframework.stereotype.Component;
 import org.vaadin.UI.Presenter.LogoutPresenter;
 import org.vaadin.UI.Presenter.ViewTemplatePresenter;
 import org.vaadin.UI.Util.Credentials;
+import org.vaadin.UI.Util.Messages;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 
-
+@Component
 public abstract class ViewTemplate extends VerticalLayout{
 
     IPresenter presenter;
@@ -27,13 +32,12 @@ public abstract class ViewTemplate extends VerticalLayout{
     Button logoutTopBar;
     Button signUpTopBar;
     Button notificationTopBar;
-    private UI currentUI;
 
     public ViewTemplate() {
         init();
         presenter = new ViewTemplatePresenter(this);
         presenter.onViewLoaded();
-        currentUI = UI.getCurrent();
+
     }
 
     private void init() {
@@ -122,9 +126,20 @@ public abstract class ViewTemplate extends VerticalLayout{
 
     private void addNotificationButton(HorizontalLayout layout){
         notificationTopBar = new Button(new Icon(VaadinIcon.BELL));
-        notificationTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("notification"));});
+        notificationTopBar.addClickListener(event -> {
+            Messages.getInstance().seen(); // Mark notifications as seen
+            getUI().ifPresent(ui -> ui.navigate("notification"));
+        });
         notificationTopBar.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         layout.add(notificationTopBar);
+        if(Messages.getInstance().isNewMessage()){
+            UI.getCurrent().access(() -> {
+                Span span = new Span("!");
+                span.getElement().getThemeList().addAll(Arrays.asList("badge", "error", "primary", "small", "pill"));
+                span.getStyle().set("position", "absolute").set("transform", "translate(-40%, -85%)");
+                notificationTopBar.getElement().appendChild(span.getElement());
+            });
+        }
     }
 
     private void addCartButton(HorizontalLayout layout) {
@@ -149,18 +164,5 @@ public abstract class ViewTemplate extends VerticalLayout{
     private void succesfullLogout() {
         init();
         getUI().ifPresent(ui -> ui.navigate(""));
-    }
-    public void notificationReceived() {
-        if (currentUI != null) {
-            currentUI.access(() -> {
-                Span span = new Span("!");
-                span.getElement().getThemeList().addAll(Arrays.asList("badge", "error", "primary", "small", "pill"));
-                span.getStyle().set("position", "absolute").set("transform", "translate(-40%, -85%)");
-                notificationTopBar.getElement().appendChild(span.getElement());
-            });
-        }
-        else{
-            System.out.println("ui is null");
-        }
     }
 }

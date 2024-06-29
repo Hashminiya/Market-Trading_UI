@@ -13,15 +13,14 @@ import java.util.concurrent.CompletableFuture;
 public class WebSocketHandler {
     private static ClientEndPoint clientEndPoint;
     private static WebSocketClient webSocketClient;
-    private static List<MessageListener> messageListeners = new ArrayList<>();
-    public static void openConnection() {
+    public static void openConnection(MessageListener messageListener) {
         HttpClient httpClient = new HttpClient();
         webSocketClient = new WebSocketClient(httpClient);
 
         try {
             webSocketClient.start();
             clientEndPoint = new ClientEndPoint();
-            clientEndPoint.addMessageListeners(messageListeners);
+            clientEndPoint.addMessageListener(messageListener);
             String username = Credentials.getUserName();
             URI serverURI = URI.create("ws://localhost:8080/ws?username=" + username);
             CompletableFuture<Session> clientSessionPromise = webSocketClient.connect(clientEndPoint, serverURI);
@@ -48,8 +47,5 @@ public class WebSocketHandler {
             clientEndPoint = null;
             webSocketClient = null;
         }
-    }
-    public static void addListener(MessageListener listener){
-        messageListeners.add(listener);
     }
 }

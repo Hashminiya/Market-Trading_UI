@@ -4,6 +4,7 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.Notifications.WebSocketHandler;
 import org.vaadin.UI.Util.Credentials;
+import org.vaadin.UI.Util.Messages;
 import org.vaadin.UI.Util.SuccessCallBack;
 import org.vaadin.UI.model.models.LoginModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
@@ -22,7 +23,7 @@ public class LoginPresenter implements IPresenter {
     public void onLogin(SuccessCallBack callBack) {
         String result = model.login(view.getUsername(), view.getPassword(), callBack);
         view.showNotification(result);
-        WebSocketHandler.openConnection();
+
     }
 
     @Override
