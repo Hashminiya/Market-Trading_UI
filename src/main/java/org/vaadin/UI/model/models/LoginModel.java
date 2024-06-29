@@ -13,6 +13,23 @@ public class LoginModel {
         this.restTemplate = new RestTemplate();
     }
 
+
+    public static String guestEntry() {
+        // Define the URL
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/user/GuestEntry", null, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                Credentials.setToken(response.getBody(),"guest");
+                return "Guest entry successful";
+            } else {
+                return response.getBody();
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
     public String login(String username, String password, SuccessCallBack callBack) {
 
         // Define the URL

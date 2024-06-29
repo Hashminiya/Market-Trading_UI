@@ -1,5 +1,6 @@
 package org.vaadin.UI.Util;
 
+import org.vaadin.UI.model.models.LoginModel;
 import org.vaadin.UI.presenter.LoginPresenter;
 
 public class Credentials {
@@ -8,6 +9,9 @@ public class Credentials {
     private static String userName = "guest";
     private static boolean isLogedIn = false;
     public static String getToken(){
+        if (token == null){
+            LoginModel.guestEntry();// Log in as guest and set guest token
+        }
         return token;
     }
 
@@ -27,7 +31,7 @@ public class Credentials {
     }
     public static void logOut(){
         isLogedIn = false;
-        token = null;
+        LoginModel.guestEntry(); // Log in as guest and set guest token
         userName = "guest";
     }
 
