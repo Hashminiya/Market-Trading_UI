@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Component
 public class Messages implements MessageListener {
+    private PropertyChangeSupport support;
     private static Messages instance;
     private boolean isLoaded;
     private boolean newMessage;
@@ -18,6 +19,7 @@ public class Messages implements MessageListener {
     private Messages(){
         this.notifications = new ArrayList<>();
         isLoaded = false;
+        support = new PropertyChangeSupport(this);
     }
 
     public static Messages getInstance(){
@@ -45,17 +47,31 @@ public class Messages implements MessageListener {
         return newMessage;
     }
 
+    public void setNewMessage(boolean newMessage) {
+        boolean oldValue = this.newMessage;
+        this.newMessage = newMessage;
+        support.firePropertyChange("newMessage", oldValue, newMessage);
+    }
     @Override
     public void onMessageReceived(String message) {
         notifications.add(new NotificationDTO(message));
-        newMessage = true;
+        setNewMessage(true);
     }
 
     public void seen() {
-        newMessage = false;
+        setNewMessage(false);
     }
 
     public void replace(List<NotificationDTO> resultListOfNotifications) {
         notifications = resultListOfNotifications;
     }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
+    }
+
 }

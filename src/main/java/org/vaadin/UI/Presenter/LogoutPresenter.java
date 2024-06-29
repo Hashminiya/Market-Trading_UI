@@ -3,12 +3,15 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.vaadin.UI.Notifications.WebSocketHandler;
 import org.vaadin.UI.Util.Credentials;
+import org.vaadin.UI.Util.Messages;
 import org.vaadin.UI.Util.SuccessCallBack;
 import org.vaadin.UI.model.models.LoginModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.LogOutView;
 import org.vaadin.UI.view.ViewInterface.ILoginView;
 import org.vaadin.UI.view.ViewTemplate;
+
+import java.util.ArrayList;
 
 public class LogoutPresenter implements IPresenter {
     private  ViewTemplate view;
@@ -32,5 +35,7 @@ public class LogoutPresenter implements IPresenter {
         String result = model.logout(Credentials.getToken(),callBack);
         Notification.show(result);
         WebSocketHandler.closeConnection();
+        Messages.getInstance().replace(new ArrayList<>());
+        Messages.getInstance().seen();
     }
 }
