@@ -159,6 +159,23 @@ public class InventoryModel {
             return "Item update - Failed";
         }
     }
+
+    public List<String> getStoreCategories(String storeName, String token) {
+        String url = "http://localhost:8080/storeManagement/viewCategoriesByStoreNameAndToken?token=" + token + "&storeName=" + storeName;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<List<String>> response = restTemplate.exchange(
+                    url, HttpMethod.PUT, requestEntity, (Class<List<String>>) (Class<?>) List.class);
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 
 
