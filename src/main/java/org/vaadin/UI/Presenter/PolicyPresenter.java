@@ -1,14 +1,11 @@
 package org.vaadin.UI.presenter;
 
 import org.vaadin.UI.Util.Credentials;
-import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.model.DTOs.PolicyDTO;
-import org.vaadin.UI.model.models.InventoryModel;
+import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.model.models.PolicyModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.PolicyView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PolicyPresenter implements IPresenter {
@@ -16,7 +13,7 @@ public class PolicyPresenter implements IPresenter {
     private final PolicyView view;
     private PolicyModel policyModel;
 
-    private List<PolicyDTO> storePolicies;
+    private List<PolicyViewDTO> storePolicies;
     public PolicyPresenter(PolicyView view) {
         this.view = view;
         this.policyModel = new PolicyModel();
