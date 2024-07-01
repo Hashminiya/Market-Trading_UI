@@ -10,10 +10,12 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.model.DTOs.PolicyDTO;
+import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
 import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 
 import java.util.List;
+
 @Route("settings/policies")
 public class PolicyView extends MainSettingView {
     private ComboBox<String> chooseStoreComboBox;
@@ -32,6 +34,7 @@ public class PolicyView extends MainSettingView {
         chooseStoreComboBox = new ComboBox<>("Select your store");
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
+
         addNewPolicyButton = new Button("Add New Policy", new Icon(VaadinIcon.PLUS));
         topLayout.add(chooseStoreComboBox);
         topLayout.add(addNewPolicyButton);
@@ -43,33 +46,19 @@ public class PolicyView extends MainSettingView {
         policiesGrid.setWidthFull();
         rightContent.add(policiesGrid);
 
-        //TODO: complete this
-//        form = new ItemForm(presenter);
-//        form.setVisible(false);
-//
-//        drawer = createDrawer();
-//        rightContent.add(drawer);
-
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = event.getValue();
             presenter.onSelectStore(selectedOptionStoreName);
         });
 
-        policiesGrid.asSingleSelect().addValueChangeListener(event -> {
-            //TODO: complete this
-//            if (event.getValue() != null) {
-//                showForm(true, event.getValue());
-//            } else {
-//                showForm(false, null);
-//            }
-        });
-
         addNewPolicyButton.addClickListener(event -> {
-            presenter.onClickingAddNewItemButton();
+            AddPolicyDialog dialog = new AddPolicyDialog(presenter, null);
+            dialog.open();
         });
     }
 
-    public void fillUpPolicies(List<PolicyDTO> storeItems) {
+    public void fillUpPolicies(List<PolicyDTO> policies) {
+        policiesGrid.setItems(policies);
     }
 
     public void fillChooseStoreComboBox(List<String> stores) {
@@ -82,12 +71,8 @@ public class PolicyView extends MainSettingView {
 
     private Grid<PolicyDTO> createPoliciesGrid() {
         Grid<PolicyDTO> grid = new Grid<>(PolicyDTO.class);
-//        grid.setColumns("itemId", "itemName", "quantity", "storeId", "totalPrice");
-//        grid.getColumnByKey("itemId").setHeader("Item ID");
-//        grid.getColumnByKey("itemName").setHeader("Item Name");
-//        grid.getColumnByKey("quantity").setHeader("Quantity Available");
-//        grid.getColumnByKey("storeId").setHeader("Store ID");
-//        grid.getColumnByKey("totalPrice").setHeader("Price");
+        grid.setWidthFull();
+        grid.setColumns("name", "type"); // Adjust columns based on your PolicyDTO structure
         return grid;
     }
 }
