@@ -3,6 +3,8 @@ package org.vaadin.UI.model.models;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 
@@ -46,6 +48,26 @@ public class PolicyModel {
         try {
             ResponseEntity<List<String>> response = restTemplate.exchange(
                     url, HttpMethod.PUT, requestEntity, (Class<List<String>>) (Class<?>) List.class);
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public String savePolicy(String token, String storeName, String policyDetails){
+        String url = "http://localhost:8080/storeManagement/addPolicyByStoreNameAndToken";
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("token", token);
+        params.add("storeName", storeName);
+        params.add("policyDetails", policyDetails);
+        System.out.println(policyDetails);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();

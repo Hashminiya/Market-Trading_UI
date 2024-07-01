@@ -12,6 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 
 import java.util.List;
 @Route("settings/policies")
@@ -32,6 +33,7 @@ public class PolicyView extends MainSettingView {
         chooseStoreComboBox = new ComboBox<>("Select your store");
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
+
         addNewPolicyButton = new Button("Add New Policy", new Icon(VaadinIcon.PLUS));
         topLayout.add(chooseStoreComboBox);
         topLayout.add(addNewPolicyButton);
@@ -43,29 +45,14 @@ public class PolicyView extends MainSettingView {
         policiesGrid.setWidthFull();
         rightContent.add(policiesGrid);
 
-        //TODO: complete this
-//        form = new ItemForm(presenter);
-//        form.setVisible(false);
-//
-//        drawer = createDrawer();
-//        rightContent.add(drawer);
-
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = event.getValue();
             presenter.onSelectStore(selectedOptionStoreName);
         });
 
-        policiesGrid.asSingleSelect().addValueChangeListener(event -> {
-            //TODO: complete this
-//            if (event.getValue() != null) {
-//                showForm(true, event.getValue());
-//            } else {
-//                showForm(false, null);
-//            }
-        });
-
         addNewPolicyButton.addClickListener(event -> {
-            presenter.onClickingAddNewItemButton();
+            AddPolicyDialog dialog = new AddPolicyDialog(presenter, null);
+            dialog.open();
         });
     }
 
