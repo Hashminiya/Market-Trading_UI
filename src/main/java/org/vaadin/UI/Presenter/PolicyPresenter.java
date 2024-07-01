@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.vaadin.UI.Util.Credentials;
+import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.Policies.AgeRestrictedPolicyDTO;
 import org.vaadin.UI.model.DTOs.Policies.ComplexPolicyDto;
@@ -26,7 +27,7 @@ public class PolicyPresenter implements IPresenter {
     private String currentStoreName;
     private final InventoryModel inventoryModel;
 
-    private List<PolicyDTO> storePolicies;
+    private List<PolicyViewDTO> storePolicies;
     public PolicyPresenter(PolicyView view) {
         this.view = view;
         this.policyModel = new PolicyModel();

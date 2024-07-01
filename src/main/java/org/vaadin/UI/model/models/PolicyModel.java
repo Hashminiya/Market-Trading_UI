@@ -1,12 +1,15 @@
 package org.vaadin.UI.model.models;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
+import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PolicyModel {
 
@@ -15,9 +18,25 @@ public class PolicyModel {
     public PolicyModel (){
         this.restTemplate = new RestTemplate();
     }
-    public List<PolicyDTO> getPolicies(String storeName, String token) {
-        return new ArrayList<>();
+    public List<PolicyViewDTO> getPolicies(String storeName, String token) {
+        try {
+            String url = "http://localhost:8080/storeManagement/viewAllPolicies?token=" + token + "&storeName=" + storeName;
+
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            return objectMapper.readValue(response.getBody(), new TypeReference<List<PolicyViewDTO>>() {});
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
+
+
+
 
     public List<String> getStores(String token) {
         String url = "http://localhost:8080/user/viewStoresByNameForUserOwnership?token=" + token;
