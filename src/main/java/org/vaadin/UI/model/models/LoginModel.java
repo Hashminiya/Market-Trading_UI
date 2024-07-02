@@ -20,7 +20,7 @@ public class LoginModel {
         try {
             ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/user/GuestEntry", null, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
-                Credentials.setToken(response.getBody(),"guest");
+                Credentials.setGuestToken(response.getBody(),"guest");
                 return "Guest entry successful";
             } else {
                 return response.getBody();
