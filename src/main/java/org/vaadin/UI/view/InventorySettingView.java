@@ -12,7 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.presenter.InventoryPresenter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.view.components.ItemForm;
+import org.vaadin.UI.view.components.ItemDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class InventorySettingView extends MainSettingView {
     private Button addNewItemButton;
     private InventoryPresenter presenter;
     private VerticalLayout drawer;
-    private ItemForm form;
+    private ItemDialog itemDialog;
 
     public InventorySettingView() {
         presenter = new InventoryPresenter(this);
@@ -47,8 +47,7 @@ public class InventorySettingView extends MainSettingView {
         inventoryGrid.setWidthFull();
         rightContent.add(inventoryGrid);
 
-        form = new ItemForm(presenter);
-        form.setVisible(false);
+        itemDialog = new ItemDialog(presenter);
 
         drawer = createDrawer();
         rightContent.add(drawer);
@@ -60,17 +59,20 @@ public class InventorySettingView extends MainSettingView {
 
         inventoryGrid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() != null) {
-                showForm(true, event.getValue());
-            } else {
-                showForm(false, null);
+                openItemDialog(event.getValue());
             }
+            itemDialog.setIsUpdate(true);
         });
 
         addNewItemButton.addClickListener(event -> {
-            presenter.onClickingAddNewItemButton();
+            openItemDialog(new ItemDTO());
+            itemDialog.setIsUpdate(false);
         });
     }
-
+    private void openItemDialog(ItemDTO item) {
+        itemDialog.setItem(item);
+        itemDialog.open();
+    }
     public void fillChooseStoreComboBox(List<String> storeList) {
         chooseStoreComboBox.setItems(storeList);
     }
@@ -98,18 +100,11 @@ public class InventorySettingView extends MainSettingView {
         drawerLayout.getStyle().set("top", "0");
         drawerLayout.getStyle().set("background", "white");
         drawerLayout.setVisible(false);
-        drawerLayout.add(form);
         return drawerLayout;
     }
 
-    public void showForm(boolean show, ItemDTO itemDTO) {
-        form.setVisible(show);
-        form.setEnabled(show);
-        drawer.setVisible(show);
-
-        if (show && itemDTO != null) {
-            form.setItem(itemDTO);
-        }
+    public void closeItemDialog() {
+        itemDialog.close();
     }
 
     public void showNotification(String message) {

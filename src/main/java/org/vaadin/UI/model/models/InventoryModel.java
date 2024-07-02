@@ -72,24 +72,23 @@ public class InventoryModel {
         }
     }
 
-    public String saveItem(ItemDTO itemDTO,String token) {
-        //Modifies http request to receive json
+    public String saveItem(ItemDTO itemDTO, String token) {
+        // Modifies http request to receive json
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Create request body
-        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
-        requestBody.add("itemName=", String.valueOf(itemDTO.getItemName()));
-        requestBody.add("description=", "");
-        requestBody.add("itemPrice=", String.valueOf(itemDTO.getTotalPrice()));
-        requestBody.add("stockAmount=", String.valueOf(itemDTO.getQuantity()));
-        requestBody.add("categories=","");
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
-
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/storeManagement/addItemToStore?token="+token, request, String.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            // Serialize ItemDTO to JSON
+            String jsonItem = objectMapper.writeValueAsString(itemDTO);
+
+            // Create request body
+            HttpEntity<String> request = new HttpEntity<>(jsonItem, headers);
+
+            // Send POST request
+            ResponseEntity<String> response = restTemplate.exchange(
+                    "http://localhost:8080/storeManagement/addItemToStore?token=" + token,
+                    HttpMethod.PUT, request, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 return "Item added successfully";
@@ -99,66 +98,61 @@ public class InventoryModel {
 
             }
         } catch (Exception e) {
-            return "Item addition - Failed";
+            return "Item addition - Failed: " + e.getMessage();
         }
     }
 
-    public String updateItem(ItemDTO itemDTO,String token) {
-        //Modifies http request to receive json
+    public String updateItem(ItemDTO itemDTO, String token) {
+        // Set HTTP headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Create request body
-        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
-        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
-        requestBody.add("newName=", String.valueOf(itemDTO.getItemName()));
-        requestBody.add("newPrice=", String.valueOf(itemDTO.getTotalPrice()));
-        requestBody.add("newAmount=", String.valueOf(itemDTO.getQuantity()));
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
-
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/storeManagement/updateItem?token="+token, request, String.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            // Create JSON payload from ItemDTO
+            String jsonPayload = objectMapper.writeValueAsString(itemDTO);
+
+            // Create request entity
+            HttpEntity<String> request = new HttpEntity<>(jsonPayload, headers);
+
+            // Construct URL with token
+            String url = "http://localhost:8080/storeManagement/updateItem?token=" + token;
+
+            // Send PATCH request
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                return "Item update successfully";
-
+                return "Item updated successfully";
             } else {
                 return "Item update - Failed";
 
             }
         } catch (Exception e) {
-            return "Item update - Failed";
+            return "Item update - Failed: " + e.getMessage();
         }
     }
 
     public String deleteItem(ItemDTO itemDTO, String token) {
         //Modifies http request to receive json
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); // Optional, you might not need it for DELETE request
+        String url = "http://localhost:8080/storeManagement/deleteItem?token=" + token + "&storeId=" + itemDTO.getStoreId() + "&itemId=" + itemDTO.getItemId();
 
-        // Create request body
-        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
-        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
+        HttpEntity<String> request = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/storeManagement/deleteItem?token="+token, request, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                return "Item update successfully";
-
+                return "Item deleted successfully";
             } else {
-                return "Item update - Failed";
-
+                return "Item deletion - Failed";
             }
         } catch (Exception e) {
-            return "Item update - Failed";
+            return "Item deletion - Failed";
         }
     }
+
 
     public List<String> getStoreCategories(String storeName, String token) {
         String url = "http://localhost:8080/storeManagement/viewCategoriesByStoreNameAndToken?token=" + token + "&storeName=" + storeName;
