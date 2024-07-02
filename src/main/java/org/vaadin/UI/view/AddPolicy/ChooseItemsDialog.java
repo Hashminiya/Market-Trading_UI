@@ -29,8 +29,8 @@ public class ChooseItemsDialog extends Dialog {
 
         // Configure the columns
         itemsGrid.addColumn(ItemDTO::getItemName).setHeader("Name");
-        itemsGrid.addColumn(ItemDTO::getId).setHeader("ID");
-        itemsGrid.addColumn(item -> String.join(", ", item.getItemCategories())).setHeader("Categories");
+        itemsGrid.addColumn(ItemDTO::getItemId).setHeader("ID");
+        itemsGrid.addColumn(item -> String.join(", ", item.getCategories())).setHeader("Categories");
 
         // Enable multi-selection mode
         itemsGrid.setSelectionMode(Grid.SelectionMode.MULTI);

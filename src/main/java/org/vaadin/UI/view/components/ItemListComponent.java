@@ -22,14 +22,14 @@ public class ItemListComponent extends VerticalLayout {
             RouterLink itemLink = new RouterLink();
             itemLink.setRoute(ItemView.class);
             itemLink.setText(item.getItemName());
-            itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getId())))));
+            itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getItemId())))));
             itemLink.getStyle().set("cursor", "pointer");
             return itemLink;
         }).setHeader("Name");
 
-        itemsGrid.addColumn(ItemDTO::getItemPrice).setHeader("Price");
-        itemsGrid.addColumn(ItemDTO::getItemDescription).setHeader("Description");
-        itemsGrid.addColumn(item -> item.getItemCategories() != null ? String.join(", ", item.getItemCategories()) : "No Categories").setHeader("Category");
+        itemsGrid.addColumn(ItemDTO::getTotalPrice).setHeader("Price");
+        itemsGrid.addColumn(ItemDTO::getDescription).setHeader("Description");
+        itemsGrid.addColumn(item -> item.getCategories() != null ? String.join(", ", item.getCategories()) : "No Categories").setHeader("Category");
 
         itemsGrid.addComponentColumn(item -> {
             Button addToCartButton = new Button("Add to Cart");

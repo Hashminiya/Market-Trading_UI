@@ -5,64 +5,47 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ItemDTO implements Serializable {
-    @JsonProperty("id")
-    private long id;
 
-    @JsonProperty("price")
-    private double itemPrice;
+    @JsonProperty("itemId")
+    private long itemId;
 
-    @JsonProperty("quantity")
-    private int itemQuantity;
-
-    @JsonProperty("name")
+    @JsonProperty("itemName")
     private String itemName;
 
-    @JsonProperty("categories")
-    private List<String> itemCategories;
-
-    @JsonProperty("description")
-    private String itemDescription;
+    @JsonProperty("quantity")
+    private int quantity;
 
     @JsonProperty("storeId")
     private long storeId;
 
-    // Add an empty constructor if you want Jackson to be able to instantiate ItemDTO without parameters
+    @JsonProperty("totalPrice")
+    private double totalPrice;
+
+    @JsonProperty("categories")
+    private List<String> categories;
+
+    @JsonProperty("description")
+    private String description;
+
     public ItemDTO() {
     }
 
-    public ItemDTO(long id, String itemName, int quantity, long storeId, double price, List<String> categories, String description) {
-        this.id = id;
+    public ItemDTO(long itemId, String itemName, int quantity, long storeId, double totalPrice, List<String> categories, String description) {
+        this.itemId = itemId;
         this.itemName = itemName;
-        this.itemQuantity = quantity;
-        this.itemPrice = price;
-        this.itemCategories = categories;
-        this.itemDescription = description;
+        this.quantity = quantity;
         this.storeId = storeId;
+        this.totalPrice = totalPrice;
+        this.categories = categories;
+        this.description = description;
     }
 
-    // Getters and Setters
-    public long getId() {
-        return id;
+    public long getItemId() {
+        return itemId;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public double getItemPrice() {
-        return itemPrice;
-    }
-
-    public void setItemPrice(double itemPrice) {
-        this.itemPrice = itemPrice;
-    }
-
-    public int getItemQuantity() {
-        return itemQuantity;
-    }
-
-    public void setItemQuantity(int itemQuantity) {
-        this.itemQuantity = itemQuantity;
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
     }
 
     public String getItemName() {
@@ -73,23 +56,43 @@ public class ItemDTO implements Serializable {
         this.itemName = itemName;
     }
 
-    public List<String> getItemCategories() {
-        return itemCategories;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setItemCategories(List<String> itemCategories) {
-        this.itemCategories = itemCategories;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
-    }
-
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
-    }
-
-    public Long getStoreId() {
+    public long getStoreId() {
         return storeId;
+    }
+
+    public void setStoreId(long storeId) {
+        this.storeId = storeId;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

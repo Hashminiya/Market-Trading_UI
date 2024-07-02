@@ -25,11 +25,11 @@ public class ItemPresenter {
         try {
             long itemId = Long.parseLong(itemIdStr);
             Optional<StoreDTO> store = storeModel.getStores().stream()
-                    .filter(s -> s.getItems().stream().anyMatch(item -> item.getId() == itemId))
+                    .filter(s -> s.getItems().stream().anyMatch(item -> item.getItemId() == itemId))
                     .findFirst();
             if (store.isPresent()) {
                 ItemDTO item = store.get().getItems().stream()
-                        .filter(i -> i.getId() == itemId)
+                        .filter(i -> i.getItemId() == itemId)
                         .findFirst()
                         .orElse(null);
                 if (item != null) {
@@ -48,7 +48,7 @@ public class ItemPresenter {
     public void addItemToCart(ItemDTO item, int amount) {
         String token = Credentials.getToken();
         if (token != null && !token.isEmpty()) {
-            String result = cartModel.addItemToCart(token,item.getStoreId(), item.getId(), amount); // Assuming quantity of 1 for simplicity
+            String result = cartModel.addItemToCart(token,item.getStoreId(), item.getItemId(), amount); // Assuming quantity of 1 for simplicity
             //if result is number as string then it was successful and we can show a notification with the item name
             if (result.matches("\\d+")) {
                 Notification.show("Added " + item.getItemName() + " to the cart.");

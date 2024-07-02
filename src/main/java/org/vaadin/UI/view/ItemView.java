@@ -65,10 +65,10 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     public void displayItemDetails(ItemDTO item, StoreDTO store) {
         this.item = item;
         itemName.setText(item.getItemName());
-        itemPrice.setText("Price: " + item.getItemPrice());
-        itemQuantity.setText("Quantity: " + item.getItemQuantity());
-        itemDescription.setText("Description: " + item.getItemDescription()); // Set description
-        itemCategories.setText("Categories: " + String.join(", ", item.getItemCategories())); // Set categories
+        itemPrice.setText("Price: " + item.getTotalPrice());
+        itemQuantity.setText("Quantity: " + item.getQuantity());
+        itemDescription.setText("Description: " + item.getDescription()); // Set description
+        itemCategories.setText("Categories: " + String.join(", ", item.getCategories())); // Set categories
 
         // Link to the store
         storeLinkLayout.removeAll();
@@ -81,7 +81,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
         HorizontalLayout relatedItemsLayoutInner = new HorizontalLayout();
         relatedItemsLayoutInner.setSpacing(true);
         List<ItemDTO> relatedItems = store.getItems().stream()
-                .filter(i -> i.getId() != item.getId())
+                .filter(i -> i.getItemId() != item.getItemId())
                 .collect(Collectors.toList());
         for (ItemDTO relatedItem : relatedItems) {
             relatedItemsLayoutInner.add(new ItemComponent(relatedItem));
