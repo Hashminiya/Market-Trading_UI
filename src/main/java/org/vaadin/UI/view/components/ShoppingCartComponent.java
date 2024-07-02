@@ -21,7 +21,11 @@ public class ShoppingCartComponent extends VerticalLayout {
         this.baskets = baskets;
         removeAll();
         if (baskets != null) {
-            baskets.forEach(basket -> add(new ShoppingBasketComponent(basket)));
+            baskets.forEach(basket -> {
+                ShoppingBasketComponent basketComponent = new ShoppingBasketComponent(basket);
+                basketComponent.addClassName("shopping-basket-card");
+                add(basketComponent);
+            });
             addCartTotalPrice();
         }
     }
@@ -31,6 +35,8 @@ public class ShoppingCartComponent extends VerticalLayout {
                 .flatMap(basket -> basket.getItems().stream())
                 .mapToDouble(item -> item.getQuantity() * item.getPriceAfterDiscount())
                 .sum();
-        add(new Div(new Text("Total Cart Price: " + totalCartPrice)));
+        Div totalPriceDiv = new Div(new Text("Total Cart Price: " + totalCartPrice));
+        totalPriceDiv.addClassName("cart-total-price");
+        add(totalPriceDiv);
     }
 }

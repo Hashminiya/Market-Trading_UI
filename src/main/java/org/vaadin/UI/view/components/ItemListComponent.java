@@ -34,7 +34,6 @@ public class ItemListComponent extends VerticalLayout {
         itemsGrid.addComponentColumn(item -> {
             Button addToCartButton = new Button("Add to Cart");
             addToCartButton.addClickListener(click -> {
-                Notification.show(item.getItemName() + " added to cart.");
             });
             return addToCartButton;
         }).setHeader("Actions");

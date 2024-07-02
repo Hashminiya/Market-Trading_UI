@@ -25,11 +25,12 @@ public class CartView extends ViewTemplate {
 
         Div title = new Div();
         title.setText("Shopping Cart");
-        title.getStyle().set("font-size", "24px");
+        title.addClassName("shopping-cart-title");
 
         shoppingCartComponent = new ShoppingCartComponent();
 
         checkoutButton = new Button("Checkout");
+        checkoutButton.addClassName("checkout-button");
         checkoutButton.addClickListener(event -> {
             presenter.checkout("1234567812345678", "12/24", "123", "DISCOUNT10");
         });

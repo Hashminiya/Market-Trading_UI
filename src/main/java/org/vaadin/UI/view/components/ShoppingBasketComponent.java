@@ -18,12 +18,18 @@ public class ShoppingBasketComponent extends VerticalLayout {
         setSpacing(true);
         setWidthFull();
 
-        basketGrid = new Grid<>(BasketItemDTO.class);
-        basketGrid.setColumns("itemName", "quantity", "categories", "description");
+        basketGrid = new Grid<>(BasketItemDTO.class, false);
+        basketGrid.addColumn(BasketItemDTO::getItemName).setHeader("Item Name");
+        basketGrid.addColumn(BasketItemDTO::getQuantity).setHeader("Quantity");
+        basketGrid.addColumn(BasketItemDTO::getCategories).setHeader("Categories");
+        basketGrid.addColumn(BasketItemDTO::getDescription).setHeader("Description");
         basketGrid.addColumn(BasketItemDTO::getTotalPrice).setHeader("Item Price");
         basketGrid.addColumn(BasketItemDTO::getPriceAfterDiscount).setHeader("Item Price After Discount");
         basketGrid.addColumn(basketItem -> basketItem.getQuantity() * basketItem.getPriceAfterDiscount()).setHeader("Total Price");
         basketGrid.setItems(shoppingBasket.getItems());
+
+        int numberOfItems = shoppingBasket.getItems().size();
+        basketGrid.setHeight((numberOfItems * 50) + "px"); // Adjust 50px based on row height
 
         add(basketGrid);
         addBasketTotalPrice();
@@ -33,6 +39,8 @@ public class ShoppingBasketComponent extends VerticalLayout {
         double totalPrice = shoppingBasket.getItems().stream()
                 .mapToDouble(item -> item.getQuantity() * item.getPriceAfterDiscount())
                 .sum();
-        add(new Div(new Text("Basket Total Price: " + totalPrice)));
+        Div totalPriceDiv = new Div(new Text("Basket Total Price: " + totalPrice));
+        totalPriceDiv.addClassName("basket-total-price");
+        add(totalPriceDiv);
     }
 }
