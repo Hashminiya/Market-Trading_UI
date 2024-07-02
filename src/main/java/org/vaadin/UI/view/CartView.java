@@ -15,6 +15,7 @@ public class CartView extends ViewTemplate {
 
     private CartPresenter presenter;
     private ShoppingCartComponent shoppingCartComponent;
+    private Button checkoutButton;
 
     public CartView() {
         presenter = new CartPresenter(this);
@@ -28,12 +29,12 @@ public class CartView extends ViewTemplate {
 
         shoppingCartComponent = new ShoppingCartComponent();
 
-        Button checkoutButton = new Button("Checkout");
+        checkoutButton = new Button("Checkout");
         checkoutButton.addClickListener(event -> {
             presenter.checkout("1234567812345678", "12/24", "123", "DISCOUNT10");
         });
 
-        add(title, shoppingCartComponent, checkoutButton);
+        add(title, shoppingCartComponent);
 
         // Load the cart items when the view is initialized
         presenter.onViewLoaded();
@@ -42,6 +43,7 @@ public class CartView extends ViewTemplate {
     public void displayShoppingCart(ShoppingCartDTO shoppingCart) {
         if (shoppingCart != null && shoppingCart.getBaskets() != null) {
             shoppingCartComponent.setShoppingBaskets(shoppingCart.getBaskets());
+            add(checkoutButton);
         } else {
             showNotification("No items found in the cart.");
         }
