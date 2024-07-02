@@ -26,6 +26,11 @@ public class Credentials {
         isLogedIn = true;
     }
 
+    public static void setGuestToken(String value, String user) {
+        token = value;
+        userName = user;
+    }
+
     public static String getUserName() {
         return userName;
     }
