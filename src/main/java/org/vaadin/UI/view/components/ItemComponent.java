@@ -24,11 +24,11 @@ public class ItemComponent extends VerticalLayout {
         RouterLink itemLink = new RouterLink();
         itemLink.setRoute(ItemView.class);
         itemLink.setText(item.getItemName());
-        itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getId())))));
+        itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getItemId())))));
         itemLink.getStyle().set("cursor", "pointer");
         add(itemLink);
 
-        Paragraph price = new Paragraph("Price: " + item.getItemPrice());
+        Paragraph price = new Paragraph("Price: " + item.getTotalPrice());
         Button addToCartButton = new Button(new Icon(VaadinIcon.CART));
         addToCartButton.getElement().setProperty("title", "Add to Cart");
         addToCartButton.addClickListener(event -> presenter.addItemToCart(item,1));

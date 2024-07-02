@@ -23,6 +23,7 @@ public class CartModel {
         return response.getBody();
     }
 
+
     public String addItemToCart(String token, long storeId, long itemId, int quantity) {
         String url = "http://localhost:8080/user/addItemToBasket";
         HttpHeaders headers = new HttpHeaders();

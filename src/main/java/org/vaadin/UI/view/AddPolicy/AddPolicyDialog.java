@@ -114,7 +114,7 @@ public class AddPolicyDialog extends Dialog {
             maxAmountPolicy.setName(nameField.getValue());
             maxAmountPolicy.setMaxAmount(maxField.getValue());
             maxAmountPolicy.setAllStorePolicy(isAllStorePolicy);
-            maxAmountPolicy.setItems(itemsChosen.stream().map(ItemDTO::getId).toList());
+            maxAmountPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
             maxAmountPolicy.setCategories(categoriesChosen);
 
             if(parent != null){
@@ -146,7 +146,7 @@ public class AddPolicyDialog extends Dialog {
             ageRestrictedPolicy.setName(nameField.getValue());
             ageRestrictedPolicy.setAge(ageField.getValue());
             ageRestrictedPolicy.setAllStorePolicy(isAllStorePolicy);
-            ageRestrictedPolicy.setItems(itemsChosen.stream().map(ItemDTO::getId).toList());
+            ageRestrictedPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
             ageRestrictedPolicy.setCategories(categoriesChosen);
             // Add logic to save the age restricted policy
             if(parent != null){

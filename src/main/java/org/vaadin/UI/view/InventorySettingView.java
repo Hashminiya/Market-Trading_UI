@@ -81,12 +81,11 @@ public class InventorySettingView extends MainSettingView {
 
     private Grid<ItemDTO> createInventoryGrid() {
         Grid<ItemDTO> grid = new Grid<>(ItemDTO.class);
-        grid.setColumns("id", "itemName", "itemQuantity", "storeId", "itemPrice");
-        grid.getColumnByKey("id").setHeader("Item ID");
+        grid.setColumns("itemId", "itemName", "quantity", "totalPrice");
+        grid.getColumnByKey("itemId").setHeader("Item ID");
         grid.getColumnByKey("itemName").setHeader("Item Name");
-        grid.getColumnByKey("itemQuantity").setHeader("Quantity Available");
-//        grid.getColumnByKey("storeId").setHeader("Store ID");
-        grid.getColumnByKey("itemPrice").setHeader("Price");
+        grid.getColumnByKey("quantity").setHeader("Quantity Available");
+        grid.getColumnByKey("totalPrice").setHeader("Price");
         return grid;
     }
 
@@ -112,6 +111,7 @@ public class InventorySettingView extends MainSettingView {
             form.setItem(itemDTO);
         }
     }
+
     public void showNotification(String message) {
         Notification.show(message);
     }

@@ -82,8 +82,8 @@ public class InventoryModel {
         requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
         requestBody.add("itemName=", String.valueOf(itemDTO.getItemName()));
         requestBody.add("description=", "");
-        requestBody.add("itemPrice=", String.valueOf(itemDTO.getItemPrice()));
-        requestBody.add("stockAmount=", String.valueOf(itemDTO.getItemQuantity()));
+        requestBody.add("itemPrice=", String.valueOf(itemDTO.getTotalPrice()));
+        requestBody.add("stockAmount=", String.valueOf(itemDTO.getQuantity()));
         requestBody.add("categories=","");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
@@ -111,10 +111,10 @@ public class InventoryModel {
         // Create request body
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
-        requestBody.add("itemId=", String.valueOf(itemDTO.getId()));
+        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
         requestBody.add("newName=", String.valueOf(itemDTO.getItemName()));
-        requestBody.add("newPrice=", String.valueOf(itemDTO.getItemPrice()));
-        requestBody.add("newAmount=", String.valueOf(itemDTO.getItemQuantity()));
+        requestBody.add("newPrice=", String.valueOf(itemDTO.getTotalPrice()));
+        requestBody.add("newAmount=", String.valueOf(itemDTO.getQuantity()));
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
 
@@ -141,7 +141,7 @@ public class InventoryModel {
         // Create request body
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("storeId=", String.valueOf(itemDTO.getStoreId()));
-        requestBody.add("itemId=", String.valueOf(itemDTO.getId()));
+        requestBody.add("itemId=", String.valueOf(itemDTO.getItemId()));
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
 
