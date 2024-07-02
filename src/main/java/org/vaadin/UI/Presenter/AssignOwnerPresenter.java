@@ -1,10 +1,8 @@
 package org.vaadin.UI.Presenter;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.AssignOwnerModel;
-import org.vaadin.UI.model.models.CreateStoreModel;
-import org.vaadin.UI.presenter.Interfaces.IPresenter;
+import org.vaadin.UI.Presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.AssignOwnerView;
-import org.vaadin.UI.view.CreateStoreView;
 
 public class AssignOwnerPresenter implements IPresenter {
 

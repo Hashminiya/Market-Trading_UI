@@ -1,3 +1,4 @@
+
 package org.vaadin.UI.view.components;
 
 import com.vaadin.flow.component.Text;
@@ -27,9 +28,6 @@ public class ShoppingBasketComponent extends VerticalLayout {
         basketGrid.addColumn(BasketItemDTO::getPriceAfterDiscount).setHeader("Item Price After Discount");
         basketGrid.addColumn(basketItem -> basketItem.getQuantity() * basketItem.getPriceAfterDiscount()).setHeader("Total Price");
         basketGrid.setItems(shoppingBasket.getItems());
-
-        int numberOfItems = shoppingBasket.getItems().size();
-        basketGrid.setHeight((numberOfItems * 50) + "px"); // Adjust 50px based on row height
 
         add(basketGrid);
         addBasketTotalPrice();

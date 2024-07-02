@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.PolicyViewDTO;
-import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.Presenter.PolicyPresenter;
 import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 
 import java.util.List;

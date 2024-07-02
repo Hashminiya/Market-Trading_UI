@@ -1,18 +1,14 @@
 package org.vaadin.UI.view;
 
-import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.button.Button;
 
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.StoreOwnerSettingPresenter;
-import com.vaadin.flow.component.combobox.ComboBox;
+import org.vaadin.UI.Presenter.StoreOwnerSettingPresenter;
 
 import java.util.*;
 
