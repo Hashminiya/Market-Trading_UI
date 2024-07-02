@@ -17,6 +17,8 @@ public class InventoryPresenter implements IPresenter {
     private int storeId;
     private ItemDTO emptyItem;
 
+    private String currenStore;
+
     public InventoryPresenter(InventorySettingView view) {
         this.view = view;
         this.inventoryModel = new InventoryModel();
@@ -35,41 +37,43 @@ public class InventoryPresenter implements IPresenter {
 
     public void onSelectStore(String storeName) {
         storeItems = inventoryModel.getStoreItems(storeName,Credentials.getToken());
-        //storeItems = getDemoItems();
-        // storeItems = inventoryModel.getStoreItems(storeName);
-        // storeItems = inventoryModel.getStoreItems(storeName);
-        storeItems = getDemoItems();
         view.fillUpInventory(storeItems);
+        currenStore = storeName;
     }
 
     public void onSavingItem(ItemDTO item) {
         String response = inventoryModel.saveItem(item, Credentials.getToken());
         if (response != null) {
             view.showNotification(response);
+            // Refresh the inventory grid
+            onSelectStore(currenStore);
         } else {
-            view.showNotification("Item saved successfully");
+            view.showNotification("Operation failed");
         }
     }
 
-    public void onEditingItem(ItemDTO item) {
+    public void onUpdatingItem(ItemDTO item) {
         String response = inventoryModel.updateItem(item, Credentials.getToken());
         if (response != null) {
             view.showNotification(response);
+            // Refresh the inventory grid
+            onSelectStore(currenStore);
         } else {
-            view.showNotification("Item updated successfully");
+            view.showNotification("Operation failed");
         }
     }
 
     public void onCancleItem() {
-        view.showForm(false, emptyItem);
+        view.closeItemDialog();
     }
 
     public void onDeleteItem(ItemDTO item) {
         String response = inventoryModel.deleteItem(item, Credentials.getToken());
         if (response != null) {
             view.showNotification(response);
+            onSelectStore(currenStore);
         } else {
-            view.showNotification("Item deleted successfully");
+            view.showNotification("Item deletion failed");
         }
     }
 
@@ -90,9 +94,5 @@ public class InventoryPresenter implements IPresenter {
         } else {
             view.showNotification("Unable to retrieve stores from server");
         }
-    }
-
-    public void onClickingAddNewItemButton() {
-        view.showForm(true, emptyItem);
     }
 }
