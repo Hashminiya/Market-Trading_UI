@@ -1,6 +1,5 @@
 package org.vaadin.UI.view.components;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -15,7 +14,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.converter.StringToBigDecimalConverter;
+import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import org.vaadin.UI.presenter.InventoryPresenter;
@@ -37,10 +36,10 @@ public class ItemForm extends Div {
     private Binder<ItemDTO> binder;
     private ItemDTO currentItem;
 
-    private static class PriceConverter extends StringToBigDecimalConverter {
+    private static class PriceConverter extends StringToDoubleConverter {
 
         public PriceConverter() {
-            super(BigDecimal.ZERO, "Cannot convert value to a number.");
+            super(0.0, "Cannot convert value to a number.");
         }
 
         @Override
@@ -100,8 +99,8 @@ public class ItemForm extends Div {
         content.add(horizontalLayout);
 
         binder = new Binder<>(ItemDTO.class);
-        binder.forField(price).withConverter(new PriceConverter()).bind("itemPrice");
-        binder.forField(quantity).withConverter(new StockCountConverter()).bind("itemQuantity");
+        binder.forField(price).withConverter(new PriceConverter()).bind("totalPrice");
+        binder.forField(quantity).withConverter(new StockCountConverter()).bind("quantity");
         binder.bindInstanceFields(this);
 
         binder.addStatusChangeListener(event -> {
@@ -145,5 +144,6 @@ public class ItemForm extends Div {
 
     public void setItem(ItemDTO item) {
         binder.setBean(item);
+        this.currentItem = item;
     }
 }
