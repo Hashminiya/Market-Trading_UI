@@ -49,7 +49,12 @@ public class ItemPresenter {
         String token = Credentials.getToken();
         if (token != null && !token.isEmpty()) {
             String result = cartModel.addItemToCart(token,item.getStoreId(), item.getId(), amount); // Assuming quantity of 1 for simplicity
-            Notification.show(result);
+            //if result is number as string then it was successful and we can show a notification with the item name
+            if (result.matches("\\d+")) {
+                Notification.show("Added " + item.getItemName() + " to the cart.");
+            } else {
+                Notification.show(result);
+            }
             // Refresh the cart view to show the newly added item
             view.getUI().ifPresent(ui -> ui.navigate("cart"));
         } else {
