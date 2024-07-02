@@ -3,6 +3,7 @@ package org.vaadin.UI.view;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -23,7 +24,6 @@ public class InventorySettingView extends MainSettingView {
     private Grid<ItemDTO> inventoryGrid;
     private Button addNewItemButton;
     private InventoryPresenter presenter;
-    private VerticalLayout drawer;
     private ItemDialog itemDialog;
 
     public InventorySettingView() {
@@ -33,6 +33,7 @@ public class InventorySettingView extends MainSettingView {
         rightContent.removeAll();
 
         HorizontalLayout topLayout = new HorizontalLayout();
+        topLayout.add(new H1("Inventory"));
         chooseStoreComboBox = new ComboBox<>("Select your store");
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
@@ -48,9 +49,6 @@ public class InventorySettingView extends MainSettingView {
         rightContent.add(inventoryGrid);
 
         itemDialog = new ItemDialog(presenter);
-
-        drawer = createDrawer();
-        rightContent.add(drawer);
 
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = event.getValue();
@@ -89,18 +87,6 @@ public class InventorySettingView extends MainSettingView {
         grid.getColumnByKey("quantity").setHeader("Quantity Available");
         grid.getColumnByKey("totalPrice").setHeader("Price");
         return grid;
-    }
-
-    private VerticalLayout createDrawer() {
-        VerticalLayout drawerLayout = new VerticalLayout();
-        drawerLayout.setWidth("300px");
-        drawerLayout.setHeightFull();
-        drawerLayout.getStyle().set("position", "fixed");
-        drawerLayout.getStyle().set("right", "0");
-        drawerLayout.getStyle().set("top", "0");
-        drawerLayout.getStyle().set("background", "white");
-        drawerLayout.setVisible(false);
-        return drawerLayout;
     }
 
     public void closeItemDialog() {

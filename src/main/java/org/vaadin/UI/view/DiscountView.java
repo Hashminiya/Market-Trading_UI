@@ -3,6 +3,7 @@ package org.vaadin.UI.view;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -31,6 +32,7 @@ public class DiscountView extends MainSettingView {
         rightContent.removeAll();
 
         HorizontalLayout topLayout = new HorizontalLayout();
+        topLayout.add(new H1("Discounts"));
         chooseStoreComboBox = new ComboBox<>("Select your store");
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
