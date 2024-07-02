@@ -1,7 +1,10 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.presenter.MarketHistoryPurchasesPresenter;
@@ -14,11 +17,22 @@ public class MarketHistoryPurchasesView extends MainSettingView{
 
     private MarketHistoryPurchasesPresenter presenter;
     private Grid<PurchaseDTO> grid;
-    public MarketHistoryPurchasesView(){
+    public MarketHistoryPurchasesView() {
         presenter = new MarketHistoryPurchasesPresenter(this);
-        VerticalLayout restOfPage = new VerticalLayout();
-        restOfPage.add(initGrid());
-        add(restOfPage);
+
+        VerticalLayout rightContent = getRightContent();
+        rightContent.removeAll();
+        HorizontalLayout topLayout = new HorizontalLayout();
+        topLayout.add(new H1("Market History"));
+
+        topLayout.setWidthFull();
+        topLayout.setAlignItems(FlexComponent.Alignment.END);
+        rightContent.add(topLayout);
+
+        // Initialize the grid
+        grid = initGrid();
+
+        rightContent.add(grid);
     }
     private Grid initGrid() {
         grid = new Grid<>(PurchaseDTO.class);
