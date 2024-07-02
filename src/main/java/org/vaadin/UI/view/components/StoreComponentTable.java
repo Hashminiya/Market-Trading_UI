@@ -47,7 +47,6 @@ public class StoreComponentTable extends VerticalLayout {
             Button addToCartButton = new Button("Add to Cart");
             addToCartButton.addClickListener(click -> {
                 presenter.addItemToCart(item,  1);
-                Notification.show(item.getItemName() + " added to cart.");
             });
             return addToCartButton;
         }).setHeader("Actions");

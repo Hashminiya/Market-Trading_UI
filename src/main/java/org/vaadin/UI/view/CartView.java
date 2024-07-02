@@ -1,21 +1,21 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.model.DTOs.BasketItemDTO;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
 import org.vaadin.UI.presenter.CartPresenter;
+import org.vaadin.UI.view.components.ShoppingCartComponent;
 
 @PageTitle("Shopping Cart")
 @Route("cart")
 public class CartView extends ViewTemplate {
 
     private CartPresenter presenter;
-    private Grid<BasketItemDTO> cartGrid;
+    private ShoppingCartComponent shoppingCartComponent;
+    private Button checkoutButton;
 
     public CartView() {
         presenter = new CartPresenter(this);
@@ -25,18 +25,17 @@ public class CartView extends ViewTemplate {
 
         Div title = new Div();
         title.setText("Shopping Cart");
-        title.getStyle().set("font-size", "24px");
+        title.addClassName("shopping-cart-title");
 
-        cartGrid = new Grid<>(BasketItemDTO.class);
-        cartGrid.setColumns("itemName", "quantity", "totalPrice", "categories", "description");
-        cartGrid.addColumn(cartItem -> cartItem.getQuantity() * cartItem.getPriceAfterDiscount()).setHeader("Total After Discount");
+        shoppingCartComponent = new ShoppingCartComponent();
 
-        Button checkoutButton = new Button("Checkout");
+        checkoutButton = new Button("Checkout");
+        checkoutButton.addClassName("checkout-button");
         checkoutButton.addClickListener(event -> {
             presenter.checkout("1234567812345678", "12/24", "123", "DISCOUNT10");
         });
 
-        add(title, cartGrid, checkoutButton);
+        add(title, shoppingCartComponent);
 
         // Load the cart items when the view is initialized
         presenter.onViewLoaded();
@@ -44,7 +43,8 @@ public class CartView extends ViewTemplate {
 
     public void displayShoppingCart(ShoppingCartDTO shoppingCart) {
         if (shoppingCart != null && shoppingCart.getBaskets() != null) {
-            shoppingCart.getBaskets().forEach(basket -> cartGrid.setItems(basket.getItems()));
+            shoppingCartComponent.setShoppingBaskets(shoppingCart.getBaskets());
+            add(checkoutButton);
         } else {
             showNotification("No items found in the cart.");
         }
