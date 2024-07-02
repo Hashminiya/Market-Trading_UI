@@ -140,14 +140,14 @@ public class ItemDialog extends Dialog {
     }
 
     private void delete() {
-        if (currentItem != null && currentItem.getId() != 0) {
+        if (currentItem != null && currentItem.getItemId() != 0) {
             presenter.onDeleteItem(currentItem);
             close();
         }
     }
 
     private void update(){
-        if (currentItem != null && currentItem.getId() != 0 && isUpdate) {
+        if (currentItem != null && currentItem.getItemId() != 0 && isUpdate) {
             presenter.onUpdatingItem(currentItem);
             close();
         }

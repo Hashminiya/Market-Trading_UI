@@ -136,7 +136,7 @@ public class InventoryModel {
         //Modifies http request to receive json
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); // Optional, you might not need it for DELETE request
-        String url = "http://localhost:8080/storeManagement/deleteItem?token=" + token + "&storeId=" + itemDTO.getStoreId() + "&itemId=" + itemDTO.getId();
+        String url = "http://localhost:8080/storeManagement/deleteItem?token=" + token + "&storeId=" + itemDTO.getStoreId() + "&itemId=" + itemDTO.getItemId();
 
         HttpEntity<String> request = new HttpEntity<>(headers);
 
