@@ -14,6 +14,7 @@ public class MainSettingView extends ViewTemplate {
 
     private MainSettingsPresenter mainSettingsPresenter;
     private VerticalLayout rightContent;
+    private Button currentActiveButton;
 
     public MainSettingView() {
         mainSettingsPresenter = new MainSettingsPresenter(this);
@@ -45,6 +46,7 @@ public class MainSettingView extends ViewTemplate {
         Button inventoryButton = new Button("Inventory", new Icon(VaadinIcon.SHOP));
         inventoryButton.setWidthFull();
         inventoryButton.addClickListener(event -> {
+            onButtonClick(inventoryButton);
             mainSettingsPresenter.onInventoryButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/inventory"));
         });
@@ -52,6 +54,7 @@ public class MainSettingView extends ViewTemplate {
         Button purchaseHistoryButton = new Button("Purchases", new Icon(VaadinIcon.SHOP));
         purchaseHistoryButton.setWidthFull();
         purchaseHistoryButton.addClickListener(event -> {
+            onButtonClick(purchaseHistoryButton);
             mainSettingsPresenter.onPurchaseHistoryButton();
             getUI().ifPresent(ui -> ui.navigate("settings/Purchases"));
         });
@@ -59,6 +62,7 @@ public class MainSettingView extends ViewTemplate {
         Button manageStoreButton = new Button("Manage Store", new Icon(VaadinIcon.COGS));
         manageStoreButton.setWidthFull();
         manageStoreButton.addClickListener(event -> {
+            onButtonClick(manageStoreButton);
             mainSettingsPresenter.onStoreManagementButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/store-setting"));
         });
@@ -66,6 +70,7 @@ public class MainSettingView extends ViewTemplate {
         Button assignOwnerButton = new Button("Assign owner", new Icon(VaadinIcon.COGS));
         assignOwnerButton.setWidthFull();
         assignOwnerButton.addClickListener(event -> {
+            onButtonClick(assignOwnerButton);
             mainSettingsPresenter.onStoreManagementButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/assign owner"));
         });
@@ -73,6 +78,7 @@ public class MainSettingView extends ViewTemplate {
         Button assignManagerButton = new Button("Assign manager", new Icon(VaadinIcon.COGS));
         assignManagerButton.setWidthFull();
         assignManagerButton.addClickListener(event -> {
+            onButtonClick(assignManagerButton);
             mainSettingsPresenter.onStoreManagementButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/assign manager"));
         });
@@ -80,6 +86,7 @@ public class MainSettingView extends ViewTemplate {
         Button marketHistoryButton = new Button("Market History", new Icon(VaadinIcon.TIME_BACKWARD));
         marketHistoryButton.setWidthFull();
         marketHistoryButton.addClickListener(event -> {
+            onButtonClick(marketHistoryButton);
             mainSettingsPresenter.onMarketHistoryButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/market-history"));
         });
@@ -87,6 +94,7 @@ public class MainSettingView extends ViewTemplate {
         Button policyButton = new Button("Policies", new Icon(VaadinIcon.LIST_OL));
         policyButton.setWidthFull();
         policyButton.addClickListener(event -> {
+            onButtonClick(policyButton);
             mainSettingsPresenter.onPolicyButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/policies"));
         });
@@ -94,6 +102,7 @@ public class MainSettingView extends ViewTemplate {
         Button discountButton = new Button("Discounts", new Icon(VaadinIcon.BOOK_PERCENT));
         discountButton.setWidthFull();
         discountButton.addClickListener(event -> {
+            onButtonClick(discountButton);
             mainSettingsPresenter.onDiscountButtonClick();
             getUI().ifPresent(ui -> ui.navigate("settings/discounts"));
         });
@@ -101,6 +110,18 @@ public class MainSettingView extends ViewTemplate {
         // Add buttons to the layout
         leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, marketHistoryButton , policyButton , discountButton);
         return leftBar;
+    }
+    private void onButtonClick(Button button) {
+        // Reset the style of the previously active button
+        if (currentActiveButton != null) {
+            currentActiveButton.getStyle().remove("background-color");
+        }
+
+        // Set the style of the newly clicked button
+        button.getStyle().set("background-color", "#D3D3D3"); // Light gray color for active button
+
+        // Update the reference to the currently active button
+        currentActiveButton = button;
     }
 
     protected VerticalLayout getRightContent() {
