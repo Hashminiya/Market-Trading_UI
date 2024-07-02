@@ -114,14 +114,14 @@ public class ItemDialog extends Dialog {
 
         binder.forField(price)
                 .withConverter(new StringToDoubleConverter("Invalid price"))
-                .bind(ItemDTO::getItemPrice, ItemDTO::setItemPrice);
+                .bind(ItemDTO::getTotalPrice, ItemDTO::setTotalPrice);
 
         binder.forField(quantity)
                 .withConverter(new StringToIntegerConverter("Invalid quantity"))
-                .bind(ItemDTO::getItemQuantity, ItemDTO::setItemQuantity);
+                .bind(ItemDTO::getQuantity, ItemDTO::setQuantity);
 
         binder.forField(description)
-                .bind(ItemDTO::getItemDescription, ItemDTO::setItemDescription);
+                .bind(ItemDTO::getDescription, ItemDTO::setDescription);
 
 //        binder.forField(categories)
 //                .withConverter(
