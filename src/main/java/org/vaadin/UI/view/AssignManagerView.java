@@ -8,7 +8,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.Presenter.AssignManagerPresenter;
-import org.vaadin.UI.Presenter.AssignOwnerPresenter;
 
 import java.util.Arrays;
 import java.util.List;

@@ -15,7 +15,7 @@ import org.vaadin.UI.model.DTOs.Policies.AgeRestrictedPolicyDTO;
 import org.vaadin.UI.model.DTOs.Policies.ComplexPolicyDto;
 import org.vaadin.UI.model.DTOs.Policies.MaximumQuantityPolicyDTO;
 import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
-import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.Presenter.PolicyPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,10 @@
-package org.vaadin.UI.presenter;
+package org.vaadin.UI.Presenter;
 
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.StoreOwnerSettingModel;
-import org.vaadin.UI.presenter.Interfaces.IPresenter;
+import org.vaadin.UI.Presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.StoreOwnerSettingView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 

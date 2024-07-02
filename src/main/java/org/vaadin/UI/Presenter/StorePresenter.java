@@ -1,12 +1,10 @@
-package org.vaadin.UI.presenter;
+package org.vaadin.UI.Presenter;
 
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
-import org.vaadin.UI.model.models.CartModel;
 import org.vaadin.UI.model.models.StoreModel;
 import org.vaadin.UI.view.ItemView;
 import org.vaadin.UI.view.StoreView;
-import org.vaadin.UI.presenter.ItemPresenter;
 //import item presenter
 
 
