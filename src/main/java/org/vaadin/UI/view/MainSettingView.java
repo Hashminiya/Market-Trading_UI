@@ -53,7 +53,7 @@ public class MainSettingView extends ViewTemplate {
         purchaseHistoryButton.setWidthFull();
         purchaseHistoryButton.addClickListener(event -> {
             mainSettingsPresenter.onPurchaseHistoryButton();
-            getUI().ifPresent(ui -> ui.navigate("settings/Purchases"));
+            getUI().ifPresent(ui -> ui.navigate("settings/purchases"));
         });
 
         Button manageStoreButton = new Button("Manage Store", new Icon(VaadinIcon.COGS));
