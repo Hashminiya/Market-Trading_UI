@@ -10,15 +10,15 @@ import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = MaximumQuantityPolicyDTO.class, name = "MaximumQuantityPolicyDTO"),
-        @JsonSubTypes.Type(value = ComplexPolicyDto.class, name = "ComplexPolicyDto"),
+        @JsonSubTypes.Type(value = MaximumQuantityPolicyDTO.class, name = "MaximumQuantityPurchasePolicy"),
+        @JsonSubTypes.Type(value = ComplexPolicyDto.class, name = "PurchasePolicyComposite"),
         @JsonSubTypes.Type(value = AgeRestrictedPolicyDTO.class, name = "AgeRestrictedPurchasePolicy")
 })
 public class PolicyDTO {
+    private Long id = 0L;
     private String name;
     private String type;
-    @JsonProperty("isStore")
-    private boolean allStorePolicy;
+
     private List<Long> items;
     private List<String> categories;
 
@@ -54,10 +54,13 @@ public class PolicyDTO {
         this.categories = categories;
     }
 
-    public void setAllStorePolicy(boolean allStorePolicy) {
-        this.allStorePolicy = allStorePolicy;
+
+
+    public Long getId() {
+        return id;
     }
-    public boolean isAllStorePolicy() {
-        return allStorePolicy;
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

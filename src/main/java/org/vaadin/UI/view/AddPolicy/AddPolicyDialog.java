@@ -72,6 +72,7 @@ public class AddPolicyDialog extends Dialog {
     private void showComplexPolicyForm() {
         contentLayout.removeAll();
         policyListLayout = new VerticalLayout();
+        TextField nameField = new TextField("Name");
         ComboBox<String> logicalRoleField = new ComboBox<>("Logical Role");
         logicalRoleField.setItems("OR", "AND", "XOR");
 
@@ -81,14 +82,15 @@ public class AddPolicyDialog extends Dialog {
             dialog.open();
         });
 
-        contentLayout.add(logicalRoleField, addSubPolicyButton, policyListLayout);
+        contentLayout.add(nameField, logicalRoleField, addSubPolicyButton, policyListLayout);
 
         Button saveButton = new Button(addOrSaveButton());
         saveButton.addClickListener(event -> {
             ComplexPolicyDto complexPolicy = new ComplexPolicyDto();
             complexPolicy.setLogicalRole(logicalRoleField.getValue());
             complexPolicy.setPolicies(policyDTOList);
-            // Add logic to save the complex policy
+            complexPolicy.setName(nameField.getValue());
+
             if(parent != null){
                 parent.policyDTOList.add(complexPolicy);
             }
@@ -114,7 +116,12 @@ public class AddPolicyDialog extends Dialog {
             maxAmountPolicy.setName(nameField.getValue());
             maxAmountPolicy.setMaxAmount(maxField.getValue());
             maxAmountPolicy.setAllStorePolicy(isAllStorePolicy);
-            maxAmountPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
+            if(itemsChosen != null) {
+                maxAmountPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
+            }
+            else{
+                maxAmountPolicy.setItems(null);
+            }
             maxAmountPolicy.setCategories(categoriesChosen);
 
             if(parent != null){
@@ -146,7 +153,12 @@ public class AddPolicyDialog extends Dialog {
             ageRestrictedPolicy.setName(nameField.getValue());
             ageRestrictedPolicy.setAge(ageField.getValue());
             ageRestrictedPolicy.setAllStorePolicy(isAllStorePolicy);
-            ageRestrictedPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
+            if(itemsChosen != null) {
+                ageRestrictedPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
+            }
+            else {
+                ageRestrictedPolicy.setItems(null);
+            }
             ageRestrictedPolicy.setCategories(categoriesChosen);
             // Add logic to save the age restricted policy
             if(parent != null){
@@ -167,11 +179,9 @@ public class AddPolicyDialog extends Dialog {
 
         policyListLayout = new VerticalLayout(); // Initialize or clear policy list layout
 
-        // Iterate through policyDTOList and display each policy
         for (PolicyDTO policy : policyDTOList) {
             HorizontalLayout policyLayout = new HorizontalLayout();
 
-            // Display policy information
             if (policy instanceof MaximumQuantityPolicyDTO) {
                 MaximumQuantityPolicyDTO maxQuantityPolicy = (MaximumQuantityPolicyDTO) policy;
                 policyLayout.add(new Text("Maximum Quantity Policy: " + maxQuantityPolicy.getName()));
