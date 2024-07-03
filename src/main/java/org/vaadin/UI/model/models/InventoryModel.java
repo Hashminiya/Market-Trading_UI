@@ -163,7 +163,7 @@ public class InventoryModel {
 
         try {
             ResponseEntity<List<String>> response = restTemplate.exchange(
-                    url, HttpMethod.PUT, requestEntity, (Class<List<String>>) (Class<?>) List.class);
+                    url, HttpMethod.GET, requestEntity, (Class<List<String>>) (Class<?>) List.class);
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
