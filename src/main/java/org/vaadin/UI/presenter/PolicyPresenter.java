@@ -1,4 +1,4 @@
-package org.vaadin.UI.Presenter;
+package org.vaadin.UI.presenter;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,7 +11,7 @@ import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
 import org.vaadin.UI.model.models.InventoryModel;
 import org.vaadin.UI.model.models.PolicyModel;
-import org.vaadin.UI.Presenter.Interfaces.IPresenter;
+import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.PolicyView;
 
 import java.util.List;

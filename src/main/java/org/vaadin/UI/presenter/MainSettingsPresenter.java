@@ -1,6 +1,6 @@
-package org.vaadin.UI.Presenter;
+package org.vaadin.UI.presenter;
 
-import org.vaadin.UI.Presenter.Interfaces.IPresenter;
+import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.MainSettingView;
 
 public class MainSettingsPresenter implements IPresenter {

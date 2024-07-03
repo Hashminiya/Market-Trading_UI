@@ -10,12 +10,12 @@ import java.util.List;
 
 public class ChooseItemsDialog extends Dialog {
     private List<ItemDTO> itemsChosen;
-    private org.vaadin.UI.Presenter.PolicyPresenter presenter;
+    private org.vaadin.UI.presenter.PolicyPresenter presenter;
     private Grid<ItemDTO> itemsGrid;
     private AddPolicyDialog parent;
 
 
-    public ChooseItemsDialog(List<ItemDTO> itemsChosen, org.vaadin.UI.Presenter.PolicyPresenter presenter, AddPolicyDialog parent) {
+    public ChooseItemsDialog(List<ItemDTO> itemsChosen, org.vaadin.UI.presenter.PolicyPresenter presenter, AddPolicyDialog parent) {
         this.itemsChosen = itemsChosen;
         this.presenter = presenter;
         this.parent = parent;

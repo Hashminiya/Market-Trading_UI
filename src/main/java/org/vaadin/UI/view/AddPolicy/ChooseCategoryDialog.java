@@ -6,7 +6,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import java.util.List;
-import org.vaadin.UI.Presenter.PolicyPresenter;
+import org.vaadin.UI.presenter.PolicyPresenter;
 
 public class ChooseCategoryDialog extends Dialog {
     private final List<String> categoriesChosen;

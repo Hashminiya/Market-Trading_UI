@@ -9,7 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.RouterLink;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.Presenter.ItemPresenter;
+import org.vaadin.UI.presenter.ItemPresenter;
 import org.vaadin.UI.view.ItemView;
 
 import java.util.Collections;

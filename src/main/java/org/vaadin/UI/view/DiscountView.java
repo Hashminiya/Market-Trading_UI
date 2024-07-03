@@ -13,7 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.DiscountDTO;
 
-import org.vaadin.UI.Presenter.DiscountPresenter;
+import org.vaadin.UI.presenter.DiscountPresenter;
 
 
 import java.util.List;

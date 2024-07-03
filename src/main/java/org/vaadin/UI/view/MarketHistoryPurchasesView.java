@@ -7,7 +7,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.Presenter.MarketHistoryPurchasesPresenter;
+import org.vaadin.UI.presenter.MarketHistoryPurchasesPresenter;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
 
 import java.util.List;
