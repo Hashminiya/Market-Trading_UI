@@ -31,8 +31,9 @@ public class CartView extends ViewTemplate {
 
         checkoutButton = new Button("Checkout");
         checkoutButton.addClassName("checkout-button");
+        // when clicked navigate to the payment view with the cart total price
         checkoutButton.addClickListener(event -> {
-            presenter.checkout("1234567812345678", "12/24", "123", "DISCOUNT10");
+            navigateToPaymentView();
         });
 
         add(title, shoppingCartComponent);

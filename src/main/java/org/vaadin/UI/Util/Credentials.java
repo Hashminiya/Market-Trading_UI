@@ -1,7 +1,6 @@
 package org.vaadin.UI.Util;
 
 import org.vaadin.UI.model.models.LoginModel;
-import org.vaadin.UI.presenter.LoginPresenter;
 
 public class Credentials {
 

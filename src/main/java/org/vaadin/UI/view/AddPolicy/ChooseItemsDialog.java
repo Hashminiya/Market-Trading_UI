@@ -3,9 +3,7 @@ package org.vaadin.UI.view.AddPolicy;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridMultiSelectionModel;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import org.vaadin.UI.Util.SuccessCallBack;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 
 import java.util.List;
