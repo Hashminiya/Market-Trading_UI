@@ -1,6 +1,8 @@
 package org.vaadin.UI.model.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.vaadin.UI.service.ImageService;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -27,6 +29,9 @@ public class ItemDTO implements Serializable {
     @JsonProperty("description")
     private String description;
 
+    private String imageURL = ImageService.getImageUrl("item");
+
+
     public ItemDTO() {
     }
 
@@ -38,6 +43,7 @@ public class ItemDTO implements Serializable {
         this.totalPrice = totalPrice;
         this.categories = categories;
         this.description = description;
+        this. imageURL = ImageService.getImageUrl(itemName);
     }
 
     public long getItemId() {
@@ -94,5 +100,13 @@ public class ItemDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imgURL) {
+        this.imageURL = imgURL;
     }
 }

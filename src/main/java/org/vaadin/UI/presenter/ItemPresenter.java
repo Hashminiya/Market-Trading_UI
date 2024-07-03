@@ -51,7 +51,7 @@ public class ItemPresenter {
             String result = cartModel.addItemToCart(token,item.getStoreId(), item.getItemId(), amount); // Assuming quantity of 1 for simplicity
             //if result is number as string then it was successful and we can show a notification with the item name
             if (result.matches("\\d+")) {
-                Notification.show("Added " + item.getItemName() + " to the cart.");
+                Notification.show("Added " + amount + " " + item.getItemName() + " to the cart.");
             } else {
                 Notification.show(result);
             }

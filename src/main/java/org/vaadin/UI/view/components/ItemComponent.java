@@ -1,41 +1,115 @@
 package org.vaadin.UI.view.components;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.QueryParameters;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.textfield.TextField;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.presenter.ItemPresenter;
-import org.vaadin.UI.view.ItemView;
-
-import java.util.Collections;
+import org.vaadin.UI.service.ImageService;
 
 public class ItemComponent extends VerticalLayout {
-    private ItemPresenter presenter;
+    private final Image itemImage;
+    private final VerticalLayout itemDetails;
+    private final TextField itemName;
+    private final TextField itemPrice;
+    private final TextField itemQuantity;
+    private final TextArea itemDescription;
+    private final TextField itemCategories;
+    private final NumberField quantityField;
+    private final Button addToCartButton;
 
     public ItemComponent(ItemDTO item) {
-        this.presenter = new ItemPresenter(new ItemView());
-        setWidth("200px");
+        setWidthFull();
+        setPadding(true);
+        setSpacing(true);
+        setMargin(true);
+        addClassName("item-component");
 
-        RouterLink itemLink = new RouterLink();
-        itemLink.setRoute(ItemView.class);
-        itemLink.setText(item.getItemName());
-        itemLink.setQueryParameters(new QueryParameters(Collections.singletonMap("itemId", Collections.singletonList(String.valueOf(item.getItemId())))));
-        itemLink.getStyle().set("cursor", "pointer");
-        add(itemLink);
+        HorizontalLayout mainLayout = new HorizontalLayout();
+        mainLayout.setWidthFull();
+        mainLayout.setSpacing(true);
+        mainLayout.setPadding(true);
 
-        Paragraph price = new Paragraph("Price: " + item.getTotalPrice());
-        Button addToCartButton = new Button(new Icon(VaadinIcon.CART));
-        addToCartButton.getElement().setProperty("title", "Add to Cart");
-        addToCartButton.addClickListener(event -> presenter.addItemToCart(item,1));
+        itemImage = new Image("https://via.placeholder.com/200", "Item Image");
+        itemImage.setWidth("300px");
+        itemImage.setHeight("300px");
+        itemImage.getStyle().set("object-fit", "cover");
+        generateImage(item);
 
-        HorizontalLayout priceAndButtonLayout = new HorizontalLayout(price, addToCartButton);
-        priceAndButtonLayout.setAlignItems(Alignment.CENTER);
-        priceAndButtonLayout.setWidthFull();
-        add(priceAndButtonLayout);
+        itemDetails = new VerticalLayout();
+        itemDetails.setSpacing(true);
+        itemDetails.setPadding(true);
+        itemDetails.setMargin(false);
+        itemDetails.setWidthFull();
+
+        itemName = new TextField("Name");
+        itemName.setValue(item.getItemName());
+        itemName.setReadOnly(true);
+        itemName.setWidthFull();
+
+        itemDescription = new TextArea("Description");
+        itemDescription.setValue(item.getDescription());
+        itemDescription.setReadOnly(true);
+        itemDescription.setWidthFull();
+
+        HorizontalLayout nameAndDescLayout = new HorizontalLayout(itemName, itemDescription);
+        nameAndDescLayout.setWidthFull();
+        nameAndDescLayout.setSpacing(true);
+
+        itemQuantity = new TextField("Available Quantity");
+        itemQuantity.setValue(String.valueOf(item.getQuantity()));
+        itemQuantity.setReadOnly(true);
+        itemQuantity.setWidthFull();
+
+        itemCategories = new TextField("Categories");
+        itemCategories.setValue(String.join(", ", item.getCategories()));
+        itemCategories.setReadOnly(true);
+        itemCategories.setWidthFull();
+
+        HorizontalLayout quantityAndCategoriesLayout = new HorizontalLayout(itemQuantity, itemCategories);
+        quantityAndCategoriesLayout.setWidthFull();
+        quantityAndCategoriesLayout.setSpacing(true);
+
+        itemPrice = new TextField("Price");
+        itemPrice.setValue(String.valueOf(item.getTotalPrice()));
+        itemPrice.setReadOnly(true);
+        itemPrice.setWidth("33%");
+
+        quantityField = new NumberField("Quantity to Add");
+        quantityField.setValue(1.0);
+        quantityField.setStep(1);
+        quantityField.setMin(1.0);
+        quantityField.setWidth("33%");
+
+        addToCartButton = new Button("Add to Cart");
+        addToCartButton.setWidth("33%");
+
+        HorizontalLayout priceAndActionsLayout = new HorizontalLayout(itemPrice, quantityField, addToCartButton);
+        priceAndActionsLayout.setWidthFull();
+        priceAndActionsLayout.setSpacing(true);
+        priceAndActionsLayout.setAlignItems(Alignment.END);
+
+        itemDetails.add(nameAndDescLayout, quantityAndCategoriesLayout, priceAndActionsLayout);
+        mainLayout.add(itemImage, itemDetails);
+        add(mainLayout);
+    }
+
+    private void generateImage(ItemDTO item) {
+        String imageUrl = item.getImageURL();
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            imageUrl = ImageService.getImageUrl(item.getItemName());
+        }
+        itemImage.setSrc(imageUrl);
+    }
+
+    public Button getAddToCartButton() {
+        return addToCartButton;
+    }
+
+    public NumberField getQuantityField() {
+        return quantityField;
     }
 }
