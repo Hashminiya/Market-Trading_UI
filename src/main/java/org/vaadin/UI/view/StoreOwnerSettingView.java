@@ -1,6 +1,7 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.button.Button;
 
@@ -25,7 +26,7 @@ public class StoreOwnerSettingView extends MainSettingView {
 
     //    private String token = "userToken"; // Replace with actual token retrieval logic
     private ComboBox<String> managementInfoComboBox;
-    private final MultiSelectComboBox<String> permissionsComboBox;
+    private MultiSelectComboBox<String> permissionsComboBox;
     private VerticalLayout formLayout;
 
 //    private VerticalLayout permissionsLayout;
@@ -63,7 +64,12 @@ public class StoreOwnerSettingView extends MainSettingView {
             }
         });
         permissionsComboBox = new MultiSelectComboBox<>("Manager Permissions");
-        add(formLayout);
+//        permissionsComboBox.setWidthFull(); // Ensure full width
+
+        VerticalLayout rightContent = getRightContent();
+        rightContent.removeAll();
+        rightContent.add(formLayout);
+//        add(formLayout);
     }
 
     private ComboBox<String> createChooseStoreComboBox() {
@@ -117,6 +123,7 @@ public class StoreOwnerSettingView extends MainSettingView {
                 "REMOVE_STORE"
         );
         permissionsComboBox.setItems(permissions);
+        permissionsComboBox.setValue(new HashSet<>(permissions));
         formLayout.add(permissionsComboBox);
 
         // Create and add the "Send" button

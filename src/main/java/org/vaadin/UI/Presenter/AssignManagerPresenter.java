@@ -17,8 +17,8 @@ public class AssignManagerPresenter implements IPresenter{
     }
 
 
-    public void onAssignManager(String userName, String storeNumber, Set<String> permissions) {
-        String result = model.assignManager(Credentials.getToken(), userName, storeNumber, permissions);
+    public void onAssignManager(String userName, String storeName, Set<String> permissions) {
+        String result = model.assignManager(Credentials.getToken(), userName, storeName, permissions);
         view.showNotification(result);
     }
 

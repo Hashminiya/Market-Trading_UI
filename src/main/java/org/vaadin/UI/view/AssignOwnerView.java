@@ -14,21 +14,24 @@ public class AssignOwnerView extends MainSettingView {
 
     private AssignOwnerPresenter assignOwnerPresenter;
     private final TextField userName;
-    private final TextField storeNumber;
+    private final TextField storeName;
 
     public AssignOwnerView() {
         assignOwnerPresenter = new AssignOwnerPresenter(this);
         userName = new TextField("User Name");
-        storeNumber = new TextField("Store Number");
+        storeName = new TextField("Store Name");
 
         Button assignOwnerButton = new Button("Assign owner");
-        assignOwnerButton.addClickListener(event -> assignOwnerPresenter.onAssignOwner(userName.getValue(),storeNumber.getValue()));
+        assignOwnerButton.addClickListener(event -> assignOwnerPresenter.onAssignOwner(userName.getValue(),storeName.getValue()));
         assignOwnerButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        VerticalLayout formLayout = new VerticalLayout(userName, storeNumber, assignOwnerButton);
+        VerticalLayout formLayout = new VerticalLayout(userName, storeName, assignOwnerButton);
         formLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         formLayout.setSpacing(true);
-        add(formLayout);
+        VerticalLayout rightContent = getRightContent();
+        rightContent.removeAll();
+        rightContent.add(formLayout);
+//        add(formLayout);
     }
 
     public void showNotification(String message) {
