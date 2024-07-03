@@ -1,7 +1,6 @@
 package org.vaadin.UI.presenter;
 
 import org.vaadin.UI.Util.Credentials;
-import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
 import org.vaadin.UI.model.models.CartModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
@@ -55,5 +54,10 @@ public class CartPresenter implements IPresenter {
         if (result.contains("successful")) {
             cartView.navigateToPaymentView();
         }
+    }
+
+    public void onCheckoutButtonClicked() {
+
+
     }
 }

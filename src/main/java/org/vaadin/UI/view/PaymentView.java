@@ -1,11 +1,12 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.customfield.CustomField;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,7 +16,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.presenter.PaymentPresenter;
-
 
 @PageTitle("Payment Form")
 @Route("payment")
@@ -27,33 +27,38 @@ public class PaymentView extends ViewTemplate {
     private ExpirationDateField expiration;
     private PasswordField cvv;
     private Button submit;
-    private Label totalPrice;
+    private Span totalPrice;
     private PaymentPresenter presenter;
 
+    private final String CARD_REGEX = "^\\d{16}$";
+    private final String CVV_REGEX = "^\\d{3}$";
+    private double amount;
 
-    private String CARD_REGEX = "^\\d{16}$";
-    private String CVV_REGEX = "^\\d{3}$";
     public PaymentView() {
         presenter = new PaymentPresenter(this);
         VerticalLayout restOfPage = new VerticalLayout();
         restOfPage.setSizeFull();
         restOfPage.setJustifyContentMode(JustifyContentMode.CENTER);
         restOfPage.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-
-        restOfPage.add(createTotalPriceLabel("$0.00"));
+        this.amount = presenter.getTotalPrice();
+        restOfPage.add(createTotalPriceLabel(String.valueOf(amount)));
         restOfPage.add(createFormLayout());
         restOfPage.add(createButtonLayout());
 
         submit.addClickListener(e -> {
-            Notification.show("Not implemented");
-            presenter.onPay(cardNumber.getValue(),expiration.getValue(), cvv.getValue());
+            //checkout
+            presenter.checkout(cardNumber.getValue(), cardholderName.getValue(), expiration.getValue(), cvv.getValue());
+            UI.getCurrent().navigate("");
+
         });
         add(restOfPage);
     }
 
     private Component createTotalPriceLabel(String setTotalPrice) {
-        totalPrice = new Label("Total Price: " + setTotalPrice);
-        totalPrice.addClassName("total-price-label");
+        totalPrice = new Span("Total Price: " + setTotalPrice);
+        totalPrice.getStyle().set("font-size", "24px")
+                .set("font-weight", "bold")
+                .set("margin-bottom", "20px");
         return totalPrice;
     }
 
@@ -81,9 +86,7 @@ public class PaymentView extends ViewTemplate {
         cvv.setPattern(CVV_REGEX);
         cvv.setAllowedCharPattern("[\\d ]");
         cvv.setRequired(true);
-        cvv = new PasswordField("CVV");
-
-
+        cvv.setErrorMessage("Please enter a valid CVV");
 
         FormLayout formLayout = new FormLayout();
         formLayout.add(cardNumber, cardholderName, expiration, cvv);
@@ -91,16 +94,22 @@ public class PaymentView extends ViewTemplate {
         formLayout.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1)
         );
+        formLayout.getStyle().set("margin", "0 auto");
 
         return formLayout;
     }
 
     private Component createButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
-        buttonLayout.addClassName("button-layout");
+        buttonLayout.setWidthFull();
+        buttonLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        buttonLayout.getStyle().set("margin-top", "20px");
 
         submit = new Button("Submit");
         submit.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        submit.getStyle().set("background-color", "#007BFF")
+                .set("color", "white")
+                .set("border-radius", "5px");
 
         buttonLayout.add(submit);
         return buttonLayout;
@@ -111,7 +120,13 @@ public class PaymentView extends ViewTemplate {
     }
 
     private class ExpirationDateField extends CustomField<String> {
+        private final Select<Integer> month;
+        private final Select<Integer> year;
+
         public ExpirationDateField(String label, Select<Integer> month, Select<Integer> year) {
+            this.month = month;
+            this.year = year;
+
             setLabel(label);
             HorizontalLayout layout = new HorizontalLayout(month, year);
             layout.setFlexGrow(1.0, month, year);
@@ -128,10 +143,6 @@ public class PaymentView extends ViewTemplate {
         @Override
         protected void setPresentationValue(String newPresentationValue) {
             // Do nothing
-        }
-
-        public void setTotalPrice(){
-
         }
     }
 }
