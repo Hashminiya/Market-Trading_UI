@@ -1,9 +1,9 @@
-package org.vaadin.UI.presenter;
+package org.vaadin.UI.Presenter;
 
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
 import org.vaadin.UI.model.models.CartModel;
-import org.vaadin.UI.presenter.Interfaces.IPresenter;
+import org.vaadin.UI.Presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.CartView;
 
 public class CartPresenter implements IPresenter {

@@ -1,7 +1,7 @@
 package org.vaadin.UI.view;
 
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.LogoutPresenter;
+import org.vaadin.UI.Presenter.LogoutPresenter;
 
 @Route("logout")
 public class LogOutView extends ViewTemplate {

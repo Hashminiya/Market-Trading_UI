@@ -7,7 +7,7 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.StoreDTO;
-import org.vaadin.UI.presenter.StorePresenter;
+import org.vaadin.UI.Presenter.StorePresenter;
 import org.vaadin.UI.view.components.StoreComponentTable;
 
 import java.util.List;

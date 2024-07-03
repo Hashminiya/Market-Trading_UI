@@ -10,7 +10,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.NumberRenderer;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
-import org.vaadin.UI.presenter.PurchasesPresenter;
+import org.vaadin.UI.Presenter.PurchasesPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

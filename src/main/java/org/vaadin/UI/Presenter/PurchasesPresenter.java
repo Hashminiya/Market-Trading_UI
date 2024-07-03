@@ -1,12 +1,9 @@
 
-package org.vaadin.UI.presenter;
+package org.vaadin.UI.Presenter;
 import org.vaadin.UI.Util.Credentials;
-import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
-import org.vaadin.UI.model.models.InventoryModel;
 import org.vaadin.UI.model.models.PurchasesModel;
-import org.vaadin.UI.presenter.Interfaces.IPresenter;
-import org.vaadin.UI.view.InventorySettingView;
+import org.vaadin.UI.Presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.PurchasesView;
 
 import java.util.ArrayList;

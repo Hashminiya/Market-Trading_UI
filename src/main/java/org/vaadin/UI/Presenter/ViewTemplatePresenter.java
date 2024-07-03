@@ -1,5 +1,5 @@
-package org.vaadin.UI.presenter;
-import org.vaadin.UI.presenter.Interfaces.IPresenter;
+package org.vaadin.UI.Presenter;
+import org.vaadin.UI.Presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewTemplate;
 
 public class ViewTemplatePresenter implements IPresenter {

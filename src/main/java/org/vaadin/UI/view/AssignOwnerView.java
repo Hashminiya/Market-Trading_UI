@@ -7,7 +7,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.AssignOwnerPresenter;
+import org.vaadin.UI.Presenter.AssignOwnerPresenter;
 
 @Route("settings/assign owner")
 public class AssignOwnerView extends MainSettingView {

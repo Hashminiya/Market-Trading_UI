@@ -6,7 +6,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.ShoppingCartDTO;
-import org.vaadin.UI.presenter.CartPresenter;
+import org.vaadin.UI.Presenter.CartPresenter;
 import org.vaadin.UI.view.components.ShoppingCartComponent;
 
 @PageTitle("Shopping Cart")

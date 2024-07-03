@@ -14,11 +14,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Image;
 import org.springframework.stereotype.Component;
-import org.vaadin.UI.presenter.LogoutPresenter;
-import org.vaadin.UI.presenter.ViewTemplatePresenter;
+import org.vaadin.UI.Presenter.LogoutPresenter;
+import org.vaadin.UI.Presenter.ViewTemplatePresenter;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.Util.Messages;
-import org.vaadin.UI.presenter.Interfaces.IPresenter;
+import org.vaadin.UI.Presenter.Interfaces.IPresenter;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

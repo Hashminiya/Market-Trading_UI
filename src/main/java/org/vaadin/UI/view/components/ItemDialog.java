@@ -10,7 +10,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.presenter.InventoryPresenter;
+import org.vaadin.UI.Presenter.InventoryPresenter;
 
 public class ItemDialog extends Dialog {
 
