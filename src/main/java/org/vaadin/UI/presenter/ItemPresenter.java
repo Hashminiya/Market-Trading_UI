@@ -45,6 +45,7 @@ public class ItemPresenter {
         }
     }
 
+
     public void addItemToCart(ItemDTO item, int amount) {
         String token = Credentials.getToken();
         if (token != null && !token.isEmpty()) {
