@@ -20,6 +20,7 @@ import java.util.List;
 public class HomeView extends ViewTemplate {
     private final HomePresenter presenter;
     private final VerticalLayout storesLayout;
+    private final VerticalLayout mainLayout;
     private ItemListComponent itemListComponent;
 
     public HomeView() {
@@ -55,23 +56,26 @@ public class HomeView extends ViewTemplate {
         storesLayout.setSpacing(true);
         add(storesLayout);
 
+        mainLayout = new VerticalLayout();
+        mainLayout.setSpacing(true);
+        add(mainLayout);
+
         presenter.onViewLoaded();
     }
 
     public void displayStores(List<StoreDTO> stores) {
-        remove(itemListComponent);
+        mainLayout.removeAll();  // Clear mainLayout content before adding new stores
         storesLayout.removeAll();  // Clear existing content before adding new stores
         for (StoreDTO store : stores) {
             StoreComponentList storeComponent = new StoreComponentList(store);
             storesLayout.add(storeComponent);
         }
-        add(storesLayout);  // Re-add the storesLayout to the view
+        mainLayout.add(storesLayout);  // Add the storesLayout to the mainLayout
     }
 
     public void displayItems(List<ItemDTO> items) {
-        remove(storesLayout);  // Remove the store list when showing items
-        remove(itemListComponent);
+        mainLayout.removeAll();  // Clear mainLayout content before adding new items
         this.itemListComponent = new ItemListComponent(items);
-        add(itemListComponent);
+        mainLayout.add(itemListComponent);
     }
 }

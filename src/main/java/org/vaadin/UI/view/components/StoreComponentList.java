@@ -19,7 +19,7 @@ public class StoreComponentList extends VerticalLayout {
         add(storeLink);
 
         HorizontalLayout itemsLayout = new HorizontalLayout();
-        store.getItems().forEach(item -> itemsLayout.add(new ItemComponent(item)));
+        store.getItems().forEach(item -> itemsLayout.add(new ItemSmallComponent(item)));
         add(itemsLayout);
     }
 }

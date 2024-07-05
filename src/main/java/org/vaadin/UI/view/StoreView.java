@@ -8,7 +8,7 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.presenter.StorePresenter;
-import org.vaadin.UI.view.components.StoreComponentTable;
+import org.vaadin.UI.view.components.StoreComponentList;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class StoreView extends ViewTemplate implements BeforeEnterObserver {
         storeDescription.setText(store.getDescription());
 
         itemList.removeAll();
-        itemList.add(new StoreComponentTable(store));
+        itemList.add(new StoreComponentList(store));
     }
     public StoreDTO getStoreDTO() {
         return storeDTO;

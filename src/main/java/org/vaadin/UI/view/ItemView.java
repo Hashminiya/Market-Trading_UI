@@ -1,11 +1,7 @@
 package org.vaadin.UI.view;
 
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -15,6 +11,7 @@ import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.presenter.ItemPresenter;
 import org.vaadin.UI.view.components.ItemComponent;
+import org.vaadin.UI.view.components.ItemSmallComponent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +21,7 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
     private ItemDTO item;
     private final ItemPresenter presenter;
     private final VerticalLayout itemDetails;
-    private final H1 itemName;
-    private final Paragraph itemPrice;
-    private final Paragraph itemQuantity;
-    private final Paragraph itemDescription; // Add description field
-    private final Paragraph itemCategories; // Add categories field
-    private final Button addToCartButton;
+    private ItemComponent itemComponent;
     private final VerticalLayout relatedItemsLayout;
     private final VerticalLayout storeLinkLayout;
 
@@ -37,45 +29,34 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
         this.item = new ItemDTO();
         this.presenter = new ItemPresenter(this);
         this.itemDetails = new VerticalLayout();
-        this.itemName = new H1();
-        this.itemPrice = new Paragraph();
-        this.itemQuantity = new Paragraph();
-        this.itemDescription = new Paragraph(); // Initialize description field
-        this.itemCategories = new Paragraph(); // Initialize categories field
-        this.addToCartButton = new Button(new Icon(VaadinIcon.CART));
         this.relatedItemsLayout = new VerticalLayout();
         this.storeLinkLayout = new VerticalLayout();
 
-        addToCartButton.getElement().setProperty("title", "Add to Cart");
-        addToCartButton.addClickListener(event -> {
-            presenter.addItemToCart(item,1);
-        });
-
-        itemDetails.add(itemName, itemPrice, itemQuantity, itemDescription, itemCategories, addToCartButton, storeLinkLayout, relatedItemsLayout);
         add(itemDetails);
     }
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
+        // Clear itemDetails and re-add the necessary components
+        itemDetails.removeAll();
+        relatedItemsLayout.removeAll();
+        storeLinkLayout.removeAll();
+
         String itemId = event.getLocation().getQueryParameters().getParameters().getOrDefault("itemId", List.of("")).get(0);
         presenter.onViewLoaded(itemId);
     }
 
     public void displayItemDetails(ItemDTO item, StoreDTO store) {
         this.item = item;
-        itemName.setText(item.getItemName());
-        itemPrice.setText("Price: " + item.getTotalPrice());
-        itemQuantity.setText("Quantity: " + item.getQuantity());
-        itemDescription.setText("Description: " + item.getDescription()); // Set description
-        itemCategories.setText("Categories: " + String.join(", ", item.getCategories())); // Set categories
+        itemComponent = new ItemComponent(item);
+        itemComponent.getAddToCartButton().addClickListener(event -> {
+            presenter.addItemToCart(item, itemComponent.getQuantityField().getValue().intValue());
+        });
 
         // Link to the store
-        storeLinkLayout.removeAll();
-        Anchor storeLink = new Anchor("store?storeName=" + store.getName(), "Back to Store: " + store.getName());
-        storeLinkLayout.add(storeLink);
+        storeLinkLayout.add(new Anchor("store?storeName=" + store.getName(), "Back to Store: " + store.getName()));
 
         // Related items from the same store
-        relatedItemsLayout.removeAll();
         relatedItemsLayout.add(new Paragraph("Related Items"));
         HorizontalLayout relatedItemsLayoutInner = new HorizontalLayout();
         relatedItemsLayoutInner.setSpacing(true);
@@ -83,8 +64,13 @@ public class ItemView extends ViewTemplate implements BeforeEnterObserver {
                 .filter(i -> i.getItemId() != item.getItemId())
                 .collect(Collectors.toList());
         for (ItemDTO relatedItem : relatedItems) {
-            relatedItemsLayoutInner.add(new ItemComponent(relatedItem));
+            relatedItemsLayoutInner.add(new ItemSmallComponent(relatedItem));
         }
         relatedItemsLayout.add(relatedItemsLayoutInner);
+
+        // Re-add components to itemDetails
+        itemDetails.addComponentAsFirst(itemComponent);
+        itemDetails.add(storeLinkLayout);
+        itemDetails.add(relatedItemsLayout);
     }
 }
