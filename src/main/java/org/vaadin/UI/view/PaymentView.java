@@ -26,6 +26,7 @@ public class PaymentView extends ViewTemplate {
     private Select<Integer> year;
     private ExpirationDateField expiration;
     private PasswordField cvv;
+    private TextField discountCode;
     private Button submit;
     private Span totalPrice;
     private PaymentPresenter presenter;
@@ -46,10 +47,8 @@ public class PaymentView extends ViewTemplate {
         restOfPage.add(createButtonLayout());
 
         submit.addClickListener(e -> {
-            //checkout
-            presenter.checkout(cardNumber.getValue(), cardholderName.getValue(), expiration.getValue(), cvv.getValue());
+            presenter.checkout(cardNumber.getValue(), cardholderName.getValue(), expiration.getValue(), cvv.getValue(), discountCode.getValue());
             UI.getCurrent().navigate("");
-
         });
         add(restOfPage);
     }
@@ -88,8 +87,10 @@ public class PaymentView extends ViewTemplate {
         cvv.setRequired(true);
         cvv.setErrorMessage("Please enter a valid CVV");
 
+        discountCode = new TextField("Discount code (optional)");
+
         FormLayout formLayout = new FormLayout();
-        formLayout.add(cardNumber, cardholderName, expiration, cvv);
+        formLayout.add(cardNumber, cardholderName, expiration, cvv, discountCode);
         formLayout.setMaxWidth("400px");
         formLayout.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1)

@@ -5,12 +5,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 public class PaymentModel {
 
     private final RestTemplate restTemplate;
@@ -19,18 +13,8 @@ public class PaymentModel {
         this.restTemplate = new RestTemplate();
     }
 
-    /*
-     @PostMapping("/user/checkoutShoppingCart")
-    public ResponseEntity<String> checkoutShoppingCart(@RequestParam String token,@RequestParam String creditCard,@RequestParam Date expiryDate,@RequestParam String cvv,@RequestParam String discountCode) {
-        return userService.checkoutShoppingCart(token, creditCard, expiryDate, cvv, discountCode);
-    }
-     */
-    public String checkoutShoppingCart(String token) {
+    public String checkoutShoppingCart(String token, String creditCard, String expiryDate, String cvv, String discountCode) {
         String url = "http://localhost:8080/user/checkoutShoppingCart";
-        String creditCard = "1111111111111111";
-        String cvv = "111";
-        String discountCode = "DISCOUNT10";
-        String expiryDate = "07/25";  // Adjust the expiry date format as needed
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
