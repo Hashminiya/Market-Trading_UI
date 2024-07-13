@@ -10,20 +10,21 @@ import com.vaadin.flow.router.Route;
 import org.vaadin.UI.presenter.AssignManagerPresenter;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Route("settings/assign manager")
 public class AssignManagerView extends MainSettingView{
     private AssignManagerPresenter assignManagerPresenter;
     private final TextField userName;
-    private final TextField storeNumber;
+    private final TextField storeName;
     private final MultiSelectComboBox<String> permissionsComboBox;
 
 
     public AssignManagerView() {
         assignManagerPresenter = new AssignManagerPresenter(this);
         userName = new TextField("User Name");
-        storeNumber = new TextField("Store Number");
+        storeName = new TextField("Store Name");
 
         // Initialize the Multi-Select Combo Box for permissions
         permissionsComboBox = new MultiSelectComboBox<>("Manager Permissions");
@@ -41,22 +42,24 @@ public class AssignManagerView extends MainSettingView{
                 "REMOVE_STORE"
         );
         permissionsComboBox.setItems(permissions);
-
+        permissionsComboBox.setValue(new HashSet<>(permissions));
         Button assignManagerButton = new Button("Assign manager");
         assignManagerButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         assignManagerButton.addClickListener(event ->
                 assignManagerPresenter.onAssignManager(
                         userName.getValue(),
-                        storeNumber.getValue(),
+                        storeName.getValue(),
                         permissionsComboBox.getValue()
                 )
         );
 
-        VerticalLayout formLayout = new VerticalLayout(userName, storeNumber, permissionsComboBox, assignManagerButton);
+        VerticalLayout formLayout = new VerticalLayout(userName, storeName, permissionsComboBox, assignManagerButton);
         formLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         formLayout.setSpacing(true);
-
-        add(formLayout);
+        VerticalLayout rightContent = getRightContent();
+        rightContent.removeAll();
+        rightContent.add(formLayout);
+//        add(formLayout);
     }
 
     public void showNotification(String message) {

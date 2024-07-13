@@ -15,8 +15,8 @@ public class AssignOwnerPresenter implements IPresenter {
     }
 
 
-    public void onAssignOwner(String userName, String storeNumber) {
-        String result = model.assignOwner(Credentials.getToken(), userName, storeNumber);
+    public void onAssignOwner(String userName, String storeName) {
+        String result = model.assignOwner(Credentials.getToken(), userName, storeName);
         view.showNotification(result);
     }
 

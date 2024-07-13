@@ -16,12 +16,27 @@ public class AssignManagerModel {
         restTemplate = new RestTemplate();
     }
 
-    public String assignManager(String token, String userName, String storeNumber, Set<String> permissions) {
+    public String assignManager(String token, String userName, String storeName, Set<String> permissions) {
+        String storeID = "";
+        String urlForFetchingID = "http://localhost:8080/storeManagement/getStoreIdByName?token=" + token + "&storeName=" + storeName;
+        HttpHeaders headers1 = new HttpHeaders();
+        headers1.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity1 = new HttpEntity<>(headers1);
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    urlForFetchingID, HttpMethod.GET, requestEntity1, String.class);
+            storeID = response.getBody();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
         String url = "http://localhost:8080/storeManagement/assignStoreManager";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("token", token);
-        params.add("storeId", storeNumber);
+        params.add("storeId", storeID);
         params.add("newManagerI", userName);
 
         // Convert set of permissions to list
