@@ -13,10 +13,11 @@ import org.vaadin.UI.model.DTOs.PurchaseDTO;
 import java.util.List;
 
 @Route("settings/market-history")
-public class MarketHistoryPurchasesView extends MainSettingView{
+public class MarketHistoryPurchasesView extends MainSettingView {
 
     private MarketHistoryPurchasesPresenter presenter;
     private Grid<PurchaseDTO> grid;
+
     public MarketHistoryPurchasesView() {
         presenter = new MarketHistoryPurchasesPresenter(this);
 
@@ -31,15 +32,24 @@ public class MarketHistoryPurchasesView extends MainSettingView{
 
         // Initialize the grid
         grid = initGrid();
-
         rightContent.add(grid);
-    }
-    private Grid initGrid() {
-        grid = new Grid<>(PurchaseDTO.class);
-        grid.setColumns("id", "productName", "quantity", "price", "buyer");
+
         presenter.onInitGrid();
+    }
+
+    private Grid<PurchaseDTO> initGrid() {
+        grid = new Grid<>(PurchaseDTO.class, false);
+        grid.addColumn(PurchaseDTO::getPurchaseId).setHeader("Purchase ID").setSortable(true);
+        grid.addColumn(purchase -> purchase.getPurchasedItemsList().stream()
+                        .map(item -> item.getItemName())
+                        .reduce((item1, item2) -> item1 + ", " + item2).orElse("No items"))
+                .setHeader("Items").setSortable(true);
+        grid.addColumn(PurchaseDTO::getTotalAmount).setHeader("Total Amount").setSortable(true);
+        grid.addColumn(PurchaseDTO::getUserId).setHeader("User ID").setSortable(true);
+        grid.addColumn(PurchaseDTO::getPurchaseDate).setHeader("Purchase Date").setSortable(true);
         return grid;
     }
+
     public void showNotification(String message) {
         Notification.show(message);
     }

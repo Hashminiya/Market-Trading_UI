@@ -1,57 +1,77 @@
 package org.vaadin.UI.model.DTOs;
-public class PurchaseDTO {
-    private Long id;
-    private String productName;
-    private Integer quantity;
-    private Double price;
-    private String buyer;
 
-    public PurchaseDTO(Long id, String productName, Integer quantity, Double price, String buyer) {
-        this.id = id;
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
-        this.buyer = buyer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PurchaseDTO {
+    @JsonProperty("purchaseId")
+    private Long purchaseId;
+
+    @JsonProperty("purchasedItemsList")
+    private List<ItemDTO> purchasedItemsList;
+
+    @JsonProperty("totalAmount")
+    private Double totalAmount;
+
+    @JsonProperty("userId")
+    private String userId;
+
+    @JsonProperty("purchaseDate")
+    private String purchaseDate;
+
+    // No-argument constructor
+    public PurchaseDTO() {
+    }
+
+    // Parameterized constructor
+    public PurchaseDTO(Long purchaseId, List<ItemDTO> purchasedItemsList, Double totalAmount, String userId, String purchaseDate) {
+        this.purchaseId = purchaseId;
+        this.purchasedItemsList = purchasedItemsList;
+        this.totalAmount = totalAmount;
+        this.userId = userId;
+        this.purchaseDate = purchaseDate;
     }
 
     // Getters and Setters
-    public Long getId() {
-        return id;
+    public Long getPurchaseId() {
+        return purchaseId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPurchaseId(Long purchaseId) {
+        this.purchaseId = purchaseId;
     }
 
-    public String getProductName() {
-        return productName;
+    public List<ItemDTO> getPurchasedItemsList() {
+        return purchasedItemsList;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setPurchasedItemsList(List<ItemDTO> purchasedItemsList) {
+        this.purchasedItemsList = purchasedItemsList;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getBuyer() {
-        return buyer;
+    public String getPurchaseDate() {
+        return purchaseDate;
     }
 
-    public void setBuyer(String buyer) {
-        this.buyer = buyer;
+    public void setPurchaseDate(String purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 }
