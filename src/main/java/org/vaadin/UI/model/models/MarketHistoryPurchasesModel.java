@@ -3,6 +3,7 @@ package org.vaadin.UI.model.models;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 public class MarketHistoryPurchasesModel {
 
     private final RestTemplate restTemplate;
-    public MarketHistoryPurchasesModel (){
+
+    public MarketHistoryPurchasesModel() {
         this.restTemplate = new RestTemplate();
     }
 
@@ -18,22 +20,25 @@ public class MarketHistoryPurchasesModel {
         String url = "http://localhost:8080/systemManager/viewMarketPurchaseHistory?token=" + token;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Create an HttpEntity with the request body and headers
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
         try {
-            ResponseEntity<PurchaseDTO[]> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, PurchaseDTO[].class);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                List<PurchaseDTO> listOfPurchases = Arrays.asList(response.getBody());
-                return listOfPurchases;
-            }
-            else {
+                String rawJson = response.getBody();
+                System.out.println("Raw JSON response: " + rawJson);
+
+                ObjectMapper mapper = new ObjectMapper();
+                PurchaseDTO[] purchaseDTOs = mapper.readValue(rawJson, PurchaseDTO[].class);
+                return Arrays.asList(purchaseDTOs);
+            } else {
                 return null;
             }
         } catch (Exception e) {
-                return null;
+            e.printStackTrace(); // Print the stack trace to debug the error
+            return null;
         }
     }
 }

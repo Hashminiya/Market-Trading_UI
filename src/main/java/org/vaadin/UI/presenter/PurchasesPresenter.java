@@ -46,11 +46,11 @@ public class PurchasesPresenter implements IPresenter {
     public ArrayList<PurchaseDTO> getDemoPurchases() {
         ArrayList<PurchaseDTO> purchases = new ArrayList<>();
 
-        purchases.add(new PurchaseDTO(1L, "Laptop", 1, 999.99, "Alice"));
-        purchases.add(new PurchaseDTO(2L, "Smartphone", 2, 499.99, "Bob"));
-        purchases.add(new PurchaseDTO(3L, "Headphones", 5, 79.99, "Charlie"));
-        purchases.add(new PurchaseDTO(4L, "Monitor", 3, 199.99, "Dave"));
-        purchases.add(new PurchaseDTO(5L, "Keyboard", 4, 49.99, "Eve"));
+//        purchases.add(new PurchaseDTO(1L, "Laptop", 1, 999.99, "Alice"));
+//        purchases.add(new PurchaseDTO(2L, "Smartphone", 2, 499.99, "Bob"));
+//        purchases.add(new PurchaseDTO(3L, "Headphones", 5, 79.99, "Charlie"));
+//        purchases.add(new PurchaseDTO(4L, "Monitor", 3, 199.99, "Dave"));
+//        purchases.add(new PurchaseDTO(5L, "Keyboard", 4, 49.99, "Eve"));
 
         return purchases;
     }

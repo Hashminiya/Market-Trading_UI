@@ -1,11 +1,13 @@
 package org.vaadin.UI.model.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.vaadin.UI.service.ImageService;
 
 import java.io.Serializable;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)  // This will ignore any unknown properties
 public class ItemDTO implements Serializable {
 
     @JsonProperty("itemId")
@@ -43,7 +45,7 @@ public class ItemDTO implements Serializable {
         this.totalPrice = totalPrice;
         this.categories = categories;
         this.description = description;
-        this. imageURL = ImageService.getImageUrl(itemName);
+        this.imageURL = ImageService.getImageUrl(itemName);
     }
 
     public long getItemId() {

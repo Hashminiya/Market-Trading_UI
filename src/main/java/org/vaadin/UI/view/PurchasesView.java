@@ -46,6 +46,7 @@ public class PurchasesView extends MainSettingView {
             presenter.onSelectStore(selectedOptionStoreName);
         });
     }
+
     public void fillChooseStoreComboBox(List<String> storeList) {
         chooseStoreComboBox.setItems(storeList);
     }
@@ -56,11 +57,14 @@ public class PurchasesView extends MainSettingView {
 
     private Grid<PurchaseDTO> createPurchasesGrid() {
         Grid<PurchaseDTO> grid = new Grid<>(PurchaseDTO.class, false);
-        grid.addColumn(PurchaseDTO::getId).setHeader("ID").setSortable(true);
-        grid.addColumn(PurchaseDTO::getProductName).setHeader("Product Name").setSortable(true);
-        grid.addColumn(PurchaseDTO::getQuantity).setHeader("Quantity").setSortable(true);
-        grid.addColumn(new NumberRenderer<>(PurchaseDTO::getPrice, "$%(,.2f")).setHeader("Price").setSortable(true);
-        grid.addColumn(PurchaseDTO::getBuyer).setHeader("Buyer").setSortable(true);
+        grid.addColumn(PurchaseDTO::getPurchaseId).setHeader("Purchase ID").setSortable(true);
+        grid.addColumn(purchase -> purchase.getPurchasedItemsList().stream()
+                        .map(item -> item.getItemName())
+                        .reduce((item1, item2) -> item1 + ", " + item2).orElse("No items"))
+                .setHeader("Items").setSortable(true);
+        grid.addColumn(PurchaseDTO::getTotalAmount).setHeader("Total Amount").setSortable(true);
+        grid.addColumn(PurchaseDTO::getUserId).setHeader("User ID").setSortable(true);
+        grid.addColumn(PurchaseDTO::getPurchaseDate).setHeader("Purchase Date").setSortable(true);
         return grid;
     }
 
