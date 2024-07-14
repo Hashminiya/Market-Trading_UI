@@ -5,6 +5,7 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.vaadin.UI.model.DTOs.ItemDTO;
+import org.vaadin.UI.view.Abstracts.IDialog;
 
 import java.util.List;
 
@@ -12,10 +13,10 @@ public class ChooseItemsDialog extends Dialog {
     private List<ItemDTO> itemsChosen;
     private org.vaadin.UI.presenter.PolicyPresenter presenter;
     private Grid<ItemDTO> itemsGrid;
-    private AddPolicyDialog parent;
+    private IDialog parent;
 
 
-    public ChooseItemsDialog(List<ItemDTO> itemsChosen, org.vaadin.UI.presenter.PolicyPresenter presenter, AddPolicyDialog parent) {
+    public ChooseItemsDialog(List<ItemDTO> itemsChosen, org.vaadin.UI.presenter.PolicyPresenter presenter, IDialog parent) {
         this.itemsChosen = itemsChosen;
         this.presenter = presenter;
         this.parent = parent;
