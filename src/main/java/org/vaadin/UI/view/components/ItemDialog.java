@@ -25,10 +25,12 @@ public class ItemDialog extends Dialog {
     private TextField quantity;
     private boolean isUpdate;
 
+    private Button saveButton;
+    private Button updateButton;
+
     public ItemDialog(InventoryPresenter presenter) {
         this.presenter = presenter;
         this.binder = new Binder<>(ItemDTO.class);
-        this.isUpdate = true;
 
         setCloseOnEsc(false);
         setCloseOnOutsideClick(false);
@@ -51,8 +53,10 @@ public class ItemDialog extends Dialog {
         add(mainLayout);
     }
 
-    public void setIsUpdate(boolean isUpdate){
+    public void setIsUpdate(boolean isUpdate) {
         this.isUpdate = isUpdate;
+        saveButton.setVisible(!isUpdate);
+        updateButton.setVisible(isUpdate);
     }
 
     private VerticalLayout createButtonLayout() {
@@ -61,15 +65,13 @@ public class ItemDialog extends Dialog {
         buttonLayout.setSpacing(true);
         buttonLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
 
-        Button saveButton = new Button("Save", e -> save());
+        saveButton = new Button("Save", e -> save());
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         saveButton.setWidthFull();
-        saveButton.setVisible(!isUpdate);
 
-        Button updateButton = new Button("Update", e -> update());
+        updateButton = new Button("Update", e -> update());
         updateButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         updateButton.setWidthFull();
-        updateButton.setVisible(isUpdate);
 
         Button cancelButton = new Button("Cancel", e -> cancel());
         cancelButton.setWidthFull();
@@ -78,7 +80,7 @@ public class ItemDialog extends Dialog {
         deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         deleteButton.setWidthFull();
 
-        buttonLayout.add(saveButton,updateButton, cancelButton, deleteButton);
+        buttonLayout.add(saveButton, updateButton, cancelButton, deleteButton);
 
         return buttonLayout;
     }
@@ -102,9 +104,6 @@ public class ItemDialog extends Dialog {
         description = new TextField("Description");
         description.setWidthFull();
 
-//        categories = new TextField("Categories");
-//        categories.setWidthFull();
-
         dialogLayout.add(itemName, price, quantity, description);
 
         binder.forField(itemName)
@@ -121,12 +120,6 @@ public class ItemDialog extends Dialog {
 
         binder.forField(description)
                 .bind(ItemDTO::getDescription, ItemDTO::setDescription);
-
-//        binder.forField(categories)
-//                .withConverter(
-//                        new StringToListConverter(),
-//                        "Invalid format. Please separate categories with commas.")
-//                .bind(ItemDTO::getItemCategories, ItemDTO::setItemCategories);
 
         return dialogLayout;
     }
@@ -145,17 +138,19 @@ public class ItemDialog extends Dialog {
         }
     }
 
-    private void update(){
-        if (currentItem != null && currentItem.getItemId() != 0 && isUpdate) {
-            presenter.onUpdatingItem(currentItem);
+    private void update() {
+        if (currentItem != null && currentItem.getItemId() != 0 && isUpdate && binder.writeBeanIfValid(currentItem)) {
+            presenter.onUpdatingItem(currentItem.getItemId(), currentItem.getStoreId(), currentItem.getItemName(), currentItem.getTotalPrice(), currentItem.getQuantity());
             close();
         }
     }
+
 
     public void setItem(ItemDTO item) {
         this.currentItem = item;
         binder.readBean(item);
     }
+
     private void cancel() {
         presenter.onCancleItem();
         close();
