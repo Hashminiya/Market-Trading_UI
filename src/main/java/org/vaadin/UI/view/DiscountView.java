@@ -14,6 +14,8 @@ import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.DiscountDTO;
 
 import org.vaadin.UI.presenter.DiscountPresenter;
+import org.vaadin.UI.view.AddDiscount.AddDiscountDialog;
+import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 
 
 import java.util.List;
@@ -47,13 +49,6 @@ public class DiscountView extends MainSettingView {
         discountsGrid.setWidthFull();
         rightContent.add(discountsGrid);
 
-        //TODO: complete this
-//        form = new ItemForm(presenter);
-//        form.setVisible(false);
-//
-//        drawer = createDrawer();
-//        rightContent.add(drawer);
-
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = event.getValue();
             presenter.onSelectStore(selectedOptionStoreName);
@@ -69,7 +64,8 @@ public class DiscountView extends MainSettingView {
         });
 
         addNewDiscountButton.addClickListener(event -> {
-            presenter.onClickingAddNewItemButton();
+            AddDiscountDialog dialog = new AddDiscountDialog(presenter, null);
+            dialog.open();
         });
     }
 
@@ -86,12 +82,6 @@ public class DiscountView extends MainSettingView {
 
     private Grid<DiscountDTO> createDiscountsGrid() {
         Grid<DiscountDTO> grid = new Grid<>(DiscountDTO.class);
-//        grid.setColumns("itemId", "itemName", "quantity", "storeId", "totalPrice");
-//        grid.getColumnByKey("itemId").setHeader("Item ID");
-//        grid.getColumnByKey("itemName").setHeader("Item Name");
-//        grid.getColumnByKey("quantity").setHeader("Quantity Available");
-//        grid.getColumnByKey("storeId").setHeader("Store ID");
-//        grid.getColumnByKey("totalPrice").setHeader("Price");
         return grid;
     }
 }

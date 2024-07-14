@@ -136,8 +136,6 @@ public class AddPolicyDialog extends Dialog {
         contentLayout.add(saveButton);
     }
 
-
-
     private void showAgeRestrictedPolicyForm() {
         contentLayout.removeAll();
         TextField nameField = new TextField("Name");

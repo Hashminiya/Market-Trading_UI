@@ -1,11 +1,12 @@
-package org.vaadin.UI.model.DTOs.Policies;
+package org.vaadin.UI.model.DTOs.Discounts;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.vaadin.UI.model.DTOs.ItemDTO;
+import org.vaadin.UI.model.DTOs.Policies.AgeRestrictedPolicyDTO;
+import org.vaadin.UI.model.DTOs.Policies.ComplexPolicyDto;
+import org.vaadin.UI.model.DTOs.Policies.MaximumQuantityPolicyDTO;
 
+import java.util.Date;
 import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
@@ -14,28 +15,27 @@ import java.util.List;
         @JsonSubTypes.Type(value = ComplexPolicyDto.class, name = "PurchasePolicyComposite"),
         @JsonSubTypes.Type(value = AgeRestrictedPolicyDTO.class, name = "AgeRestrictedPurchasePolicy")
 })
-public class PolicyDTO {
-    private Long id = 0L;
-    private String name;
-    private String type;
 
+public class DiscountDTO {
+    private Long id = 0L;
+    private double percent;
+    private Date expirationDate;
     private List<Long> items;
     private List<String> categories;
+    private boolean isStore;
 
-    public String getName() {
-        return name;
+    public double getPercent() {
+        return percent;
     }
 
-    public String getType() {
-        return type;
+    public void setPercent(double percent) {
+        this.percent = percent;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Date getExpirationDate(){return expirationDate;}
 
-    public void setType(String type) {
-        this.type = type;
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     public List<Long> getItems() {
