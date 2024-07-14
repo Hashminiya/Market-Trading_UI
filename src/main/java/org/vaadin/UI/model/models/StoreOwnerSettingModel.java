@@ -48,37 +48,31 @@ public class StoreOwnerSettingModel {
         }
     }
 
-    public Set<String> viewManagementInfo(String token, String storeId) {
-        String url = "http://localhost:8080/storeManagement/viewManagementInfo?token=" + token + "&storeId=" + storeId;
+    public Set<String> viewManagementInfo(String token, String storeName) {
+        String storeID = "";
+        String urlForFetchingID = "http://localhost:8080/storeManagement/getStoreIdByName?token=" + token + "&storeName=" + storeName;
+        HttpHeaders headers1 = new HttpHeaders();
+        headers1.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity1 = new HttpEntity<>(headers1);
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    urlForFetchingID, HttpMethod.GET, requestEntity1, String.class);
+            storeID = response.getBody();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        String url = "http://localhost:8080/storeManagement/viewManagementInfo?token=" + token + "&storeId=" + storeID;
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpHeaders headers2 = new HttpHeaders();
+        headers2.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity2 = new HttpEntity<>(headers2);
 
         try {
             ResponseEntity<HashMap<String, List<String>>> response = restTemplate.exchange(
-                    url, HttpMethod.GET, requestEntity, (Class<HashMap<String, List<String>>>) (Class<?>) HashMap.class);
+                    url, HttpMethod.GET, requestEntity2, (Class<HashMap<String, List<String>>>) (Class<?>) HashMap.class);
             return response.getBody().keySet();
-//            HashMap<String, List<String>> userPermissions = new HashMap<>();
-//
-//            String user1 = "User1";
-//            String user2 = "User2";
-//            String user3 = "User3";
-//
-//            List<String> permissions1 = new ArrayList<>();
-//            permissions1.add("Read");
-//            permissions1.add("Write");
-//
-//            List<String> permissions2 = new ArrayList<>();
-//            permissions2.add("Read");
-//
-//            List<String> permissions3 = new ArrayList<>();
-//            permissions3.add("Write");
-//
-//            userPermissions.put(user1, permissions1);
-//            userPermissions.put(user2, permissions2);
-//            userPermissions.put(user3, permissions3);
-//            return userPermissions.keySet();
         }
         catch (Exception e) {
             e.printStackTrace();
