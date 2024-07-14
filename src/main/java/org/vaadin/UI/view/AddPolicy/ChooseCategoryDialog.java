@@ -7,14 +7,15 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import java.util.List;
 import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.view.Abstracts.IDialog;
 
 public class ChooseCategoryDialog extends Dialog {
     private final List<String> categoriesChosen;
     private final PolicyPresenter presenter;
     private final Grid<String> categoriesGrid;
-    private AddPolicyDialog parent;
+    private IDialog parent;
 
-    public ChooseCategoryDialog(List<String> categoriesChosen, PolicyPresenter presenter,AddPolicyDialog parent) {
+    public ChooseCategoryDialog(List<String> categoriesChosen, PolicyPresenter presenter, IDialog parent) {
         this.categoriesChosen = categoriesChosen;
         this.presenter = presenter;
         this.parent = parent;

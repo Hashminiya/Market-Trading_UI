@@ -13,6 +13,7 @@ import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
 import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.view.Abstracts.IDialog;
 import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 import org.vaadin.UI.view.AddPolicy.ChooseCategoryDialog;
 import org.vaadin.UI.view.AddPolicy.ChooseItemsDialog;
@@ -20,7 +21,7 @@ import org.vaadin.UI.view.AddPolicy.ChooseItemsDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddDiscountDialog extends Dialog {
+public class AddDiscountDialog extends Dialog implements IDialog {
     private DiscountPresenter presenter;
     private PolicyPresenter policyPresenter;
     private ComboBox<String> discountTypeComboBox;
@@ -81,16 +82,16 @@ public class AddDiscountDialog extends Dialog {
                     categoriesChosen = null;
                     break;
                 case "Specific Items":
-                    //Dialog itemsDialog  = new ChooseItemsDialog(itemsChosen, policyPresenter, this);
+                    Dialog itemsDialog  = new ChooseItemsDialog(itemsChosen, policyPresenter, this);
                     categoriesChosen = null;
                     isAllStoreDiscount = false;
-                    //itemsDialog.open();
+                    itemsDialog.open();
                     break;
                 case "Specific Categories":
-                    // categoryDialog  = new ChooseCategoryDialog(categoriesChosen, policyPresenter, this);
+                    Dialog categoryDialog  = new ChooseCategoryDialog(categoriesChosen, policyPresenter, this);
                     itemsChosen = null;
                     isAllStoreDiscount = false;
-                    //categoryDialog.open();
+                    categoryDialog.open();
                     break;
                 default:
                     break;
