@@ -91,7 +91,8 @@ public abstract class ViewTemplate extends VerticalLayout implements PropertyCha
     private void addCreateStoreButton(HorizontalLayout layout) {
         Button createStoreButton = new Button("Create Store");
         createStoreButton.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate("createStore")));
-        layout.add(createStoreButton);
+        if(!Credentials.getUserName().contains("guest"))
+            layout.add(createStoreButton);
     }
 
     private void decorateLayout(HorizontalLayout header){
@@ -116,7 +117,8 @@ public abstract class ViewTemplate extends VerticalLayout implements PropertyCha
     private void addManageStoresButton(HorizontalLayout layout){
         Button settingsTopBar = new Button("Settings");
         settingsTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings"));});
-        layout.add(settingsTopBar);
+        if(!Credentials.getUserName().equals("guest"))
+            layout.add(settingsTopBar);
     }
 
     private void  addLogoutButton(HorizontalLayout layout){
