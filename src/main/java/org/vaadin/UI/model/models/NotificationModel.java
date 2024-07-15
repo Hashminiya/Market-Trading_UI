@@ -4,10 +4,7 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.Util.SuccessCallBack;
 import org.vaadin.UI.model.DTOs.NotificationDTO;
-import org.vaadin.UI.model.DTOs.PurchaseDTO;
 
-import javax.security.auth.callback.Callback;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package org.vaadin.UI.Util;
 
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.vaadin.UI.Notifications.MessageListener;
 import org.vaadin.UI.model.DTOs.NotificationDTO;

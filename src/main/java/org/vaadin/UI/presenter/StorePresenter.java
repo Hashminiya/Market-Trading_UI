@@ -5,8 +5,6 @@ import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.model.models.StoreModel;
 import org.vaadin.UI.view.ItemView;
 import org.vaadin.UI.view.StoreView;
-//import item presenter
-
 
 import java.util.Optional;
 import java.util.logging.Logger;

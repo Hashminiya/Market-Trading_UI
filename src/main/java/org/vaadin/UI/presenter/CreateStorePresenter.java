@@ -1,8 +1,9 @@
 package org.vaadin.UI.presenter;
+
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.CreateStoreModel;
-import org.vaadin.UI.view.CreateStoreView;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
+import org.vaadin.UI.view.CreateStoreView;
 
 public class CreateStorePresenter implements IPresenter {
 

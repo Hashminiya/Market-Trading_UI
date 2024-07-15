@@ -1,12 +1,12 @@
 package org.vaadin.UI.presenter;
 
+import com.vaadin.flow.component.notification.Notification;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
 import org.vaadin.UI.model.models.CartModel;
 import org.vaadin.UI.model.models.StoreModel;
 import org.vaadin.UI.view.ItemView;
-import com.vaadin.flow.component.notification.Notification;
 
 import java.util.Optional;
 

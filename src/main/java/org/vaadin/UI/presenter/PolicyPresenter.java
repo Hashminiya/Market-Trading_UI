@@ -5,14 +5,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import org.vaadin.UI.Util.Credentials;
-import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.model.DTOs.Policies.AgeRestrictedPolicyDTO;
-import org.vaadin.UI.model.DTOs.Policies.ComplexPolicyDto;
-import org.vaadin.UI.model.DTOs.Policies.MaximumQuantityPolicyDTO;
 import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
+import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.model.models.InventoryModel;
 import org.vaadin.UI.model.models.PolicyModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;

@@ -1,12 +1,13 @@
 package org.vaadin.UI.presenter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
 import org.vaadin.UI.view.ViewInterface.ISignUpView;
-import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 

@@ -1,11 +1,8 @@
 
 package org.vaadin.UI.model.models;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
 
 import java.util.ArrayList;

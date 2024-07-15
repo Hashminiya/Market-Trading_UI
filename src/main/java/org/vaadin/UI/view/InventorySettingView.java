@@ -11,8 +11,8 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.presenter.InventoryPresenter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
+import org.vaadin.UI.presenter.InventoryPresenter;
 import org.vaadin.UI.view.components.ItemDialog;
 
 import java.util.ArrayList;
