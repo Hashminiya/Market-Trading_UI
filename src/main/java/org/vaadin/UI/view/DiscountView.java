@@ -11,11 +11,11 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.model.DTOs.DiscountDTO;
 
+import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
+import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
 import org.vaadin.UI.view.AddDiscount.AddDiscountDialog;
-import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 
 
 import java.util.List;
@@ -25,7 +25,6 @@ public class DiscountView extends MainSettingView {
     private Grid<DiscountDTO> discountsGrid;
     private Button addNewDiscountButton;
     private DiscountPresenter presenter;
-    private VerticalLayout drawer;
 
     public DiscountView(){
         presenter = new DiscountPresenter(this);
@@ -54,23 +53,13 @@ public class DiscountView extends MainSettingView {
             presenter.onSelectStore(selectedOptionStoreName);
         });
 
-        discountsGrid.asSingleSelect().addValueChangeListener(event -> {
-            //TODO: complete this
-//            if (event.getValue() != null) {
-//                showForm(true, event.getValue());
-//            } else {
-//                showForm(false, null);
-//            }
-        });
-
         addNewDiscountButton.addClickListener(event -> {
             AddDiscountDialog dialog = new AddDiscountDialog(presenter, null);
             dialog.open();
         });
     }
 
-    public void fillUpDiscounts(List<DiscountDTO> storeItems) {
-    }
+    public void fillUpDiscounts(List<DiscountDTO> discounts) {discountsGrid.setItems(discounts);}
 
     public void fillChooseStoreComboBox(List<String> stores) {
         chooseStoreComboBox.setItems(stores);

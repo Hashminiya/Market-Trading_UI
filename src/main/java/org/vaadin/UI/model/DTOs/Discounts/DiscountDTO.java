@@ -16,8 +16,8 @@ import java.util.List;
         @JsonSubTypes.Type(value = AgeRestrictedPolicyDTO.class, name = "AgeRestrictedPurchasePolicy")
 })
 
-public class DiscountDTO {
-    private Long id = 0L;
+public class DiscountDTO extends BaseDiscountDTO{
+
     private double percent;
     private Date expirationDate;
     private List<Long> items;
@@ -54,11 +54,4 @@ public class DiscountDTO {
         this.categories = categories;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
