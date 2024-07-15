@@ -8,13 +8,14 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import org.vaadin.UI.model.DTOs.DiscountDTO;
+import org.vaadin.UI.model.DTOs.Discounts.ConditionCompositeDTO;
+import org.vaadin.UI.model.DTOs.Discounts.ConditionDTO;
+import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
+import org.vaadin.UI.model.DTOs.Discounts.LogicalDiscountCompositeDTO;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
 import org.vaadin.UI.presenter.PolicyPresenter;
 import org.vaadin.UI.view.Abstracts.IDialog;
-import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 import org.vaadin.UI.view.AddPolicy.ChooseCategoryDialog;
 import org.vaadin.UI.view.AddPolicy.ChooseItemsDialog;
 
@@ -27,7 +28,7 @@ public class AddDiscountDialog extends Dialog implements IDialog {
     private ComboBox<String> discountTypeComboBox;
     private VerticalLayout contentLayout;
     private AddDiscountDialog parent;
-    private List<DiscountDTO> discountDTOList;
+    private List<ConditionDTO> conditionDTOList;
     private VerticalLayout discountListLayout;
     private VerticalLayout applyOnLayout;
     private List<ItemDTO> itemsChosen;
@@ -35,7 +36,7 @@ public class AddDiscountDialog extends Dialog implements IDialog {
     private boolean isAllStoreDiscount;
     private VerticalLayout productsListLayout;
     public AddDiscountDialog(DiscountPresenter presenter , AddDiscountDialog parent) {
-        discountDTOList = new ArrayList<>();
+        conditionDTOList = new ArrayList<>();
         this.parent = parent;
         this.presenter = presenter;
         setWidth("1000px");  // Set initial width
@@ -43,14 +44,14 @@ public class AddDiscountDialog extends Dialog implements IDialog {
 
         contentLayout = new VerticalLayout();
         discountTypeComboBox = new ComboBox<>("Select Discount Type");
-        discountTypeComboBox.setItems("Regular Discount", "Logical Discount Composite", "Numeric Discount Composite");
+        discountTypeComboBox.setItems("Condition Composite", "Logical Discount Composite", "Numeric Discount Composite");
         discountTypeComboBox.setPlaceholder("Select Discount Type");
 
         discountTypeComboBox.addValueChangeListener(event -> {
             String selectedPolicyType = event.getValue();
             switch (selectedPolicyType) {
-                case "Logical Discount Composite":
-                    //showComplexPolicyForm();
+                case "Condition Composite":
+                    showConditionCompositeForm();
                     break;
                 case "Regular Discount":
                     //showMaxAmountPolicyForm();
@@ -66,6 +67,42 @@ public class AddDiscountDialog extends Dialog implements IDialog {
         add(discountTypeComboBox, contentLayout);
     }
 
+    private void showConditionCompositeForm() {
+        contentLayout.removeAll();
+        discountListLayout = new VerticalLayout();
+        TextField nameField = new TextField("Name");
+        ComboBox<String> logicalRoleField = new ComboBox<>("Logical Role");
+        logicalRoleField.setItems("OR", "AND", "XOR");
+
+        Button addSubDiscountButton = new Button("Add Sub-discount");
+        addSubDiscountButton.addClickListener(event -> {
+            AddDiscountDialog dialog = new AddDiscountDialog(presenter, this);
+            dialog.open();
+        });
+
+        contentLayout.add(nameField, logicalRoleField, addSubDiscountButton, discountListLayout);
+
+        Button saveButton = new Button(addOrSaveButton());
+        saveButton.addClickListener(event -> {
+            ConditionCompositeDTO conditionComposite = new ConditionCompositeDTO();
+            conditionComposite.setLogicalRole(logicalRoleField.getValue());
+            conditionComposite.setConditions(conditionDTOList);
+            conditionComposite.setName(nameField.getValue());
+
+            if(parent != null){
+                parent.conditionDTOList.add(conditionComposite);
+            }
+            else {
+                presenter.saveCondition(conditionComposite);
+            }
+            close();
+        });
+        contentLayout.add(saveButton);
+    }
+
+    private String addOrSaveButton(){
+        return (parent == null) ? "save" : "add";
+    }
     private VerticalLayout applyOnSelector() {
         VerticalLayout layout = new VerticalLayout();
         ComboBox<String> options = new ComboBox<String>("Apply on");

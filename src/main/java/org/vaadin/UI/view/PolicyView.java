@@ -22,7 +22,6 @@ public class PolicyView extends MainSettingView {
     private Grid<PolicyViewDTO> policiesGrid;
     private Button addNewPolicyButton;
     private PolicyPresenter presenter;
-    private VerticalLayout drawer;
 
     public PolicyView(){
         presenter = new PolicyPresenter(this);
@@ -72,12 +71,6 @@ public class PolicyView extends MainSettingView {
 
     private Grid<PolicyViewDTO> createPoliciesGrid() {
         Grid<PolicyViewDTO> grid = new Grid<>(PolicyViewDTO.class);
-//        grid.setColumns("itemId", "itemName", "quantity", "storeId", "totalPrice");
-//        grid.getColumnByKey("itemId").setHeader("Item ID");
-//        grid.getColumnByKey("itemName").setHeader("Item Name");
-//        grid.getColumnByKey("quantity").setHeader("Quantity Available");
-//        grid.getColumnByKey("storeId").setHeader("Store ID");
-//        grid.getColumnByKey("totalPrice").setHeader("Price");
         return grid;
     }
 }
