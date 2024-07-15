@@ -11,9 +11,9 @@ import org.vaadin.UI.presenter.CreateStorePresenter;
 @Route("createStore")
 public class CreateStoreView extends ViewTemplate {
 
-    private CreateStorePresenter createStorePresenter;
     private final TextField storeName;
     private final TextField storeDescription;
+    private CreateStorePresenter createStorePresenter;
 
     public CreateStoreView() {
         createStorePresenter = new CreateStorePresenter(this);
@@ -21,7 +21,7 @@ public class CreateStoreView extends ViewTemplate {
         storeDescription = new TextField("Store description");
 
         Button createStoreButton = new Button("Create Store");
-        createStoreButton.addClickListener(event -> createStorePresenter.onCreateStore(storeName.getValue(),storeDescription.getValue()));
+        createStoreButton.addClickListener(event -> createStorePresenter.onCreateStore(storeName.getValue(), storeDescription.getValue()));
         createStoreButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         VerticalLayout formLayout = new VerticalLayout(storeName, storeDescription, createStoreButton);

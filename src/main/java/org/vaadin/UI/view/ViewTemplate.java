@@ -25,14 +25,14 @@ import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 
 @Component
-public abstract class ViewTemplate extends VerticalLayout implements PropertyChangeListener{
-    private UI ui;
+public abstract class ViewTemplate extends VerticalLayout implements PropertyChangeListener {
     IPresenter presenter;
     LogoutPresenter logoutPresenter;
     Button loginTopBar;
     Button logoutTopBar;
     Button signUpTopBar;
     Button notificationTopBar;
+    private UI ui;
 
     public ViewTemplate() {
         init();
@@ -76,12 +76,11 @@ public abstract class ViewTemplate extends VerticalLayout implements PropertyCha
     }
 
     private void displayButtons() {
-        if (Credentials.isIsLogedIn()){
+        if (Credentials.isIsLogedIn()) {
             loginTopBar.setVisible(false);
             signUpTopBar.setVisible(false);
             logoutTopBar.setVisible(true);
-        }
-        else{
+        } else {
             loginTopBar.setVisible(true);
             signUpTopBar.setVisible(true);
             logoutTopBar.setVisible(false);
@@ -91,11 +90,11 @@ public abstract class ViewTemplate extends VerticalLayout implements PropertyCha
     private void addCreateStoreButton(HorizontalLayout layout) {
         Button createStoreButton = new Button("Create Store");
         createStoreButton.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate("createStore")));
-        if(!Credentials.getUserName().contains("guest"))
+        if (!Credentials.getUserName().contains("guest"))
             layout.add(createStoreButton);
     }
 
-    private void decorateLayout(HorizontalLayout header){
+    private void decorateLayout(HorizontalLayout header) {
         header.setWidth("100%");
         header.setHeight("60px");
         header.setSpacing(true);
@@ -114,31 +113,37 @@ public abstract class ViewTemplate extends VerticalLayout implements PropertyCha
         layout.add(logoButton);
     }
 
-    private void addManageStoresButton(HorizontalLayout layout){
+    private void addManageStoresButton(HorizontalLayout layout) {
         Button settingsTopBar = new Button("Settings");
-        settingsTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("settings"));});
-        if(!Credentials.getUserName().equals("guest"))
+        settingsTopBar.addClickListener(event -> {
+            getUI().ifPresent(ui -> ui.navigate("settings"));
+        });
+        if (!Credentials.getUserName().equals("guest"))
             layout.add(settingsTopBar);
     }
 
-    private void  addLogoutButton(HorizontalLayout layout){
+    private void addLogoutButton(HorizontalLayout layout) {
         logoutTopBar = new Button("Logout");
         logoutTopBar.setVisible(false);
         logoutTopBar.addClickListener(event -> {
             logoutPresenter.onLogOut(this::succesfullLogout);
-            });
+        });
         layout.add(logoutTopBar);
     }
 
-    private void addLoginButton(HorizontalLayout layout){
+    private void addLoginButton(HorizontalLayout layout) {
         loginTopBar = new Button("Log-in");
-        loginTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("login"));});
+        loginTopBar.addClickListener(event -> {
+            getUI().ifPresent(ui -> ui.navigate("login"));
+        });
         layout.add(loginTopBar);
     }
 
-    private void addSignupButton(HorizontalLayout layout){
+    private void addSignupButton(HorizontalLayout layout) {
         signUpTopBar = new Button("Sign-up");
-        signUpTopBar.addClickListener(event -> { getUI().ifPresent(ui -> ui.navigate("sign-up"));});
+        signUpTopBar.addClickListener(event -> {
+            getUI().ifPresent(ui -> ui.navigate("sign-up"));
+        });
         layout.add(signUpTopBar);
     }
 
@@ -163,7 +168,6 @@ public abstract class ViewTemplate extends VerticalLayout implements PropertyCha
                 notificationTopBar.getElement().getChildren()
                         .filter(child -> child.getClassList().contains("badge"))
                         .forEach(child -> notificationTopBar.getElement().removeChild(child));
-
 
 
                 if (Messages.getInstance().isNewMessage()) {
@@ -198,13 +202,16 @@ public abstract class ViewTemplate extends VerticalLayout implements PropertyCha
         });
         layout.add(cartButton);
     }
-    public void setUp(){
+
+    public void setUp() {
         //presenter.onViewLoaded();
     }
-    public void displayUserName(HorizontalLayout layout){
+
+    public void displayUserName(HorizontalLayout layout) {
         Text userNameLabel = new Text(Credentials.getUserName());
         layout.add(userNameLabel);
     }
+
     private void succesfullLogout() {
         init();
         getUI().ifPresent(ui -> ui.navigate(""));

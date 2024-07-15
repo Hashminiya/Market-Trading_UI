@@ -10,10 +10,10 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public class StorePresenter {
+    private static final Logger logger = Logger.getLogger(StorePresenter.class.getName());
     private final StoreView view;
     private final StoreModel model;
     private final ItemPresenter itemPresenter;
-    private static final Logger logger = Logger.getLogger(StorePresenter.class.getName());
     private StoreDTO storeDTO;
     private Long storeId;
 
@@ -22,7 +22,7 @@ public class StorePresenter {
         this.model = new StoreModel();
         this.itemPresenter = new ItemPresenter(new ItemView());
 
- ;
+        ;
     }
 
     public void onViewLoaded(String storeName) {

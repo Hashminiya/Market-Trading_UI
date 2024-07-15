@@ -1,4 +1,5 @@
 package org.vaadin.UI.presenter;
+
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.PurchaseDTO;
 import org.vaadin.UI.model.models.MarketHistoryPurchasesModel;
@@ -12,10 +13,11 @@ public class MarketHistoryPurchasesPresenter implements IPresenter {
     private MarketHistoryPurchasesView view;
     private MarketHistoryPurchasesModel model;
 
-    public MarketHistoryPurchasesPresenter(MarketHistoryPurchasesView view){
+    public MarketHistoryPurchasesPresenter(MarketHistoryPurchasesView view) {
         this.view = view;
         model = new MarketHistoryPurchasesModel();
     }
+
     @Override
     public void onViewLoaded() {
 
@@ -26,12 +28,11 @@ public class MarketHistoryPurchasesPresenter implements IPresenter {
 
     }
 
-    public void onInitGrid(){
+    public void onInitGrid() {
         List<PurchaseDTO> resultListOfPurchases = model.getListOfPurchases(Credentials.getToken());
 
-        if(resultListOfPurchases!= null){
+        if (resultListOfPurchases != null) {
             view.setGrid(resultListOfPurchases);
-        }
-        else view.showNotification("Failed to fetch purchases history");
+        } else view.showNotification("Failed to fetch purchases history");
     }
 }

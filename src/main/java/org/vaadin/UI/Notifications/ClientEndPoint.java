@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public class ClientEndPoint implements WebSocketListener {
-    private Session session;
     private final List<MessageListener> messageListeners = new ArrayList<>();
+    private Session session;
 
     @Override
     public void onWebSocketConnect(Session session) {
@@ -46,6 +46,7 @@ public class ClientEndPoint implements WebSocketListener {
             session.getRemote().sendString(message, null);
         }
     }
+
     private void notifyMessageListeners(String message) {
         for (MessageListener listener : messageListeners) {
             listener.onMessageReceived(message);

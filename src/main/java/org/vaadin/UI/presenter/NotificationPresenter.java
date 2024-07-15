@@ -24,37 +24,36 @@ public class NotificationPresenter implements IPresenter {
 
     @Override
     public void onViewLoaded() {
-        if(!Credentials.isIsLogedIn()){
+        if (!Credentials.isIsLogedIn()) {
             view.setGrid(new ArrayList<>());
             view.showNotification("To see messages, please login first");
             return;
         }
         Messages messages = Messages.getInstance();
         List<NotificationDTO> resultListOfNotifications;
-        if(!messages.isLoaded()){
+        if (!messages.isLoaded()) {
             resultListOfNotifications = model.getListOfNotifications(Credentials.getToken());
             messages.load(resultListOfNotifications);
         }
         resultListOfNotifications = messages.getNotifications();
 
-        if(resultListOfNotifications!= null){
+        if (resultListOfNotifications != null) {
             view.setGrid(resultListOfNotifications);
-        }
-        else view.showNotification("Failed to fetch notifications");
+        } else view.showNotification("Failed to fetch notifications");
     }
 
     @Override
     public void onViewStopped() {
         // Implement any cleanup logic here
     }
-    public void clear(SuccessCallBack callback){
+
+    public void clear(SuccessCallBack callback) {
         Messages messages = Messages.getInstance();
         List<NotificationDTO> resultListOfNotifications = model.clear(Credentials.getToken(), callback);
         messages.replace(resultListOfNotifications);
-        if(resultListOfNotifications!= null){
+        if (resultListOfNotifications != null) {
             view.setGrid(resultListOfNotifications);
-        }
-        else view.showNotification("Failed to clear notifications");
+        } else view.showNotification("Failed to clear notifications");
     }
 
 }

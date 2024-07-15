@@ -48,6 +48,7 @@ public class StoreView extends ViewTemplate implements BeforeEnterObserver {
         itemList.removeAll();
         itemList.add(new StoreComponentList(store));
     }
+
     public StoreDTO getStoreDTO() {
         return storeDTO;
     }

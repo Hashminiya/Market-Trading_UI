@@ -20,8 +20,7 @@ public class AssignOwnerModel {
             ResponseEntity<String> response = restTemplate.exchange(
                     urlForFetchingID, HttpMethod.GET, requestEntity1, String.class);
             storeID = response.getBody();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

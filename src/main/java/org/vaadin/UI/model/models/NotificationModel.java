@@ -11,7 +11,8 @@ import java.util.List;
 public class NotificationModel {
 
     private final RestTemplate restTemplate;
-    public NotificationModel(){
+
+    public NotificationModel() {
         this.restTemplate = new RestTemplate();
     }
 
@@ -29,8 +30,7 @@ public class NotificationModel {
             if (response.getStatusCode() == HttpStatus.OK) {
                 List<NotificationDTO> listOfNotifications = Arrays.asList(response.getBody());
                 return listOfNotifications;
-            }
-            else {
+            } else {
                 return null;
             }
         } catch (Exception e) {
@@ -53,8 +53,7 @@ public class NotificationModel {
                 List<NotificationDTO> listOfNotifications = Arrays.asList(response.getBody());
                 callback.call();
                 return listOfNotifications;
-            }
-            else {
+            } else {
                 return null;
             }
         } catch (Exception e) {

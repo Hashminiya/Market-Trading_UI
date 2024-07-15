@@ -12,9 +12,9 @@ import org.vaadin.UI.presenter.AssignOwnerPresenter;
 @Route("settings/assign owner")
 public class AssignOwnerView extends MainSettingView {
 
-    private AssignOwnerPresenter assignOwnerPresenter;
     private final TextField userName;
     private final TextField storeName;
+    private AssignOwnerPresenter assignOwnerPresenter;
 
     public AssignOwnerView() {
         assignOwnerPresenter = new AssignOwnerPresenter(this);
@@ -22,7 +22,7 @@ public class AssignOwnerView extends MainSettingView {
         storeName = new TextField("Store Name");
 
         Button assignOwnerButton = new Button("Assign owner");
-        assignOwnerButton.addClickListener(event -> assignOwnerPresenter.onAssignOwner(userName.getValue(),storeName.getValue()));
+        assignOwnerButton.addClickListener(event -> assignOwnerPresenter.onAssignOwner(userName.getValue(), storeName.getValue()));
         assignOwnerButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         VerticalLayout formLayout = new VerticalLayout(userName, storeName, assignOwnerButton);

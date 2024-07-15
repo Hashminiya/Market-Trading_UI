@@ -16,6 +16,7 @@ import java.util.List;
 
 public class ItemListComponent extends VerticalLayout {
     private ItemPresenter itemPresenter;
+
     public ItemListComponent(List<ItemDTO> items) {
         this.itemPresenter = new ItemPresenter(new ItemView());
         Grid<ItemDTO> itemsGrid = new Grid<>(ItemDTO.class, false);

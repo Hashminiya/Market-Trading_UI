@@ -1,4 +1,5 @@
 package org.vaadin.UI.presenter;
+
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.AssignManagerModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
@@ -6,7 +7,7 @@ import org.vaadin.UI.view.AssignManagerView;
 
 import java.util.Set;
 
-public class AssignManagerPresenter implements IPresenter{
+public class AssignManagerPresenter implements IPresenter {
 
     private final AssignManagerView view;
     private final AssignManagerModel model;

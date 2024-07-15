@@ -1,4 +1,3 @@
-
 package org.vaadin.UI.presenter;
 
 import org.vaadin.UI.Util.Credentials;

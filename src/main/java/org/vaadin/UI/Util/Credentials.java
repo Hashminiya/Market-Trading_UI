@@ -7,8 +7,9 @@ public class Credentials {
     private static String token;
     private static String userName = "guest";
     private static boolean isLogedIn = false;
-    public static String getToken(){
-        if (token == null){
+
+    public static String getToken() {
+        if (token == null) {
             LoginModel.guestEntry();// Log in as guest and set guest token
         }
         return token;
@@ -33,7 +34,8 @@ public class Credentials {
     public static String getUserName() {
         return userName;
     }
-    public static void logOut(){
+
+    public static void logOut() {
         isLogedIn = false;
         LoginModel.guestEntry(); // Log in as guest and set guest token
         userName = "guest";

@@ -16,6 +16,7 @@ import org.vaadin.UI.presenter.PolicyPresenter;
 import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
 
 import java.util.List;
+
 @Route("settings/policies")
 public class PolicyView extends MainSettingView {
     private ComboBox<String> chooseStoreComboBox;
@@ -24,7 +25,7 @@ public class PolicyView extends MainSettingView {
     private PolicyPresenter presenter;
     private VerticalLayout drawer;
 
-    public PolicyView(){
+    public PolicyView() {
         presenter = new PolicyPresenter(this);
 
         VerticalLayout rightContent = getRightContent();

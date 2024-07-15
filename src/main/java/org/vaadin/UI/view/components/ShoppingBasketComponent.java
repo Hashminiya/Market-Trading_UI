@@ -1,4 +1,3 @@
-
 package org.vaadin.UI.view.components;
 
 import com.vaadin.flow.component.Text;

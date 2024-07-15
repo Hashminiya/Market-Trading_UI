@@ -20,6 +20,8 @@ import org.vaadin.UI.presenter.PaymentPresenter;
 @PageTitle("Payment Form")
 @Route("payment")
 public class PaymentView extends ViewTemplate {
+    private final String CARD_REGEX = "^\\d{16}$";
+    private final String CVV_REGEX = "^\\d{3}$";
     private TextField cardNumber;
     private TextField cardholderName;
     private Select<Integer> month;
@@ -30,9 +32,6 @@ public class PaymentView extends ViewTemplate {
     private Button submit;
     private Span totalPrice;
     private PaymentPresenter presenter;
-
-    private final String CARD_REGEX = "^\\d{16}$";
-    private final String CVV_REGEX = "^\\d{3}$";
     private double amount;
 
     public PaymentView() {

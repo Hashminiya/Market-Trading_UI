@@ -15,9 +15,10 @@ public class PolicyModel {
 
     private final RestTemplate restTemplate;
 
-    public PolicyModel (){
+    public PolicyModel() {
         this.restTemplate = new RestTemplate();
     }
+
     public List<PolicyViewDTO> getPolicies(String storeName, String token) {
         try {
             String url = "http://localhost:8080/storeManagement/viewAllPolicies?token=" + token + "&storeName=" + storeName;
@@ -27,15 +28,14 @@ public class PolicyModel {
 
             ObjectMapper objectMapper = new ObjectMapper();
 
-            return objectMapper.readValue(response.getBody(), new TypeReference<List<PolicyViewDTO>>() {});
+            return objectMapper.readValue(response.getBody(), new TypeReference<List<PolicyViewDTO>>() {
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
-
-
 
 
     public List<String> getStores(String token) {
@@ -54,7 +54,8 @@ public class PolicyModel {
             return null;
         }
     }
-    public String savePolicy(String token, String storeName, String policyDetails){
+
+    public String savePolicy(String token, String storeName, String policyDetails) {
         String url = "http://localhost:8080/storeManagement/addPolicyByStoreNameAndToken";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

@@ -20,11 +20,11 @@ import java.util.List;
 public class PolicyPresenter implements IPresenter {
 
     private final PolicyView view;
+    private final InventoryModel inventoryModel;
     private PolicyModel policyModel;
     private String currentStoreName;
-    private final InventoryModel inventoryModel;
-
     private List<PolicyViewDTO> storePolicies;
+
     public PolicyPresenter(PolicyView view) {
         this.view = view;
         this.policyModel = new PolicyModel();
@@ -56,11 +56,11 @@ public class PolicyPresenter implements IPresenter {
         view.fillUpPolicies(storePolicies);
     }
 
-    public void onSavingPolicy(){
+    public void onSavingPolicy() {
 
     }
 
-    public void onDeletingPolicy(){
+    public void onDeletingPolicy() {
 
     }
 
@@ -90,13 +90,14 @@ public class PolicyPresenter implements IPresenter {
             throw new RuntimeException(e);
         }
     }
-    public List<ItemDTO> getItems(){
-        return inventoryModel.getStoreItems(currentStoreName,Credentials.getToken());
+
+    public List<ItemDTO> getItems() {
+        return inventoryModel.getStoreItems(currentStoreName, Credentials.getToken());
 
     }
 
     public List<String> getCategories() {
-        return inventoryModel.getStoreCategories(currentStoreName,Credentials.getToken());
+        return inventoryModel.getStoreCategories(currentStoreName, Credentials.getToken());
     }
 
 }

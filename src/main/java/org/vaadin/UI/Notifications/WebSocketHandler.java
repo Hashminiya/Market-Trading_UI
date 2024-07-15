@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture;
 public class WebSocketHandler {
     private static ClientEndPoint clientEndPoint;
     private static WebSocketClient webSocketClient;
+
     public static void openConnection(MessageListener messageListener) {
         HttpClient httpClient = new HttpClient();
         webSocketClient = new WebSocketClient(httpClient);

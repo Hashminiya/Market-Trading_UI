@@ -14,10 +14,10 @@ import java.util.regex.Pattern;
 
 @Component
 public class SignUpPresenter implements IPresenter {
-    private final ISignUpView view;
-    private final RestTemplate restTemplate;
     private static final int MIN_PASSWORD_LENGTH = 4;
     private static final int MAX_PASSWORD_LENGTH = 20;
+    private final ISignUpView view;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public SignUpPresenter(ISignUpView view) {
@@ -61,16 +61,15 @@ public class SignUpPresenter implements IPresenter {
         }
     }
 
-    private boolean isValidAge(String age)  {
-        try{
+    private boolean isValidAge(String age) {
+        try {
             int ageConvert = Integer.parseInt(age);
-            if (ageConvert>0 && ageConvert<120)
+            if (ageConvert > 0 && ageConvert < 120)
                 return true;
-            else{
+            else {
                 return false;
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 
 @Route("item")
 public class ItemView extends ViewTemplate implements BeforeEnterObserver {
-    private ItemDTO item;
     private final ItemPresenter presenter;
     private final VerticalLayout itemDetails;
-    private ItemComponent itemComponent;
     private final VerticalLayout relatedItemsLayout;
     private final VerticalLayout storeLinkLayout;
+    private ItemDTO item;
+    private ItemComponent itemComponent;
 
     public ItemView() {
         this.item = new ItemDTO();

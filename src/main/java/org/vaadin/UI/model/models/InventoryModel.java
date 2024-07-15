@@ -14,10 +14,12 @@ import java.util.List;
 
 public class InventoryModel {
     private final RestTemplate restTemplate;
-    public InventoryModel (){
+
+    public InventoryModel() {
         this.restTemplate = new RestTemplate();
         this.restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
     }
+
     public ArrayList<ItemDTO> getStoreItems(String storeName, String token) {
         try {
             String url = "http://localhost:8080/storeManagement/viewInventoryByStoreNameAndToken?token=" + token + "&storeName=" + storeName;

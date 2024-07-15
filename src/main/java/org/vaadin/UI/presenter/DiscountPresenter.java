@@ -14,6 +14,7 @@ public class DiscountPresenter implements IPresenter {
     private DiscountModel discountModel;
 
     private List<DiscountDTO> storeDiscounts;
+
     public DiscountPresenter(DiscountView view) {
         this.view = view;
         this.discountModel = new DiscountModel();
@@ -43,11 +44,11 @@ public class DiscountPresenter implements IPresenter {
         view.fillUpDiscounts(storeDiscounts);
     }
 
-    public void onSavingDiscount(){
+    public void onSavingDiscount() {
 
     }
 
-    public void onDeletingDiscount(){
+    public void onDeletingDiscount() {
 
     }
 

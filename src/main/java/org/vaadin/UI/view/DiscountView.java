@@ -15,6 +15,7 @@ import org.vaadin.UI.model.DTOs.DiscountDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
 
 import java.util.List;
+
 @Route("settings/discounts")
 public class DiscountView extends MainSettingView {
     private ComboBox<String> chooseStoreComboBox;
@@ -23,7 +24,7 @@ public class DiscountView extends MainSettingView {
     private DiscountPresenter presenter;
     private VerticalLayout drawer;
 
-    public DiscountView(){
+    public DiscountView() {
         presenter = new DiscountPresenter(this);
 
         VerticalLayout rightContent = getRightContent();

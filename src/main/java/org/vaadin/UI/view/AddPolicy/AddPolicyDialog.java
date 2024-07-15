@@ -33,11 +33,7 @@ public class AddPolicyDialog extends Dialog {
     private boolean isAllStorePolicy;
     private VerticalLayout productsListLayout;
 
-    private String addOrSaveButton(){
-        return (parent == null) ? "save" : "add";
-    }
-
-    public AddPolicyDialog(PolicyPresenter presenter , AddPolicyDialog parent) {
+    public AddPolicyDialog(PolicyPresenter presenter, AddPolicyDialog parent) {
         policyDTOList = new ArrayList<>();
         this.parent = parent;
         this.presenter = presenter;
@@ -69,6 +65,10 @@ public class AddPolicyDialog extends Dialog {
         add(policyTypeComboBox, contentLayout);
     }
 
+    private String addOrSaveButton() {
+        return (parent == null) ? "save" : "add";
+    }
+
     private void showComplexPolicyForm() {
         contentLayout.removeAll();
         policyListLayout = new VerticalLayout();
@@ -91,10 +91,9 @@ public class AddPolicyDialog extends Dialog {
             complexPolicy.setPolicies(policyDTOList);
             complexPolicy.setName(nameField.getValue());
 
-            if(parent != null){
+            if (parent != null) {
                 parent.policyDTOList.add(complexPolicy);
-            }
-            else {
+            } else {
                 presenter.savePolicy(complexPolicy);
             }
             close();
@@ -108,7 +107,7 @@ public class AddPolicyDialog extends Dialog {
         TextField nameField = new TextField("Name");
         IntegerField maxField = new IntegerField("Maximum Amount");
         applyOnLayout = applyOnSelector();
-        contentLayout.add(nameField ,maxField, applyOnLayout);
+        contentLayout.add(nameField, maxField, applyOnLayout);
 
         Button saveButton = new Button(addOrSaveButton());
         saveButton.addClickListener(event -> {
@@ -116,19 +115,17 @@ public class AddPolicyDialog extends Dialog {
             maxAmountPolicy.setName(nameField.getValue());
             maxAmountPolicy.setMaxAmount(maxField.getValue());
             maxAmountPolicy.setAllStorePolicy(isAllStorePolicy);
-            if(itemsChosen != null) {
+            if (itemsChosen != null) {
                 maxAmountPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
-            }
-            else{
+            } else {
                 maxAmountPolicy.setItems(null);
             }
             maxAmountPolicy.setCategories(categoriesChosen);
 
-            if(parent != null){
+            if (parent != null) {
                 parent.policyDTOList.add(maxAmountPolicy);
                 parent.displayPolicyList();
-            }
-            else {
+            } else {
                 presenter.savePolicy(maxAmountPolicy);
             }
             close();
@@ -137,14 +134,13 @@ public class AddPolicyDialog extends Dialog {
     }
 
 
-
     private void showAgeRestrictedPolicyForm() {
         contentLayout.removeAll();
         TextField nameField = new TextField("Name");
         IntegerField ageField = new IntegerField("Minimum Age");
 
         applyOnLayout = applyOnSelector();
-        contentLayout.add(nameField ,ageField, applyOnLayout);
+        contentLayout.add(nameField, ageField, applyOnLayout);
 
 
         Button saveButton = new Button(addOrSaveButton());
@@ -153,19 +149,17 @@ public class AddPolicyDialog extends Dialog {
             ageRestrictedPolicy.setName(nameField.getValue());
             ageRestrictedPolicy.setAge(ageField.getValue());
             ageRestrictedPolicy.setAllStorePolicy(isAllStorePolicy);
-            if(itemsChosen != null) {
+            if (itemsChosen != null) {
                 ageRestrictedPolicy.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
-            }
-            else {
+            } else {
                 ageRestrictedPolicy.setItems(null);
             }
             ageRestrictedPolicy.setCategories(categoriesChosen);
             // Add logic to save the age restricted policy
-            if(parent != null){
+            if (parent != null) {
                 parent.policyDTOList.add(ageRestrictedPolicy);
                 parent.displayPolicyList();
-            }
-            else {
+            } else {
                 presenter.savePolicy(ageRestrictedPolicy);
             }
             close();
@@ -221,13 +215,13 @@ public class AddPolicyDialog extends Dialog {
                     categoriesChosen = null;
                     break;
                 case "Specific Items":
-                    Dialog itemsDialog  = new ChooseItemsDialog(itemsChosen, presenter, this);
+                    Dialog itemsDialog = new ChooseItemsDialog(itemsChosen, presenter, this);
                     categoriesChosen = null;
                     isAllStorePolicy = false;
                     itemsDialog.open();
                     break;
                 case "Specific Categories":
-                    Dialog categoryDialog  = new ChooseCategoryDialog(categoriesChosen, presenter, this);
+                    Dialog categoryDialog = new ChooseCategoryDialog(categoriesChosen, presenter, this);
                     itemsChosen = null;
                     isAllStorePolicy = false;
                     categoryDialog.open();

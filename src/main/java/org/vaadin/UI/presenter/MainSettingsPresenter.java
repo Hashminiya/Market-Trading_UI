@@ -6,10 +6,11 @@ import org.vaadin.UI.view.MainSettingView;
 public class MainSettingsPresenter implements IPresenter {
     private MainSettingView mainSettingView;
 
-    public MainSettingsPresenter(MainSettingView mainSettingView){
+    public MainSettingsPresenter(MainSettingView mainSettingView) {
         this.mainSettingView = mainSettingView;
 
     }
+
     @Override
     public void onViewLoaded() {
         mainSettingView.setUp();
@@ -20,7 +21,7 @@ public class MainSettingsPresenter implements IPresenter {
 
     }
 
-    public void onInventoryButtonClick(){
+    public void onInventoryButtonClick() {
 
     }
 

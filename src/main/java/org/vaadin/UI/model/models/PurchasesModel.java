@@ -1,4 +1,3 @@
-
 package org.vaadin.UI.model.models;
 
 import org.springframework.http.*;

@@ -100,7 +100,7 @@ public class MainSettingView extends ViewTemplate {
         });
 
         // Add buttons to the layout
-        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, policyButton , discountButton);
+        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, policyButton, discountButton);
         if (isAdmin) {
             leftBar.add(marketHistoryButton);
         }

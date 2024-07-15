@@ -9,11 +9,13 @@ public class AgeRestrictedPolicyDTO extends PolicyDTO {
     private int age;
     @JsonProperty("isStore")
     private boolean allStorePolicy;
-    public void setAllStorePolicy(boolean allStorePolicy) {
-        this.allStorePolicy = allStorePolicy;
-    }
+
     public boolean isAllStorePolicy() {
         return allStorePolicy;
+    }
+
+    public void setAllStorePolicy(boolean allStorePolicy) {
+        this.allStorePolicy = allStorePolicy;
     }
 
     public int getAge() {

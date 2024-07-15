@@ -14,7 +14,7 @@ public class ChooseCategoryDialog extends Dialog {
     private final Grid<String> categoriesGrid;
     private AddPolicyDialog parent;
 
-    public ChooseCategoryDialog(List<String> categoriesChosen, PolicyPresenter presenter,AddPolicyDialog parent) {
+    public ChooseCategoryDialog(List<String> categoriesChosen, PolicyPresenter presenter, AddPolicyDialog parent) {
         this.categoriesChosen = categoriesChosen;
         this.presenter = presenter;
         this.parent = parent;

@@ -1,4 +1,5 @@
 package org.vaadin.UI.presenter;
+
 import com.vaadin.flow.component.notification.Notification;
 import org.vaadin.UI.Notifications.WebSocketHandler;
 import org.vaadin.UI.Util.Credentials;
@@ -11,8 +12,8 @@ import org.vaadin.UI.view.ViewTemplate;
 import java.util.ArrayList;
 
 public class LogoutPresenter implements IPresenter {
-    private  ViewTemplate view;
     private final LoginModel model;
+    private ViewTemplate view;
 
     public LogoutPresenter(ViewTemplate view) {
         this.view = view;
@@ -28,8 +29,9 @@ public class LogoutPresenter implements IPresenter {
     public void onViewStopped() {
 
     }
-    public void onLogOut(SuccessCallBack callBack){
-        String result = model.logout(Credentials.getToken(),callBack);
+
+    public void onLogOut(SuccessCallBack callBack) {
+        String result = model.logout(Credentials.getToken(), callBack);
         Notification.show(result);
         WebSocketHandler.closeConnection();
         Messages.getInstance().replace(new ArrayList<>());

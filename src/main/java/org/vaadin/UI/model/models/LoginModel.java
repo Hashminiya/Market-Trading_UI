@@ -20,7 +20,7 @@ public class LoginModel {
         try {
             ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/user/GuestEntry", null, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
-                Credentials.setGuestToken(response.getBody(),"guest");
+                Credentials.setGuestToken(response.getBody(), "guest");
                 return "Guest entry successful";
             } else {
                 return response.getBody();
@@ -42,7 +42,7 @@ public class LoginModel {
             ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Login successful
-                Credentials.setToken(response.getBody(),username);
+                Credentials.setToken(response.getBody(), username);
                 callBack.call();
                 return "Login successful for user: " + username;
             } else {
@@ -52,6 +52,7 @@ public class LoginModel {
             return e.getMessage();
         }
     }
+
     public String logout(String token, SuccessCallBack callBack) {
 
         // Define the URL

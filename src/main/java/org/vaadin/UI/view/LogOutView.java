@@ -6,7 +6,8 @@ import org.vaadin.UI.presenter.LogoutPresenter;
 @Route("logout")
 public class LogOutView extends ViewTemplate {
     private LogoutPresenter presenter;
-    public LogOutView(){
+
+    public LogOutView() {
         presenter = new LogoutPresenter(this);
         presenter.onLogOut(this::succesfullLogout);
     }

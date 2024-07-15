@@ -20,7 +20,8 @@ public class CartModel {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<ShoppingCartDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<ShoppingCartDTO>() {});
+            ResponseEntity<ShoppingCartDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<ShoppingCartDTO>() {
+            });
             System.out.println("Response: " + response.getBody());  // Debug log
             return response.getBody();
         } catch (Exception e) {

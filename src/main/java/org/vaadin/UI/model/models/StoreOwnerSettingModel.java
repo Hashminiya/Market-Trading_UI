@@ -57,8 +57,7 @@ public class StoreOwnerSettingModel {
             ResponseEntity<String> response = restTemplate.exchange(
                     urlForFetchingID, HttpMethod.GET, requestEntity1, String.class);
             storeID = response.getBody();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -72,8 +71,7 @@ public class StoreOwnerSettingModel {
             ResponseEntity<HashMap<String, List<String>>> response = restTemplate.exchange(
                     url, HttpMethod.GET, requestEntity2, (Class<HashMap<String, List<String>>>) (Class<?>) HashMap.class);
             return response.getBody().keySet();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

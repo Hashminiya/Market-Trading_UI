@@ -1,4 +1,5 @@
 package org.vaadin.UI.view;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -14,11 +15,11 @@ import java.util.HashSet;
 import java.util.List;
 
 @Route("settings/assign manager")
-public class AssignManagerView extends MainSettingView{
-    private AssignManagerPresenter assignManagerPresenter;
+public class AssignManagerView extends MainSettingView {
     private final TextField userName;
     private final TextField storeName;
     private final MultiSelectComboBox<String> permissionsComboBox;
+    private AssignManagerPresenter assignManagerPresenter;
 
 
     public AssignManagerView() {

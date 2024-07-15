@@ -67,10 +67,12 @@ public class InventorySettingView extends MainSettingView {
             itemDialog.setIsUpdate(false);
         });
     }
+
     private void openItemDialog(ItemDTO item) {
         itemDialog.setItem(item);
         itemDialog.open();
     }
+
     public void fillChooseStoreComboBox(List<String> storeList) {
         chooseStoreComboBox.setItems(storeList);
     }

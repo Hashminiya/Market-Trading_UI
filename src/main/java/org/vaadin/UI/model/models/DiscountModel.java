@@ -10,9 +10,10 @@ public class DiscountModel {
 
     private final RestTemplate restTemplate;
 
-    public DiscountModel (){
+    public DiscountModel() {
         this.restTemplate = new RestTemplate();
     }
+
     public List<DiscountDTO> getDiscounts(String storeName, String token) {
         return null;
     }
