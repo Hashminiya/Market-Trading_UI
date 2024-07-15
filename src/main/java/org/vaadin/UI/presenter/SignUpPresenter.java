@@ -29,7 +29,6 @@ public class SignUpPresenter implements IPresenter {
         String password = view.getPassword();
         String age = view.getAge();
 
-        // Add your signup logic here
         if (!isValidPassword(password) || !isValidAge(age)) {
             view.showNotification("Password or age are invalid.");
             return;
@@ -38,7 +37,6 @@ public class SignUpPresenter implements IPresenter {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        // Create request body using MultiValueMap
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("userName", username);
         requestBody.add("password", password);
@@ -51,6 +49,7 @@ public class SignUpPresenter implements IPresenter {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 view.showNotification("Signup successful for user: " + username);
+                view.navigateToLoginView(username); // Navigate to login view with username
             } else if (response.getStatusCode() == HttpStatus.CONFLICT) {
                 view.showNotification("Username already exists.");
             } else {

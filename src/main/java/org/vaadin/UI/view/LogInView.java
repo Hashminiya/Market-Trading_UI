@@ -1,5 +1,6 @@
 package org.vaadin.UI.view;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
@@ -7,21 +8,18 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.QueryParameters;
 import org.vaadin.UI.Notifications.WebSocketHandler;
 import org.vaadin.UI.Util.Messages;
 import org.vaadin.UI.presenter.LoginPresenter;
-
-
-
-
-
 import org.vaadin.UI.view.ViewInterface.ILoginView;
 
+import java.util.Map;
 
 @Route("login")
 public class LogInView extends ViewTemplate implements ILoginView {
 
-    private LoginPresenter presenter;
+    private final LoginPresenter presenter;
     private final TextField usernameField;
     private final PasswordField passwordField;
 
@@ -30,14 +28,24 @@ public class LogInView extends ViewTemplate implements ILoginView {
         usernameField = new TextField("Username");
         passwordField = new PasswordField("Password");
         Button loginButton = new Button("Login");
-        loginButton.addClickListener(event -> {
-            presenter.onLogin(() -> succesfullLogin());});
+        loginButton.addClickListener(event -> presenter.onLogin(this::successfulLogin));
         loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         VerticalLayout formLayout = new VerticalLayout(usernameField, passwordField, loginButton);
         add(formLayout);
     }
 
-    private void succesfullLogin() {
+    @Override
+    public void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        getUI().ifPresent(ui -> {
+            QueryParameters queryParameters = ui.getInternals().getActiveViewLocation().getQueryParameters();
+            if (queryParameters.getParameters().containsKey("username")) {
+                usernameField.setValue(queryParameters.getParameters().get("username").get(0));
+            }
+        });
+    }
+
+    private void successfulLogin() {
         getUI().ifPresent(ui -> ui.navigate(""));
         WebSocketHandler.openConnection(Messages.getInstance());
     }
@@ -56,5 +64,4 @@ public class LogInView extends ViewTemplate implements ILoginView {
     public String getPassword() {
         return passwordField.getValue();
     }
-
 }

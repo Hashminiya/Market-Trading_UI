@@ -17,8 +17,7 @@ public class HomePresenter {
     }
 
     public void onViewLoaded() {
-        // Assuming getStores() now returns List<ItemDTO> for all items across stores
-        List<StoreDTO> allStores = model.getStores();  // This method needs to be redefined to return items or managed through a new method.
+        List<StoreDTO> allStores = model.getStores();
         view.displayStores(allStores);
     }
 
@@ -27,7 +26,6 @@ public class HomePresenter {
         view.displayItems(searchedItems);
     }
 
-    // If you also want to support category searches, here's an additional method
     public void onSearchRequested(String query, String category) {
         List<ItemDTO> searchedItems = model.searchItemsByKeyWordAndCategory(query, category);
         view.displayItems(searchedItems);

@@ -5,4 +5,5 @@ public interface ISignUpView {
     String getPassword();
     String getAge();
     void showNotification(String message);
+    void navigateToLoginView(String username);
 }

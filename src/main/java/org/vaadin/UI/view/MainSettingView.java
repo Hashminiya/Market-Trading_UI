@@ -6,6 +6,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.presenter.MainSettingsPresenter;
 
 @Route("settings")
@@ -13,6 +14,7 @@ public class MainSettingView extends ViewTemplate {
 
     private MainSettingsPresenter mainSettingsPresenter;
     private VerticalLayout rightContent;
+    private boolean isAdmin = Credentials.getUserName().equals("admin");
 
     public MainSettingView() {
         mainSettingsPresenter = new MainSettingsPresenter(this);
@@ -98,7 +100,10 @@ public class MainSettingView extends ViewTemplate {
         });
 
         // Add buttons to the layout
-        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, marketHistoryButton , policyButton , discountButton);
+        leftBar.add(inventoryButton, purchaseHistoryButton, manageStoreButton, assignOwnerButton, assignManagerButton, policyButton , discountButton);
+        if (isAdmin) {
+            leftBar.add(marketHistoryButton);
+        }
         return leftBar;
     }
 
