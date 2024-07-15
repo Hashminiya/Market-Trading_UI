@@ -7,10 +7,8 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.DTOs.StoreDTO;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class StoreModel {
@@ -19,7 +17,7 @@ public class StoreModel {
 
     public StoreModel() {
         this.restTemplate = new RestTemplate();
-        this.useDemoData = false; // Change this to false when the real API is implemented
+        this.useDemoData = false;
     }
 
     public List<StoreDTO> getStores() {
@@ -118,14 +116,11 @@ public class StoreModel {
         return new ArrayList<>();
     }
 
-    // Demo data methods
     private List<StoreDTO> getDemoStores() {
-        // Your demo data implementation
         return new ArrayList<>();
     }
 
     private Optional<StoreDTO> getDemoStoreById(long id) {
-        // Your demo data implementation
         return Optional.empty();
     }
 }
