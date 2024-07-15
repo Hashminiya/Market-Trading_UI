@@ -23,10 +23,7 @@ public class ItemListComponent extends VerticalLayout {
         itemsGrid.setItems(items);
 
         itemsGrid.addComponentColumn(item -> {
-            String imageUrl = item.getImageURL();
-            if (imageUrl == null || imageUrl.isEmpty()) {
-                imageUrl = ImageService.getImageUrl(item.getItemName());
-            }
+            String imageUrl = ImageService.getImageUrl(item.getItemName());
             Image itemImage = new Image(imageUrl, "Item Image");
             itemImage.setWidth("100px");
             itemImage.setHeight("100px");

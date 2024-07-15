@@ -44,7 +44,7 @@ public class StoreModel {
 
                         List<ItemDTO> items = new ArrayList<>();
                         storeNode.get("items").forEach(itemNode -> {
-                            if (itemNode != null && itemNode.has("itemId") && itemNode.has("itemName") && itemNode.has("stockAmount") && itemNode.has("itemPrice") && itemNode.has("category") && itemNode.has("description")){
+                            if (itemNode != null && itemNode.has("itemId") && itemNode.has("itemName") && itemNode.has("stockAmount") && itemNode.has("itemPrice") && itemNode.has("category") && itemNode.has("description")) {
                                 long itemId = itemNode.get("itemId").asLong();
                                 String itemName = itemNode.get("itemName").asText();
                                 int stockAmount = itemNode.get("stockAmount").asInt();
@@ -52,7 +52,6 @@ public class StoreModel {
                                 List<String> categories = new ArrayList<>();
                                 itemNode.get("category").forEach(categoryNode -> categories.add(categoryNode.asText()));
                                 String description = itemNode.get("description").asText();
-
 
                                 items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice, categories, description));
                             }
@@ -71,6 +70,7 @@ public class StoreModel {
             return new ArrayList<>();
         }
     }
+
 
     public Optional<StoreDTO> getStoreById(long id) {
         if (useDemoData) {

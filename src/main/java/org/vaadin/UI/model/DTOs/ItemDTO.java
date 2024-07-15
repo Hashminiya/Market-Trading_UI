@@ -10,10 +10,10 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)  // This will ignore any unknown properties
 public class ItemDTO implements Serializable {
 
-    @JsonProperty("itemId")
+    @JsonProperty("id")
     private long itemId;
 
-    @JsonProperty("itemName")
+    @JsonProperty("name")
     private String itemName;
 
     @JsonProperty("quantity")
@@ -22,7 +22,7 @@ public class ItemDTO implements Serializable {
     @JsonProperty("storeId")
     private long storeId;
 
-    @JsonProperty("totalPrice")
+    @JsonProperty("price")
     private double totalPrice;
 
     @JsonProperty("categories")
