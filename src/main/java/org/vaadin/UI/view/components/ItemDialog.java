@@ -12,6 +12,11 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.presenter.InventoryPresenter;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 public class ItemDialog extends Dialog {
 
     private final InventoryPresenter presenter;
@@ -104,7 +109,10 @@ public class ItemDialog extends Dialog {
         description = new TextField("Description");
         description.setWidthFull();
 
-        dialogLayout.add(itemName, price, quantity, description);
+        categories = new TextField("Categories (comma separated)");
+        categories.setWidthFull();
+
+        dialogLayout.add(itemName, price, quantity, description, categories);
 
         binder.forField(itemName)
                 .asRequired("Product name is required")
@@ -120,6 +128,12 @@ public class ItemDialog extends Dialog {
 
         binder.forField(description)
                 .bind(ItemDTO::getDescription, ItemDTO::setDescription);
+
+        binder.forField(categories)
+                .bind(
+                        item -> String.join(", ", Objects.requireNonNullElse(item.getCategories(), Collections.emptyList())),
+                        (item, value) -> item.setCategories(Arrays.asList(value.split("\\s*,\\s*")))
+                );
 
         return dialogLayout;
     }
@@ -140,11 +154,10 @@ public class ItemDialog extends Dialog {
 
     private void update() {
         if (currentItem != null && currentItem.getItemId() != 0 && isUpdate && binder.writeBeanIfValid(currentItem)) {
-            presenter.onUpdatingItem(currentItem.getItemId(), currentItem.getStoreId(), currentItem.getItemName(), currentItem.getTotalPrice(), currentItem.getQuantity());
+            presenter.onUpdatingItem(currentItem.getItemId(), currentItem.getStoreId(), currentItem.getItemName(), currentItem.getTotalPrice(), currentItem.getQuantity(), currentItem.getDescription());
             close();
         }
     }
-
 
     public void setItem(ItemDTO item) {
         this.currentItem = item;

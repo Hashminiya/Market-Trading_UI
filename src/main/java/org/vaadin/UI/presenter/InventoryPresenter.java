@@ -1,5 +1,5 @@
-
 package org.vaadin.UI.presenter;
+
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.models.InventoryModel;
@@ -16,6 +16,7 @@ public class InventoryPresenter implements IPresenter {
     private ArrayList<ItemDTO> storeItems;
 
     private String currenStore;
+    private long currentStoreId;
 
     public InventoryPresenter(InventorySettingView view) {
         this.view = view;
@@ -33,13 +34,14 @@ public class InventoryPresenter implements IPresenter {
     }
 
     public void onSelectStore(String storeName) {
-        storeItems = inventoryModel.getStoreItems(storeName,Credentials.getToken());
+        storeItems = inventoryModel.getStoreItems(storeName, Credentials.getToken());
         view.fillUpInventory(storeItems);
         currenStore = storeName;
+        this.currentStoreId = inventoryModel.getStoreIdByName(storeName, Credentials.getToken());
     }
 
     public void onSavingItem(ItemDTO item) {
-        String response = inventoryModel.saveItem(item, Credentials.getToken());
+        String response = inventoryModel.saveItem(Credentials.getToken(), this.currentStoreId, item.getItemName(), item.getDescription(), item.getTotalPrice(), item.getQuantity(), item.getCategories());
         if (response != null) {
             view.showNotification(response);
             // Refresh the inventory grid
@@ -49,8 +51,8 @@ public class InventoryPresenter implements IPresenter {
         }
     }
 
-    public void onUpdatingItem(long itemId, long storeId, String newName, double newPrice, int newAmount) {
-        String response = inventoryModel.updateItem(itemId, storeId, newName, newPrice, newAmount, Credentials.getToken());
+    public void onUpdatingItem(long itemId, long storeId, String newName, double newPrice, int newAmount, String description) {
+        String response = inventoryModel.updateItem(itemId, storeId, newName, newPrice, newAmount, description, Credentials.getToken());
         if (response != null) {
             view.showNotification(response);
             // Refresh the inventory grid
