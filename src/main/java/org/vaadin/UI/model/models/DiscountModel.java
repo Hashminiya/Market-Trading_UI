@@ -2,7 +2,7 @@ package org.vaadin.UI.model.models;
 
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import org.vaadin.UI.model.DTOs.DiscountDTO;
+import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
 
 import java.util.List;
 
@@ -32,5 +32,9 @@ public class DiscountModel {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String savePolicy(String token, String currentStoreName, String json) {
+        return null;
     }
 }

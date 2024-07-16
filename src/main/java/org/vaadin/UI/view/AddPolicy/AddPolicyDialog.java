@@ -16,11 +16,12 @@ import org.vaadin.UI.model.DTOs.Policies.ComplexPolicyDto;
 import org.vaadin.UI.model.DTOs.Policies.MaximumQuantityPolicyDTO;
 import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
 import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.view.Abstracts.IDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPolicyDialog extends Dialog {
+public class AddPolicyDialog extends Dialog implements IDialog {
     private PolicyPresenter presenter;
     private ComboBox<String> policyTypeComboBox;
     private VerticalLayout contentLayout;
@@ -135,8 +136,6 @@ public class AddPolicyDialog extends Dialog {
         });
         contentLayout.add(saveButton);
     }
-
-
 
     private void showAgeRestrictedPolicyForm() {
         contentLayout.removeAll();

@@ -1,5 +1,6 @@
 package org.vaadin.UI.view;
 
+import com.vaadin.flow.component.PollEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
@@ -11,9 +12,13 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.vaadin.UI.model.DTOs.DiscountDTO;
 
+import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
+import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
+import org.vaadin.UI.presenter.PolicyPresenter;
+import org.vaadin.UI.view.AddDiscount.AddDiscountDialog;
+import org.vaadin.UI.view.AddDiscount.AddHiddenDiscountDialog;
 
 
 import java.util.List;
@@ -22,11 +27,12 @@ public class DiscountView extends MainSettingView {
     private ComboBox<String> chooseStoreComboBox;
     private Grid<DiscountDTO> discountsGrid;
     private Button addNewDiscountButton;
+    private Button addNewHiddenDiscountButton;
     private DiscountPresenter presenter;
-    private VerticalLayout drawer;
 
     public DiscountView(){
         presenter = new DiscountPresenter(this);
+        PolicyPresenter policyPresenter = new PolicyPresenter(null);
 
         VerticalLayout rightContent = getRightContent();
         rightContent.removeAll();
@@ -36,9 +42,11 @@ public class DiscountView extends MainSettingView {
         chooseStoreComboBox = new ComboBox<>("Select your store");
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
-        addNewDiscountButton = new Button("Add New Discount", new Icon(VaadinIcon.PLUS));
+        addNewDiscountButton = new Button("Add New Composite Discount", new Icon(VaadinIcon.PLUS));
+        addNewHiddenDiscountButton = new Button("Add New Hidden Discount", new Icon(VaadinIcon.PLUS));
         topLayout.add(chooseStoreComboBox);
         topLayout.add(addNewDiscountButton);
+        topLayout.add(addNewHiddenDiscountButton);
         topLayout.setWidthFull();
         topLayout.setAlignItems(FlexComponent.Alignment.END);
         rightContent.add(topLayout);
@@ -47,34 +55,24 @@ public class DiscountView extends MainSettingView {
         discountsGrid.setWidthFull();
         rightContent.add(discountsGrid);
 
-        //TODO: complete this
-//        form = new ItemForm(presenter);
-//        form.setVisible(false);
-//
-//        drawer = createDrawer();
-//        rightContent.add(drawer);
-
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = event.getValue();
-            presenter.onSelectStore(selectedOptionStoreName);
-        });
-
-        discountsGrid.asSingleSelect().addValueChangeListener(event -> {
-            //TODO: complete this
-//            if (event.getValue() != null) {
-//                showForm(true, event.getValue());
-//            } else {
-//                showForm(false, null);
-//            }
+            policyPresenter.onSelectStore(selectedOptionStoreName);
         });
 
         addNewDiscountButton.addClickListener(event -> {
-            presenter.onClickingAddNewItemButton();
+            AddDiscountDialog dialog = new AddDiscountDialog(presenter, null);
+            dialog.open();
         });
+
+        addNewHiddenDiscountButton.addClickListener(event -> {
+            AddHiddenDiscountDialog dialog = new AddHiddenDiscountDialog(presenter,policyPresenter);
+            dialog.open();
+        });
+
     }
 
-    public void fillUpDiscounts(List<DiscountDTO> storeItems) {
-    }
+    public void fillUpDiscounts(List<DiscountDTO> discounts) {discountsGrid.setItems(discounts);}
 
     public void fillChooseStoreComboBox(List<String> stores) {
         chooseStoreComboBox.setItems(stores);
@@ -86,12 +84,6 @@ public class DiscountView extends MainSettingView {
 
     private Grid<DiscountDTO> createDiscountsGrid() {
         Grid<DiscountDTO> grid = new Grid<>(DiscountDTO.class);
-//        grid.setColumns("itemId", "itemName", "quantity", "storeId", "totalPrice");
-//        grid.getColumnByKey("itemId").setHeader("Item ID");
-//        grid.getColumnByKey("itemName").setHeader("Item Name");
-//        grid.getColumnByKey("quantity").setHeader("Quantity Available");
-//        grid.getColumnByKey("storeId").setHeader("Store ID");
-//        grid.getColumnByKey("totalPrice").setHeader("Price");
         return grid;
     }
 }
