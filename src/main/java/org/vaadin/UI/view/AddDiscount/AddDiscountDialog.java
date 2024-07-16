@@ -7,12 +7,14 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import org.vaadin.UI.model.DTOs.Discounts.ConditionCompositeDTO;
 import org.vaadin.UI.model.DTOs.Discounts.ConditionDTO;
 import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
 import org.vaadin.UI.model.DTOs.Discounts.LogicalDiscountCompositeDTO;
 import org.vaadin.UI.model.DTOs.ItemDTO;
+import org.vaadin.UI.model.DTOs.Policies.MaximumQuantityPolicyDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
 import org.vaadin.UI.presenter.PolicyPresenter;
 import org.vaadin.UI.view.Abstracts.IDialog;
@@ -53,10 +55,10 @@ public class AddDiscountDialog extends Dialog implements IDialog {
                 case "Condition Composite":
                     showConditionCompositeForm();
                     break;
-                case "Regular Discount":
-                    //showMaxAmountPolicyForm();
+                case "Condition":
+                    showConditionForm();
                     break;
-                case "Numeric Discount Composite":
+                case "Hidden Discount":
                     //showAgeRestrictedPolicyForm();
                     break;
                 default:
@@ -65,6 +67,43 @@ public class AddDiscountDialog extends Dialog implements IDialog {
         });
 
         add(discountTypeComboBox, contentLayout);
+    }
+
+    private void showConditionForm() {
+        contentLayout.removeAll();
+
+        TextField nameField = new TextField("Name");
+        IntegerField countField = new IntegerField("Count");
+        applyOnLayout = applyOnSelector();
+        contentLayout.add(nameField ,countField, applyOnLayout);
+
+        Button saveButton = new Button(addOrSaveButton());
+        saveButton.addClickListener(event -> {
+            ConditionDTO conditionDTO = new ConditionDTO();
+            conditionDTO.setName(nameField.getValue());
+            conditionDTO.setCount(countField.getValue());
+            conditionDTO.setAllStoreCondition(isAllStoreDiscount);
+            if(itemsChosen != null) {
+                conditionDTO.setItems(itemsChosen.stream().map(ItemDTO::getItemId).toList());
+            }
+            else{
+                conditionDTO.setItems(null);
+            }
+            conditionDTO.setCategories(categoriesChosen);
+
+            if(parent != null){
+                parent.conditionDTOList.add(conditionDTO);
+                parent.displayDiscountList();
+            }
+            else {
+                presenter.saveDiscount(conditionDTO);
+            }
+            close();
+        });
+        contentLayout.add(saveButton);
+    }
+
+    private void displayDiscountList() {
     }
 
     private void showConditionCompositeForm() {

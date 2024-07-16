@@ -89,4 +89,10 @@ public class DiscountPresenter implements IPresenter {
             throw new RuntimeException(e);
         }
     }
+
+    public void saveDiscount(ConditionDTO conditionDTO) {
+    }
+
+    public void onSavingHiddenDiscount() {
+    }
 }
