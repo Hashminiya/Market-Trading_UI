@@ -13,8 +13,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
+import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
 import org.vaadin.UI.model.DTOs.PolicyViewDTO;
+import org.vaadin.UI.model.models.InventoryModel;
 import org.vaadin.UI.presenter.DiscountPresenter;
 import org.vaadin.UI.presenter.PolicyPresenter;
 import org.vaadin.UI.view.AddDiscount.AddDiscountDialog;
@@ -29,8 +31,11 @@ public class DiscountView extends MainSettingView {
     private Button addNewDiscountButton;
     private Button addNewHiddenDiscountButton;
     private DiscountPresenter presenter;
+    private InventoryModel inventoryModel;
+    private long storeId;
 
     public DiscountView(){
+        this.inventoryModel = new InventoryModel();
         presenter = new DiscountPresenter(this);
         PolicyPresenter policyPresenter = new PolicyPresenter(null);
 
@@ -57,6 +62,7 @@ public class DiscountView extends MainSettingView {
 
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = event.getValue();
+            this.storeId = this.inventoryModel.getStoreIdByName(selectedOptionStoreName, Credentials.getToken());
             policyPresenter.onSelectStore(selectedOptionStoreName);
         });
 
@@ -66,10 +72,13 @@ public class DiscountView extends MainSettingView {
         });
 
         addNewHiddenDiscountButton.addClickListener(event -> {
-            AddHiddenDiscountDialog dialog = new AddHiddenDiscountDialog(presenter,policyPresenter);
+            AddHiddenDiscountDialog dialog = new AddHiddenDiscountDialog(presenter,policyPresenter, storeId);
             dialog.open();
         });
+    }
 
+    public void setStoreId(long storeId) {
+        this.storeId = storeId;
     }
 
     public void fillUpDiscounts(List<DiscountDTO> discounts) {discountsGrid.setItems(discounts);}
