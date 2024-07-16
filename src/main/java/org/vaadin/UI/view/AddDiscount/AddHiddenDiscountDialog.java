@@ -64,6 +64,7 @@ public class AddHiddenDiscountDialog extends Dialog implements IDialog {
         saveButton = new Button("Save", e -> save());
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         saveButton.setWidthFull();
+
         buttonLayout.add(saveButton);
 
         return buttonLayout;
