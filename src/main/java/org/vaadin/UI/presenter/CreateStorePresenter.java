@@ -1,4 +1,6 @@
 package org.vaadin.UI.presenter;
+
+import com.vaadin.flow.component.UI;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.models.CreateStoreModel;
 import org.vaadin.UI.view.CreateStoreView;
@@ -14,10 +16,12 @@ public class CreateStorePresenter implements IPresenter {
         model = new CreateStoreModel();
     }
 
-
     public void onCreateStore(String storeName, String storeDescription) {
         String result = model.createStore(Credentials.getToken(), storeName, storeDescription);
         view.showNotification(result);
+        if (result.equals("Store created successfully")) {
+            UI.getCurrent().navigate("settings/inventory");
+        }
     }
 
     @Override

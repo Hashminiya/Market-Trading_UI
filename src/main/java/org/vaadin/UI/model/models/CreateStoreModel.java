@@ -20,7 +20,11 @@ public class CreateStoreModel {
 
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
-            return response.getBody();
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return "Store created successfully";
+            } else {
+                return "Failed to create store";
+            }
         } catch (Exception e) {
             return e.getMessage();
         }
