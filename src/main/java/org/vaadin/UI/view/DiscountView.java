@@ -16,6 +16,7 @@ import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
 import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
 import org.vaadin.UI.view.AddDiscount.AddDiscountDialog;
+import org.vaadin.UI.view.AddDiscount.AddHiddenDiscountDialog;
 
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class DiscountView extends MainSettingView {
     private ComboBox<String> chooseStoreComboBox;
     private Grid<DiscountDTO> discountsGrid;
     private Button addNewDiscountButton;
+    private Button addNewHiddenDiscountButton;
     private DiscountPresenter presenter;
 
     public DiscountView(){
@@ -38,8 +40,10 @@ public class DiscountView extends MainSettingView {
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
         addNewDiscountButton = new Button("Add New Discount", new Icon(VaadinIcon.PLUS));
+        addNewHiddenDiscountButton = new Button("Add New Hidden Discount", new Icon(VaadinIcon.PLUS));
         topLayout.add(chooseStoreComboBox);
         topLayout.add(addNewDiscountButton);
+        topLayout.add(addNewHiddenDiscountButton);
         topLayout.setWidthFull();
         topLayout.setAlignItems(FlexComponent.Alignment.END);
         rightContent.add(topLayout);
@@ -57,6 +61,12 @@ public class DiscountView extends MainSettingView {
             AddDiscountDialog dialog = new AddDiscountDialog(presenter, null);
             dialog.open();
         });
+
+        addNewHiddenDiscountButton.addClickListener(event -> {
+            AddHiddenDiscountDialog dialog = new AddHiddenDiscountDialog(presenter);
+            dialog.open();
+        });
+
     }
 
     public void fillUpDiscounts(List<DiscountDTO> discounts) {discountsGrid.setItems(discounts);}
