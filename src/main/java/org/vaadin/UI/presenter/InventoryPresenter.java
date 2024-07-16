@@ -51,8 +51,8 @@ public class InventoryPresenter implements IPresenter {
         }
     }
 
-    public void onUpdatingItem(long itemId, long storeId, String newName, double newPrice, int newAmount, String description) {
-        String response = inventoryModel.updateItem(itemId, storeId, newName, newPrice, newAmount, description, Credentials.getToken());
+    public void onUpdatingItem(long itemId, long storeId, String newName, double newPrice, int newAmount) {
+        String response = inventoryModel.updateItem(itemId, storeId, newName, newPrice, newAmount, Credentials.getToken());
         if (response != null) {
             view.showNotification(response);
             // Refresh the inventory grid

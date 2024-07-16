@@ -154,7 +154,7 @@ public class ItemDialog extends Dialog {
 
     private void update() {
         if (currentItem != null && currentItem.getItemId() != 0 && isUpdate && binder.writeBeanIfValid(currentItem)) {
-            presenter.onUpdatingItem(currentItem.getItemId(), currentItem.getStoreId(), currentItem.getItemName(), currentItem.getTotalPrice(), currentItem.getQuantity(), currentItem.getDescription());
+            presenter.onUpdatingItem(currentItem.getItemId(), currentItem.getStoreId(), currentItem.getItemName(), currentItem.getTotalPrice(), currentItem.getQuantity());
             close();
         }
     }

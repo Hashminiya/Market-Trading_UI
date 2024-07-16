@@ -99,21 +99,20 @@ public class InventoryModel {
         }
     }
 
-    public String updateItem(long itemId, long storeId, String newName, double newPrice, int newAmount, String description, String token) {
+    public String updateItem(long itemId, long storeId, String newName, double newPrice, int newAmount, String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            Map<String, Object> payload = new HashMap<>();
-            payload.put("storeId", storeId);
-            payload.put("itemId", itemId);
-            payload.put("newName", newName);
-            payload.put("newPrice", newPrice);
-            payload.put("newAmount", newAmount);
-            payload.put("description", description);
+            String url = "http://localhost:8080/storeManagement/updateItem?"
+                    + "token=" + token
+                    + "&storeId=" + storeId
+                    + "&itemId=" + itemId
+                    + "&newName=" + newName
+                    + "&newPrice=" + newPrice
+                    + "&newAmount=" + newAmount;
 
-            HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
-            String url = "http://localhost:8080/storeManagement/updateItem?token=" + token;
+            HttpEntity<String> request = new HttpEntity<>(headers);
 
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
 
@@ -126,6 +125,8 @@ public class InventoryModel {
             return "Item update - Failed: " + e.getMessage();
         }
     }
+
+
 
     public String deleteItem(ItemDTO itemDTO, String token) {
         HttpHeaders headers = new HttpHeaders();
