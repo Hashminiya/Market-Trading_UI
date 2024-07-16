@@ -1,5 +1,6 @@
 package org.vaadin.UI.view;
 
+import com.vaadin.flow.component.PollEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
@@ -15,6 +16,7 @@ import com.vaadin.flow.router.Route;
 import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
 import org.vaadin.UI.model.DTOs.PolicyViewDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
+import org.vaadin.UI.presenter.PolicyPresenter;
 import org.vaadin.UI.view.AddDiscount.AddDiscountDialog;
 import org.vaadin.UI.view.AddDiscount.AddHiddenDiscountDialog;
 
@@ -30,6 +32,7 @@ public class DiscountView extends MainSettingView {
 
     public DiscountView(){
         presenter = new DiscountPresenter(this);
+        PolicyPresenter policyPresenter = new PolicyPresenter(null);
 
         VerticalLayout rightContent = getRightContent();
         rightContent.removeAll();
@@ -39,7 +42,7 @@ public class DiscountView extends MainSettingView {
         chooseStoreComboBox = new ComboBox<>("Select your store");
         chooseStoreComboBox.setPlaceholder("No store selected yet");
         presenter.onChoosingStore();
-        addNewDiscountButton = new Button("Add New Discount", new Icon(VaadinIcon.PLUS));
+        addNewDiscountButton = new Button("Add New Composite Discount", new Icon(VaadinIcon.PLUS));
         addNewHiddenDiscountButton = new Button("Add New Hidden Discount", new Icon(VaadinIcon.PLUS));
         topLayout.add(chooseStoreComboBox);
         topLayout.add(addNewDiscountButton);
@@ -54,7 +57,7 @@ public class DiscountView extends MainSettingView {
 
         chooseStoreComboBox.addValueChangeListener(event -> {
             String selectedOptionStoreName = event.getValue();
-            presenter.onSelectStore(selectedOptionStoreName);
+            policyPresenter.onSelectStore(selectedOptionStoreName);
         });
 
         addNewDiscountButton.addClickListener(event -> {
@@ -63,7 +66,7 @@ public class DiscountView extends MainSettingView {
         });
 
         addNewHiddenDiscountButton.addClickListener(event -> {
-            AddHiddenDiscountDialog dialog = new AddHiddenDiscountDialog(presenter);
+            AddHiddenDiscountDialog dialog = new AddHiddenDiscountDialog(presenter,policyPresenter);
             dialog.open();
         });
 

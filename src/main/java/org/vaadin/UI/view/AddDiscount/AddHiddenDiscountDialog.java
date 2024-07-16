@@ -3,38 +3,41 @@ package org.vaadin.UI.view.AddDiscount;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.converter.StringToDoubleConverter;
-import com.vaadin.flow.data.converter.StringToIntegerConverter;
-import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
 import org.vaadin.UI.model.DTOs.ItemDTO;
-import org.vaadin.UI.model.DTOs.Policies.PolicyDTO;
 import org.vaadin.UI.presenter.DiscountPresenter;
-import org.vaadin.UI.presenter.InventoryPresenter;
 import org.vaadin.UI.presenter.PolicyPresenter;
 import org.vaadin.UI.view.Abstracts.IDialog;
-import org.vaadin.UI.view.AddPolicy.AddPolicyDialog;
+import org.vaadin.UI.view.AddPolicy.ChooseCategoryDialog;
+import org.vaadin.UI.view.AddPolicy.ChooseItemsDialog;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AddHiddenDiscountDialog extends Dialog implements IDialog {
     private DiscountPresenter presenter;
-    private TextField code;
-    private TextField expirationDate;
-    private TextField percent;
-    private Button saveButton;
-    private Button updateButton;
-    public AddHiddenDiscountDialog (DiscountPresenter presenter){
-        this.presenter = presenter;
 
+    private PolicyPresenter policyPresenter;
+    private TextField code;
+    private TextField percent;
+    private DatePicker expirationDate;
+    private Button saveButton;
+
+    private List<ItemDTO> itemsChosen;
+    private List<String> categoriesChosen;
+    private boolean isAllStoreDiscount;
+
+    public AddHiddenDiscountDialog(DiscountPresenter presenter , PolicyPresenter policyPresenter) {
+        this.presenter = presenter;
+        this.policyPresenter = policyPresenter;
         setCloseOnEsc(false);
         setCloseOnOutsideClick(false);
-
-        setWidth("800px");  // Set initial width
+        setWidth("800px"); // Set initial width
         setHeight("600px"); // Set initial height
 
         VerticalLayout mainLayout = new VerticalLayout();
@@ -44,13 +47,14 @@ public class AddHiddenDiscountDialog extends Dialog implements IDialog {
 
         VerticalLayout dialogLayout = createDialogLayout();
         VerticalLayout buttonLayout = createButtonLayout();
-
-        mainLayout.add(dialogLayout, buttonLayout);
+        VerticalLayout applyOnSelectorLayout = applyOnSelector();
+        mainLayout.add(dialogLayout,applyOnSelectorLayout, buttonLayout);
         mainLayout.setFlexGrow(1, dialogLayout);
         mainLayout.setFlexGrow(0, buttonLayout);
 
         add(mainLayout);
     }
+
     private VerticalLayout createButtonLayout() {
         VerticalLayout buttonLayout = new VerticalLayout();
         buttonLayout.setPadding(true);
@@ -60,11 +64,11 @@ public class AddHiddenDiscountDialog extends Dialog implements IDialog {
         saveButton = new Button("Save", e -> save());
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         saveButton.setWidthFull();
-
         buttonLayout.add(saveButton);
 
         return buttonLayout;
     }
+
     private void save() {
         presenter.onSavingHiddenDiscount();
         close();
@@ -84,17 +88,55 @@ public class AddHiddenDiscountDialog extends Dialog implements IDialog {
         percent.setWidthFull();
         percent.setRequired(true);
 
-        expirationDate = new TextField("Expiration Date");
+        expirationDate = new DatePicker("Expiration Date");
         expirationDate.setWidthFull();
         expirationDate.setRequired(true);
+        expirationDate.setPlaceholder("DD/MM/YYYY");
+        expirationDate.setLocale(Locale.UK);
 
-        dialogLayout.add(code,percent,expirationDate);
+        DatePicker.DatePickerI18n singleFormatI18n = new DatePicker.DatePickerI18n()
+                .setDateFormat("dd/MM/yyyy");
+        expirationDate.setI18n(singleFormatI18n);
 
-
+        dialogLayout.add(code, percent, expirationDate);
         return dialogLayout;
     }
+
     @Override
     public void ItemsOrCategories() {
-
+    }
+    private VerticalLayout applyOnSelector() {
+        VerticalLayout layout = new VerticalLayout();
+        ComboBox<String> options = new ComboBox<String>("Apply on");
+        options.setItems("All Store Policy", "Specific Items", "Specific Categories");
+        options.addValueChangeListener(event -> {
+            String selectedPolicyType = event.getValue();
+            isAllStoreDiscount = false;
+            itemsChosen = new ArrayList<>();
+            categoriesChosen = new ArrayList<>();
+            switch (selectedPolicyType) {
+                case "All Store Policy":
+                    isAllStoreDiscount = true;
+                    itemsChosen = null;
+                    categoriesChosen = null;
+                    break;
+                case "Specific Items":
+                    Dialog itemsDialog  = new ChooseItemsDialog(itemsChosen, policyPresenter, this);
+                    categoriesChosen = null;
+                    isAllStoreDiscount = false;
+                    itemsDialog.open();
+                    break;
+                case "Specific Categories":
+                    Dialog categoryDialog  = new ChooseCategoryDialog(categoriesChosen, policyPresenter, this);
+                    itemsChosen = null;
+                    isAllStoreDiscount = false;
+                    categoryDialog.open();
+                    break;
+                default:
+                    break;
+            }
+        });
+        layout.add(options);
+        return layout;
     }
 }

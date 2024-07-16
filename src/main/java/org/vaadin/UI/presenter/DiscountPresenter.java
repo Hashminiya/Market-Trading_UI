@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.vaadin.UI.Util.Credentials;
 import org.vaadin.UI.model.DTOs.Discounts.ConditionDTO;
 import org.vaadin.UI.model.DTOs.Discounts.DiscountDTO;
+import org.vaadin.UI.model.DTOs.ItemDTO;
 import org.vaadin.UI.model.models.DiscountModel;
 import org.vaadin.UI.model.models.InventoryModel;
 import org.vaadin.UI.presenter.Interfaces.IPresenter;
@@ -94,5 +95,9 @@ public class DiscountPresenter implements IPresenter {
     }
 
     public void onSavingHiddenDiscount() {
+    }
+
+    public List<ItemDTO> getItems(){
+        return inventoryModel.getStoreItems(currentStoreName,Credentials.getToken());
     }
 }

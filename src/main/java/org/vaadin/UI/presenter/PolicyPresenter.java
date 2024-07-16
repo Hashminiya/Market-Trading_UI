@@ -96,7 +96,6 @@ public class PolicyPresenter implements IPresenter {
     }
     public List<ItemDTO> getItems(){
         return inventoryModel.getStoreItems(currentStoreName,Credentials.getToken());
-
     }
 
     public List<String> getCategories() {
