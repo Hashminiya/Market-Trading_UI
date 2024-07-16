@@ -18,6 +18,7 @@ import org.vaadin.UI.view.AddPolicy.ChooseItemsDialog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class AddHiddenDiscountDialog extends Dialog implements IDialog {
     private DiscountPresenter presenter;
@@ -31,10 +32,12 @@ public class AddHiddenDiscountDialog extends Dialog implements IDialog {
     private List<ItemDTO> itemsChosen;
     private List<String> categoriesChosen;
     private boolean isAllStoreDiscount;
+    private long storeId;
 
-    public AddHiddenDiscountDialog(DiscountPresenter presenter , PolicyPresenter policyPresenter) {
+    public AddHiddenDiscountDialog(DiscountPresenter presenter , PolicyPresenter policyPresenter,long storeId) {
         this.presenter = presenter;
         this.policyPresenter = policyPresenter;
+        this.storeId = storeId;
         setCloseOnEsc(false);
         setCloseOnOutsideClick(false);
         setWidth("800px"); // Set initial width
@@ -71,9 +74,30 @@ public class AddHiddenDiscountDialog extends Dialog implements IDialog {
     }
 
     private void save() {
-        presenter.onSavingHiddenDiscount();
+        String discountCode = code.getValue();
+        String discountPercent = percent.getValue();
+        String expiryDate = expirationDate.getValue().toString();
+        boolean isStoreDiscount = isAllStoreDiscount;
+
+        List<String> selectedCategories;
+        if (isAllStoreDiscount || categoriesChosen == null) {
+            selectedCategories = new ArrayList<>();
+        }
+        else
+            selectedCategories = categoriesChosen;
+
+        List<String> selectedItems;
+        if (isAllStoreDiscount || itemsChosen == null) {
+            selectedItems = new ArrayList<>();
+        }
+        else
+            selectedItems = itemsChosen.stream().map(ItemDTO::getItemId).map(String::valueOf).collect(Collectors.toList());
+
+
+        presenter.onSavingHiddenDiscount(discountCode, discountPercent, expiryDate, isStoreDiscount, selectedCategories, selectedItems, this.storeId);
         close();
     }
+
 
     private VerticalLayout createDialogLayout() {
         VerticalLayout dialogLayout = new VerticalLayout();
