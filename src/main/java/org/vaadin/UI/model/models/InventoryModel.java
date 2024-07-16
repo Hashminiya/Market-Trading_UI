@@ -4,20 +4,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.UI.model.DTOs.ItemDTO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InventoryModel {
     private final RestTemplate restTemplate;
-    public InventoryModel (){
+
+    public InventoryModel() {
         this.restTemplate = new RestTemplate();
         this.restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
     }
+
     public ArrayList<ItemDTO> getStoreItems(String storeName, String token) {
         try {
             String url = "http://localhost:8080/storeManagement/viewInventoryByStoreNameAndToken?token=" + token + "&storeName=" + storeName;
@@ -33,10 +35,15 @@ public class InventoryModel {
                     String itemName = itemNode.get("itemName").asText();
                     double itemPrice = itemNode.get("itemPrice").asDouble();
                     int stockAmount = itemNode.get("stockAmount").asInt();
-                    //String category = itemNode.get("category").asText();
+                    String description = itemNode.has("description") ? itemNode.get("description").asText() : "";
                     long storeId = itemNode.has("storeId") ? itemNode.get("storeId").asLong() : 0L;
 
-                    items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice, new ArrayList<>(), "desc"));
+                    List<String> categories = new ArrayList<>();
+                    if (itemNode.has("category")) {
+                        itemNode.get("category").forEach(categoryNode -> categories.add(categoryNode.asText()));
+                    }
+
+                    items.add(new ItemDTO(itemId, itemName, stockAmount, storeId, itemPrice, categories, description));
                 });
 
                 return items;
@@ -66,17 +73,21 @@ public class InventoryModel {
         }
     }
 
-    public String saveItem(ItemDTO itemDTO, String token) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
+    public String saveItem(String token, long storeId, String name, String description, double price, int amount, List<String> categories) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonItem = objectMapper.writeValueAsString(itemDTO);
-            HttpEntity<String> request = new HttpEntity<>(jsonItem, headers);
-            ResponseEntity<String> response = restTemplate.exchange(
-                    "http://localhost:8080/storeManagement/addItemToStore?token=" + token,
-                    HttpMethod.PUT, request, String.class);
+            String url = "http://localhost:8080/storeManagement/addItemToStore?"
+                    + "token=" + token
+                    + "&storeId=" + storeId
+                    + "&itemName=" + name
+                    + "&description=" + description
+                    + "&itemPrice=" + price
+                    + "&stockAmount=" + amount
+                    + "&categories=" + String.join(",", categories);
+
+            HttpHeaders headers = new HttpHeaders();
+            HttpEntity<String> request = new HttpEntity<>(headers);
+
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 return "Item added successfully";
@@ -90,18 +101,18 @@ public class InventoryModel {
 
     public String updateItem(long itemId, long storeId, String newName, double newPrice, int newAmount, String token) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            MultiValueMap<String, String> payload = new LinkedMultiValueMap<>();
-            payload.add("storeId", String.valueOf(storeId));
-            payload.add("itemId", String.valueOf(itemId));
-            payload.add("newName", newName);
-            payload.add("newPrice", String.valueOf(newPrice));
-            payload.add("newAmount", String.valueOf(newAmount));
+            String url = "http://localhost:8080/storeManagement/updateItem?"
+                    + "token=" + token
+                    + "&storeId=" + storeId
+                    + "&itemId=" + itemId
+                    + "&newName=" + newName
+                    + "&newPrice=" + newPrice
+                    + "&newAmount=" + newAmount;
 
-            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(payload, headers);
-            String url = "http://localhost:8080/storeManagement/updateItem?token=" + token;
+            HttpEntity<String> request = new HttpEntity<>(headers);
 
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
 
@@ -116,9 +127,10 @@ public class InventoryModel {
     }
 
 
+
     public String deleteItem(ItemDTO itemDTO, String token) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
         String url = "http://localhost:8080/storeManagement/deleteItem?token=" + token + "&storeId=" + itemDTO.getStoreId() + "&itemId=" + itemDTO.getItemId();
 
         HttpEntity<String> request = new HttpEntity<>(headers);
@@ -150,6 +162,30 @@ public class InventoryModel {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    //    @GetMapping("storeManagement/getStoreIdByName")
+    //    public ResponseEntity<String> getStoreIdByName(@RequestParam String token,@RequestParam String storeName) {
+    //        ResponseEntity<String> result = storeManagementService.getStoreIdByName(token, storeName);
+    //        return result;
+    //    }
+    public long getStoreIdByName(String storeName, String token) {
+        String url = "http://localhost:8080/storeManagement/getStoreIdByName?token=" + token + "&storeName=" + storeName;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    url, HttpMethod.GET, requestEntity, String.class);
+            return Long.parseLong(response.getBody());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+
         }
     }
 }
