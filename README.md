@@ -1,57 +1,96 @@
-# Skeleton Starter for Vaadin
+<img src="src/main/webapp/icons/logoFinal.png" alt="Project Logo" width="300">
 
-This project can be used as a starting point to create your own Vaadin application.
-It has the necessary dependencies and files to help you get started.
+# Market Trading UI
 
-The best way to use it is via [vaadin.com/start](https://vaadin.com/start) - you can get only the necessary parts and choose the package naming you want to use.
-There is also a [getting started tutorial](https://vaadin.com/tutorials/getting-started-with-flow) based on this project.
+This project is a sophisticated market trading system.
 
-To access it directly from github, clone the repository and import the project to the IDE of your choice as a Maven project. You need to have Java 8 or 11 installed.
+It utilizes Spring Boot for the backend and Vaadin for the frontend to provide a seamless user experience.
 
-Run using `mvn jetty:run` and open [http://localhost:8080](http://localhost:8080) in the browser.
 
-If you want to run your app locally in the production mode, run `mvn jetty:run -Pproduction`.
 
-### Running Integration Tests
+## Table of Contents
 
-Integration tests are implemented using [Vaadin TestBench](https://vaadin.com/testbench). The tests take a few minutes to run and are therefore included in a separate Maven profile. We recommend running tests with a production build to minimize the chance of development time toolchains affecting test stability. To run the tests using Google Chrome, execute
+- [Getting Started](#getting-started)
+- [Prerequisites](#prerequisites)
+- [Installing](#installing)
+- [Running the Application](#running-the-application)
+- [Functionality Overview](#functionality-overview)
 
-`mvn verify -Pit,production`
 
-and make sure you have a valid TestBench license installed (you can obtain a 
-trial license from the [trial page](
-https://vaadin.com/trial)).
 
-## Project structure
 
-The project follow Maven's [standard directory layout structure](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html):
-- Under the `srs/main/java` are located Application sources
-    - `AppShell.java` configures the @PWA annotation making the application 
-      installable
-    - `GreetService.java` is a service class
-    - `MainView.java` is an example Vaadin view
-- Under the `srs/test` are located the TestBench test files
-- `src/main/resources` contains configuration files and static resources
-- The `frontend` directory in the root folder contains client-side 
-  dependencies and resource files. Example CSS styles used by the application 
-  are located under `frontend/themes`
+## Getting Started
 
-## Workspace.xml file
-IntelliJ IDEA uses `workspace.xml` file to cache user-specific project configuration.
-Tracking of local changes to the `workspace.xml` file can be prevented with the `git update-index --assume-unchanged .idea/workspace.xml` command.
-And to revert the setting: `git update-index --no-assume-unchanged .idea/workspace.xml`.
+These instructions will help you set up and run the project on your local machine.
 
-## Useful links
+## Prerequisites
 
-- Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorials at [vaadin.com/tutorials](https://vaadin.com/tutorials).
-- Watch training videos and get certified at [vaadin.com/learn/training]( https://vaadin.com/learn/training).
-- Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/components](https://vaadin.com/components).
-- Find a collection of solutions to common use cases in [Vaadin Cookbook](https://cookbook.vaadin.com/).
-- Find Add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Discord channel](https://discord.gg/MYFq5RTbBn).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin/).
+- Java 17 or higher
+- Maven
+- Node.js (for Vaadin)
+- Spring Boot
 
-For a full Vaadin application example, there are more choices available also from [vaadin.com/start](https://vaadin.com/start) page.
+## Installing
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/Hashminiya/Market-Trading_UI.git
+   cd Market-Trading_UI
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   mvn clean install
+   ```
+3. **Run the backend:**
+
+      Before running the application, you need to start the backend API.
+
+      You can find the instructions to run the backend API https://github.com/Hashminiya/Market-Trading_System
+
+      Backend API will run on: `http://localhost:8080`
+
+## Running the Application
+
+
+After installing the dependencies and setting up the project, you can run the application using:
+   ```sh
+   mvn jetty:run
+   ```
+
+The application will start on http://localhost:8081
+
+
+## Functionality Overview
+
+The Market-Trading UI application offers a wide range of functionalities to provide a comprehensive trading platform.
+Below are the key features and capabilities available to users, store owners, and admins:
+
+#### User Management
+- **User Registration:** New users can register by providing necessary details such as username, password, and email.
+- **User Login:** Registered users can log in using their credentials to access their account and utilize the platform's features.
+
+#### Store Management
+- **Create Store:** Users can create a new store by providing store details such as name, description, and category.
+- **Add Items to Store:** Store owners can add items to their store by specifying item details like name, price, description, and stock quantity.
+- **Modify Items:** Store owners can update item details to keep their inventory accurate and up-to-date.
+- **Delete Items:** Store owners can remove items from their store if they are no longer available for sale.
+- **Assign Store Owners:** Store owners can assign additional owners to help manage the store.
+
+#### Shopping Cart
+- **Add Items to Cart:** Users can browse stores and add items to their shopping cart for purchase.
+- **Modify Shopping Cart:** Users can update quantities or remove items from their shopping cart as needed.
+- **Checkout:** Users can proceed to checkout to finalize their purchase and place an order.
+- **View Order History:** Admins can view the history of orders placed on the platform, providing oversight and management capabilities for all transactions.
+
+#### Admin Capabilities
+- **Order History:** Admins have access to the complete history of all purchases made on the platform. This includes details such as order date, items purchased, and total amount spent, allowing for effective monitoring and analysis of the trading activities.
+
+This functionality makes the Market-Trading UI application a robust platform for managing stores, handling purchases, and ensuring smooth transactions between buyers and sellers.
+
+
+
+
+
+
 
