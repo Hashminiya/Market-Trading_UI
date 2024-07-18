@@ -2,6 +2,7 @@ package org.vaadin.UI.model.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingBasketDTO implements Serializable {
@@ -58,5 +59,19 @@ public class ShoppingBasketDTO implements Serializable {
 
     public void setStoreId(long storeId) {
         this.storeId = storeId;
+    }
+
+
+    private void test() {
+        ShoppingBasketDTO shoppingBasketDTO = new ShoppingBasketDTO();
+        shoppingBasketDTO.setPrice(10.0);
+        shoppingBasketDTO.setStoreId(1);
+        shoppingBasketDTO.setStoreName("store");
+        shoppingBasketDTO.setItems(new ArrayList<>());
+        shoppingBasketDTO.getItems().add(new BasketItemDTO());
+    }
+
+    public String toString() {
+        return "ShoppingBasketDTO{" + "items=" + items + ", price=" + price + ", storeName=";
     }
 }
